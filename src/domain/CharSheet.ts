@@ -9,7 +9,7 @@ export interface CharSheet {
   dreamlandPowers: Power[];
   /** Слабость */
   weakness: Weakness;
-  /** Воспоминания */
+  /** Воспоминания, до 3 единиц */
   recollections: Recollection[];
   /** Трудности и преимущества */
   temporalConditions: TemporalCondition[];
@@ -21,6 +21,13 @@ export interface CharSheet {
   luck: number;
 }
 
+
+// Описание предмета
+// - название + ступень силы
+// - прочность
+// - предел прочности = floor(прочность / 2)
+// - исходная прочность
+// - 1-2 силы + ступень силы (если есть)
 
 
 export interface Power {

@@ -19,6 +19,10 @@ export interface CharSheet {
   bodyWounds: BodyWound[];
   /** Кубики удачи, макс. 12 */
   luck: number;
+  /** Предметы снаряжения */
+  items: string[];
+  /** Заметки */
+  notes: string;
 }
 
 

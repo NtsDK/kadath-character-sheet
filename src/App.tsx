@@ -1,5 +1,11 @@
 import { observer } from "mobx-react-lite";
+import { CharSheetEditor } from "./components/CharSheetEditor";
 
 export const App = observer(() => {
-  return <div>Hello, Kadath!</div>;
+  return (
+    <div>
+      <div>Hello, Kadath!</div>
+      <CharSheetEditor />
+    </div>
+  );
 });

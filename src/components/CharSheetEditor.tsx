@@ -2,7 +2,7 @@ import { observer } from "mobx-react-lite";
 import { Button, Form, Input, Radio } from "antd";
 import { charSheetService } from "../appServices/CharSheetService";
 
-import { PlusIcon } from '@heroicons/react/24/outline';
+import { PlusIcon } from "@heroicons/react/24/outline";
 
 export const CharSheetEditor = observer(() => {
   const { playerName, characterName, powers } = charSheetService._charSheet;
@@ -21,7 +21,12 @@ export const CharSheetEditor = observer(() => {
         />
       </Form.Item>
       <div>
-        <h2>Силы <Button><PlusIcon className="tw-h-5"/></Button></h2>
+        <h2>
+          Силы{" "}
+          <Button onClick={() => charSheetService.createPower()}>
+            <PlusIcon className="tw-h-5" />
+          </Button>
+        </h2>
         {powers.map((power, index) => (
           <div key={index} style={{ marginBottom: "10px" }}>
             <Input

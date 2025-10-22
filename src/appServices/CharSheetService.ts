@@ -11,6 +11,7 @@ export class CharSheetService {
       _charSheet: observable,
       setPlayerName: action,
       setCharacterName: action,
+      setPowerName: action,
     });
   }
 
@@ -20,6 +21,11 @@ export class CharSheetService {
 
   setPlayerName(name: string) {
     this._charSheet.playerName = name;
+  }
+
+  setPowerName(index: number, name: string) {
+    const p = this._charSheet.powers[index];
+    p.name = name;
   }
 }
 

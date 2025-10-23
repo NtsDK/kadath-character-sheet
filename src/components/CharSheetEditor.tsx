@@ -1,11 +1,13 @@
 import { observer } from "mobx-react-lite";
 import { Button, Form, Input, Radio } from "antd";
+import { Segmented } from "antd";
 import { charSheetService } from "../appServices/CharSheetService";
 
-import { PlusIcon } from "@heroicons/react/24/outline";
+import { PowerInput } from "./PowerInput";
+import { SectionHeader } from "./SectionHeader";
 
 export const CharSheetEditor = observer(() => {
-  const { playerName, characterName, powers } = charSheetService._charSheet;
+  const { playerName, characterName, powers, dreamlandPowers } = charSheetService._charSheet;
   return (
     <div>
       <Form.Item label="Имя персонажа" name="characterName" layout="vertical">
@@ -21,25 +23,51 @@ export const CharSheetEditor = observer(() => {
         />
       </Form.Item>
       <div>
-        <h2>
-          Силы{" "}
-          <Button onClick={() => charSheetService.createPower()}>
-            <PlusIcon className="tw-h-5" />
-          </Button>
-        </h2>
+        <SectionHeader
+          buttonProps={{
+            onCreate: () => charSheetService.createPower(),
+            disabled: !charSheetService.canCreatePower,
+          }}
+        >
+          Силы
+        </SectionHeader>
         {powers.map((power, index) => (
-          <div key={index} style={{ marginBottom: "10px" }}>
-            <Input
-              value={power.name}
-              onChange={(e) =>
-                charSheetService.setPowerName(index, e.target.value)
-              }
-            />
-          </div>
+          <PowerInput
+            key={index}
+            power={power}
+            onChangeName={(name) => charSheetService.setPowerName(index, name)}
+            onChangeValue={(value) =>
+              charSheetService.setPowerValue(index, value)
+            }
+            removePower={() => {
+              charSheetService.removePower(index);
+            }}
+          />
         ))}
       </div>
       <div>
-        <h2>Силы Мира Грёз</h2>
+        <h2></h2>
+        <SectionHeader
+          buttonProps={{
+            onCreate: () => charSheetService.createDreamlandPower(),
+            disabled: !charSheetService.canCreateDreamlandPower,
+          }}
+        >
+          Силы Мира Грёз
+        </SectionHeader>
+        {dreamlandPowers.map((power, index) => (
+          <PowerInput
+            key={index}
+            power={power}
+            onChangeName={(name) => charSheetService.setDreamlandPowerName(index, name)}
+            onChangeValue={(value) =>
+              charSheetService.setDreamlandPowerValue(index, value)
+            }
+            removePower={() => {
+              charSheetService.removeDreamlandPower(index);
+            }}
+          />
+        ))}
       </div>
       <div>
         <h2>Слабость</h2>

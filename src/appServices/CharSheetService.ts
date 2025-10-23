@@ -19,6 +19,8 @@ export class CharSheetService {
       setDreamlandPowerName: action,
       setDreamlandPowerValue: action,
       removeDreamlandPower: action,
+      setWeaknessName: action,
+      setWeaknessValue: action,
       canCreateDreamlandPower: computed,
       canCreatePower: computed,
     });
@@ -79,6 +81,14 @@ export class CharSheetService {
 
   removeDreamlandPower(index: number) {
     this._charSheet.dreamlandPowers = this._charSheet.dreamlandPowers.filter((_, i) => i !== index);
+  }
+
+  setWeaknessName(name: string) {
+    this._charSheet.weakness.name = name;
+  }
+
+  setWeaknessValue(value: number) {
+    this._charSheet.weakness.value = value;
   }
 }
 

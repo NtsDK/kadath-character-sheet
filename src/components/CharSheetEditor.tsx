@@ -7,7 +7,8 @@ import { PowerInput } from "./PowerInput";
 import { SectionHeader } from "./SectionHeader";
 
 export const CharSheetEditor = observer(() => {
-  const { playerName, characterName, powers, dreamlandPowers } = charSheetService._charSheet;
+  const { playerName, characterName, powers, dreamlandPowers, weakness } =
+    charSheetService._charSheet;
   return (
     <div>
       <Form.Item label="Имя персонажа" name="characterName" layout="vertical">
@@ -46,7 +47,6 @@ export const CharSheetEditor = observer(() => {
         ))}
       </div>
       <div>
-        <h2></h2>
         <SectionHeader
           buttonProps={{
             onCreate: () => charSheetService.createDreamlandPower(),
@@ -59,7 +59,9 @@ export const CharSheetEditor = observer(() => {
           <PowerInput
             key={index}
             power={power}
-            onChangeName={(name) => charSheetService.setDreamlandPowerName(index, name)}
+            onChangeName={(name) =>
+              charSheetService.setDreamlandPowerName(index, name)
+            }
             onChangeValue={(value) =>
               charSheetService.setDreamlandPowerValue(index, value)
             }
@@ -70,7 +72,17 @@ export const CharSheetEditor = observer(() => {
         ))}
       </div>
       <div>
-        <h2>Слабость</h2>
+        <SectionHeader>Слабость</SectionHeader>
+        <div className="tw-flex">
+          <Input
+            value={weakness.name}
+            onChange={(e) => charSheetService.setWeaknessName(e.target.value)}
+          />
+          <Segmented<number>
+            options={[1, 2, 3, 4, 5, 6]}
+            onChange={(value) => charSheetService.setWeaknessValue(value)}
+          />
+        </div>
       </div>
     </div>
   );

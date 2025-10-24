@@ -1,10 +1,11 @@
 import { action, computed, makeObservable, observable } from "mobx";
 import { CharSheet } from "../domain/CharSheet";
-import { getNewCharSheet } from "../domainServices/charSheet";
+import { getNewCharSheet, getNewDefinedCharSheet } from "../domainServices/charSheet";
 
 export class CharSheetService {
 
-  _charSheet: CharSheet = getNewCharSheet();
+  // _charSheet: CharSheet = getNewCharSheet();
+  _charSheet: CharSheet = getNewDefinedCharSheet();
 
   constructor() {
     makeObservable(this, {
@@ -32,6 +33,13 @@ export class CharSheetService {
       setRecollectionValue: action,
       removeRecollection: action,
       canCreateRecollection: computed,
+      // mental conditions
+      createMentalCondition: action,
+      setMentalConditionName: action,
+      setMentalConditionValue: action,
+      setMentalConditionInjury: action,
+      removeMentalCondition: action,
+      canCreateMentalCondition: computed,
     });
   }
 
@@ -129,6 +137,37 @@ export class CharSheetService {
 
   removeRecollection(index: number) {
     this._charSheet.recollections = this._charSheet.recollections.filter((_, i) => i !== index);
+  }
+  // #endregion
+
+  // #region Mental Conditions
+  get canCreateMentalCondition() {
+    return this._charSheet.mentalConditions.length < 3;
+  }
+
+  createMentalCondition() {
+    this._charSheet.mentalConditions.push({ name: "", value: 1, isInjury: false });
+  }
+
+  setMentalConditionName(index: number, name: string) {
+    const c = this._charSheet.mentalConditions[index];
+    c.name = name;
+  }
+
+  setMentalConditionValue(index: number, value: number) {
+    const c = this._charSheet.mentalConditions[index];
+    c.value = value;
+  }
+
+  setMentalConditionInjury(index: number, isInjury: boolean) {
+    const c = this._charSheet.mentalConditions[index];
+    c.isInjury = isInjury;
+  }
+
+  removeMentalCondition(index: number) {
+    this._charSheet.mentalConditions = this._charSheet.mentalConditions.filter(
+      (_, i) => i !== index
+    );
   }
   // #endregion
 }

@@ -65,3 +65,5 @@ export interface BodyWound {
   value: number;
   isInjury: boolean;
 }
+
+export type CharacterCondition = MentalCondition | BodyWound;

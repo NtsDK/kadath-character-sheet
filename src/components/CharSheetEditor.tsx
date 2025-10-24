@@ -5,11 +5,19 @@ import { charSheetService } from "../appServices/CharSheetService";
 
 import { PowerInput } from "./PowerInput";
 import { RecollectionInput } from "./RecollectionInput";
+import { CharacterConditionInput } from "./CharacterConditionInput";
 import { SectionHeader } from "./SectionHeader";
 
 export const CharSheetEditor = observer(() => {
-  const { playerName, characterName, powers, dreamlandPowers, weakness, recollections } =
-    charSheetService._charSheet;
+  const {
+    playerName,
+    characterName,
+    powers,
+    dreamlandPowers,
+    weakness,
+    recollections,
+    mentalConditions,
+  } = charSheetService._charSheet;
   return (
     <div>
       <Form.Item label="Имя персонажа" name="characterName" layout="vertical">
@@ -106,6 +114,34 @@ export const CharSheetEditor = observer(() => {
             }
             removeRecollection={() => {
               charSheetService.removeRecollection(index);
+            }}
+          />
+        ))}
+      </div>
+      <div>
+        <SectionHeader
+          buttonProps={{
+            onCreate: () => charSheetService.createMentalCondition(),
+            disabled: !charSheetService.canCreateMentalCondition,
+          }}
+        >
+          Душевные состояния
+        </SectionHeader>
+        {mentalConditions.map((mc, index) => (
+          <CharacterConditionInput
+            key={index}
+            characterCondition={mc}
+            onChangeName={(name) =>
+              charSheetService.setMentalConditionName(index, name)
+            }
+            onChangeValue={(value) =>
+              charSheetService.setMentalConditionValue(index, value)
+            }
+            onChangeInjury={(isInjury) =>
+              charSheetService.setMentalConditionInjury(index, isInjury)
+            }
+            removeCondition={() => {
+              charSheetService.removeMentalCondition(index);
             }}
           />
         ))}

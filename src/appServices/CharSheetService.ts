@@ -58,6 +58,8 @@ export class CharSheetService {
       removeItem: action,
       // luck
       setLuck: action,
+      // notes
+      setNotes: action,
     });
   }
 
@@ -255,6 +257,12 @@ export class CharSheetService {
   // #region Luck
   setLuck(value: number) {
     this._charSheet.luck = value;
+  }
+  // #endregion
+
+  // #region Notes
+  setNotes(value: string) {
+    this._charSheet.notes = value;
   }
   // #endregion
 }

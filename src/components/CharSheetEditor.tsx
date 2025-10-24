@@ -231,6 +231,14 @@ export const CharSheetEditor = observer(() => {
           onChange={(value) => charSheetService.setLuck(value)}
         />
       </div>
+      <div>
+        <SectionHeader>Заметки</SectionHeader>
+        <Input.TextArea
+          value={notes}
+          onChange={(e) => charSheetService.setNotes(e.target.value)}
+          autoSize={{minRows: 5}}
+        />
+      </div>
     </div>
   );
 });

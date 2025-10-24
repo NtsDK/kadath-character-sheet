@@ -7,6 +7,7 @@ import { PowerInput } from "./PowerInput";
 import { RecollectionInput } from "./RecollectionInput";
 import { CharacterConditionInput } from "./CharacterConditionInput";
 import { SectionHeader } from "./SectionHeader";
+import { TemporalConditionInput } from "./TemporalConditionInput";
 
 export const CharSheetEditor = observer(() => {
   const {
@@ -17,7 +18,8 @@ export const CharSheetEditor = observer(() => {
     weakness,
     recollections,
     mentalConditions,
-    bodyWounds
+    bodyWounds,
+    temporalConditions,
   } = charSheetService._charSheet;
   return (
     <div>
@@ -171,6 +173,30 @@ export const CharSheetEditor = observer(() => {
             }
             removeCondition={() => {
               charSheetService.removeBodyWound(index);
+            }}
+          />
+        ))}
+      </div>
+      <div>
+        <SectionHeader
+          buttonProps={{
+            onCreate: () => charSheetService.createTemporalCondition(),
+          }}
+        >
+          Трудности и преимущества
+        </SectionHeader>
+        {temporalConditions.map((condition, index) => (
+          <TemporalConditionInput
+            key={index}
+            temporalCondition={condition}
+            onChangeName={(name) =>
+              charSheetService.setTemporalConditionName(index, name)
+            }
+            onChangeValue={(value) =>
+              charSheetService.setTemporalConditionValue(index, value)
+            }
+            removeCondition={() => {
+              charSheetService.removeTemporalCondition(index);
             }}
           />
         ))}

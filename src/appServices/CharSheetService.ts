@@ -47,6 +47,11 @@ export class CharSheetService {
       setBodyWoundInjury: action,
       removeBodyWound: action,
       canCreateBodyWound: computed,
+      // temporal conditions
+      createTemporalCondition: action,
+      setTemporalConditionName: action,
+      setTemporalConditionValue: action,
+      removeTemporalCondition: action,
     });
   }
 
@@ -204,6 +209,26 @@ export class CharSheetService {
 
   removeBodyWound(index: number) {
     this._charSheet.bodyWounds = this._charSheet.bodyWounds.filter((_, i) => i !== index);
+  }
+  // #endregion
+
+  // #region Temporal Conditions
+  createTemporalCondition() {
+    this._charSheet.temporalConditions.push({ name: "", value: 1 });
+  }
+
+  setTemporalConditionName(index: number, name: string) {
+    const c = this._charSheet.temporalConditions[index];
+    c.name = name;
+  }
+
+  setTemporalConditionValue(index: number, value: number) {
+    const c = this._charSheet.temporalConditions[index];
+    c.value = value;
+  }
+
+  removeTemporalCondition(index: number) {
+    this._charSheet.temporalConditions = this._charSheet.temporalConditions.filter((_, i) => i !== index);
   }
   // #endregion
 }

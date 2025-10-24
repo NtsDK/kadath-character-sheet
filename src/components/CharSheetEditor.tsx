@@ -1,6 +1,8 @@
 import { observer } from "mobx-react-lite";
 import { Button, Form, Input, Radio } from "antd";
 import { Segmented } from "antd";
+import { XMarkIcon } from "@heroicons/react/24/outline";
+
 import { charSheetService } from "../appServices/CharSheetService";
 
 import { PowerInput } from "./PowerInput";
@@ -20,6 +22,7 @@ export const CharSheetEditor = observer(() => {
     mentalConditions,
     bodyWounds,
     temporalConditions,
+    items,
   } = charSheetService._charSheet;
   return (
     <div>
@@ -199,6 +202,23 @@ export const CharSheetEditor = observer(() => {
               charSheetService.removeTemporalCondition(index);
             }}
           />
+        ))}
+      </div>
+      <div>
+        <SectionHeader
+          buttonProps={{
+            onCreate: () => charSheetService.createItem(),
+          }}
+        >
+          Снаряжение
+        </SectionHeader>
+        {items.map((item, index) => (
+          <div key={index} className="tw-flex tw-items-center">
+            <Input value={item} onChange={(e) => charSheetService.setItemName(index, e.target.value)}/>
+            <Button onClick={() => charSheetService.removeItem(index)}>
+              <XMarkIcon className="tw-h-3" />
+            </Button>
+          </div>
         ))}
       </div>
     </div>

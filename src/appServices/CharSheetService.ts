@@ -52,6 +52,10 @@ export class CharSheetService {
       setTemporalConditionName: action,
       setTemporalConditionValue: action,
       removeTemporalCondition: action,
+      // items
+      createItem: action,
+      setItemName: action,
+      removeItem: action,
     });
   }
 
@@ -229,6 +233,20 @@ export class CharSheetService {
 
   removeTemporalCondition(index: number) {
     this._charSheet.temporalConditions = this._charSheet.temporalConditions.filter((_, i) => i !== index);
+  }
+  // #endregion
+
+  // #region Items
+  createItem() {
+    this._charSheet.items.push("");
+  }
+
+  setItemName(index: number, name: string) {
+    this._charSheet.items[index] = name;
+  }
+
+  removeItem(index: number) {
+    this._charSheet.items = this._charSheet.items.filter((_, i) => i !== index);
   }
   // #endregion
 }

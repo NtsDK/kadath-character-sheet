@@ -40,6 +40,13 @@ export class CharSheetService {
       setMentalConditionInjury: action,
       removeMentalCondition: action,
       canCreateMentalCondition: computed,
+      // body wounds
+      createBodyWound: action,
+      setBodyWoundName: action,
+      setBodyWoundValue: action,
+      setBodyWoundInjury: action,
+      removeBodyWound: action,
+      canCreateBodyWound: computed,
     });
   }
 
@@ -168,6 +175,35 @@ export class CharSheetService {
     this._charSheet.mentalConditions = this._charSheet.mentalConditions.filter(
       (_, i) => i !== index
     );
+  }
+  // #endregion
+
+  // #region Body Wounds
+  get canCreateBodyWound() {
+    return this._charSheet.bodyWounds.length < 6;
+  }
+
+  createBodyWound() {
+    this._charSheet.bodyWounds.push({ name: "", value: 1, isInjury: false });
+  }
+
+  setBodyWoundName(index: number, name: string) {
+    const b = this._charSheet.bodyWounds[index];
+    b.name = name;
+  }
+
+  setBodyWoundValue(index: number, value: number) {
+    const b = this._charSheet.bodyWounds[index];
+    b.value = value;
+  }
+
+  setBodyWoundInjury(index: number, isInjury: boolean) {
+    const b = this._charSheet.bodyWounds[index];
+    b.isInjury = isInjury;
+  }
+
+  removeBodyWound(index: number) {
+    this._charSheet.bodyWounds = this._charSheet.bodyWounds.filter((_, i) => i !== index);
   }
   // #endregion
 }

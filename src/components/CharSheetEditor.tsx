@@ -17,6 +17,7 @@ export const CharSheetEditor = observer(() => {
     weakness,
     recollections,
     mentalConditions,
+    bodyWounds
   } = charSheetService._charSheet;
   return (
     <div>
@@ -142,6 +143,34 @@ export const CharSheetEditor = observer(() => {
             }
             removeCondition={() => {
               charSheetService.removeMentalCondition(index);
+            }}
+          />
+        ))}
+      </div>
+      <div>
+        <SectionHeader
+          buttonProps={{
+            onCreate: () => charSheetService.createBodyWound(),
+            disabled: !charSheetService.canCreateBodyWound,
+          }}
+        >
+          Телесные раны
+        </SectionHeader>
+        {bodyWounds.map((bw, index) => (
+          <CharacterConditionInput
+            key={index}
+            characterCondition={bw}
+            onChangeName={(name) =>
+              charSheetService.setBodyWoundName(index, name)
+            }
+            onChangeValue={(value) =>
+              charSheetService.setBodyWoundValue(index, value)
+            }
+            onChangeInjury={(isInjury) =>
+              charSheetService.setBodyWoundInjury(index, isInjury)
+            }
+            removeCondition={() => {
+              charSheetService.removeBodyWound(index);
             }}
           />
         ))}

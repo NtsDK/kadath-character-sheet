@@ -4,7 +4,7 @@ import { Segmented } from "antd";
 
 import { charSheetService } from "../appServices/CharSheetService";
 
-import { SectionHeader } from "./SectionHeader";
+import { SectionHeader } from "../unitComponents/SectionHeader";
 import { PowerSectionBody } from "./PowerSectionBody";
 import { DreamlandPowerSectionBody } from "./DreamlandPowerSectionBody";
 import { RecollectionSectionBody } from "./RecollectionSectionBody";

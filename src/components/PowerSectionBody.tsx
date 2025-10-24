@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { PowerInput } from "./PowerInput";
+import { PowerInput } from "../unitComponents/PowerInput";
 import { charSheetService } from "../appServices/CharSheetService";
 
 type Props = {

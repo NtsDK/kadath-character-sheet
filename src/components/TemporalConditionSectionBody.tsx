@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { TemporalConditionInput } from "./TemporalConditionInput";
+import { TemporalConditionInput } from "../unitComponents/TemporalConditionInput";
 import { charSheetService } from "../appServices/CharSheetService";
 
 type Props = {

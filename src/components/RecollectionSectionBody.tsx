@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { RecollectionInput } from "./RecollectionInput";
+import { RecollectionInput } from "../unitComponents/RecollectionInput";
 import { charSheetService } from "../appServices/CharSheetService";
 
 type Props = {

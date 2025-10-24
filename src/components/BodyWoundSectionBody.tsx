@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { CharacterConditionInput } from "./CharacterConditionInput";
+import { CharacterConditionInput } from "../unitComponents/CharacterConditionInput";
 import { charSheetService } from "../appServices/CharSheetService";
 
 type Props = {

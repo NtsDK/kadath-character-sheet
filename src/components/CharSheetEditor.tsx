@@ -1,31 +1,21 @@
 import { observer } from "mobx-react-lite";
-import { Button, Form, Input, Radio } from "antd";
+import { Form, Input } from "antd";
 import { Segmented } from "antd";
-import { XMarkIcon } from "@heroicons/react/24/outline";
 
 import { charSheetService } from "../appServices/CharSheetService";
 
-import { PowerInput } from "./PowerInput";
-import { RecollectionInput } from "./RecollectionInput";
-import { CharacterConditionInput } from "./CharacterConditionInput";
 import { SectionHeader } from "./SectionHeader";
-import { TemporalConditionInput } from "./TemporalConditionInput";
+import { PowerSectionBody } from "./PowerSectionBody";
+import { DreamlandPowerSectionBody } from "./DreamlandPowerSectionBody";
+import { RecollectionSectionBody } from "./RecollectionSectionBody";
+import { MentalConditionSectionBody } from "./MentalConditionSectionBody";
+import { BodyWoundSectionBody } from "./BodyWoundSectionBody";
+import { TemporalConditionSectionBody } from "./TemporalConditionSectionBody";
+import { ItemSectionBody } from "./ItemSectionBody";
 
 export const CharSheetEditor = observer(() => {
-  const {
-    playerName,
-    characterName,
-    powers,
-    dreamlandPowers,
-    weakness,
-    recollections,
-    mentalConditions,
-    bodyWounds,
-    temporalConditions,
-    items,
-    luck,
-    notes
-  } = charSheetService._charSheet;
+  const { playerName, characterName, weakness, luck, notes } =
+    charSheetService._charSheet;
   return (
     <div>
       <Form.Item label="Имя персонажа" name="characterName" layout="vertical">
@@ -49,19 +39,7 @@ export const CharSheetEditor = observer(() => {
         >
           Силы
         </SectionHeader>
-        {powers.map((power, index) => (
-          <PowerInput
-            key={index}
-            power={power}
-            onChangeName={(name) => charSheetService.setPowerName(index, name)}
-            onChangeValue={(value) =>
-              charSheetService.setPowerValue(index, value)
-            }
-            removePower={() => {
-              charSheetService.removePower(index);
-            }}
-          />
-        ))}
+        <PowerSectionBody />
       </div>
       <div>
         <SectionHeader
@@ -72,21 +50,7 @@ export const CharSheetEditor = observer(() => {
         >
           Силы Мира Грёз
         </SectionHeader>
-        {dreamlandPowers.map((power, index) => (
-          <PowerInput
-            key={index}
-            power={power}
-            onChangeName={(name) =>
-              charSheetService.setDreamlandPowerName(index, name)
-            }
-            onChangeValue={(value) =>
-              charSheetService.setDreamlandPowerValue(index, value)
-            }
-            removePower={() => {
-              charSheetService.removeDreamlandPower(index);
-            }}
-          />
-        ))}
+        <DreamlandPowerSectionBody />
       </div>
       <div>
         <SectionHeader>Слабость</SectionHeader>
@@ -110,21 +74,7 @@ export const CharSheetEditor = observer(() => {
         >
           Воспоминания
         </SectionHeader>
-        {recollections.map((recollection, index) => (
-          <RecollectionInput
-            key={index}
-            recollection={recollection}
-            onChangeName={(name) =>
-              charSheetService.setRecollectionName(index, name)
-            }
-            onChangeValue={(value) =>
-              charSheetService.setRecollectionValue(index, value)
-            }
-            removeRecollection={() => {
-              charSheetService.removeRecollection(index);
-            }}
-          />
-        ))}
+        <RecollectionSectionBody />
       </div>
       <div>
         <SectionHeader
@@ -135,24 +85,7 @@ export const CharSheetEditor = observer(() => {
         >
           Душевные состояния
         </SectionHeader>
-        {mentalConditions.map((mc, index) => (
-          <CharacterConditionInput
-            key={index}
-            characterCondition={mc}
-            onChangeName={(name) =>
-              charSheetService.setMentalConditionName(index, name)
-            }
-            onChangeValue={(value) =>
-              charSheetService.setMentalConditionValue(index, value)
-            }
-            onChangeInjury={(isInjury) =>
-              charSheetService.setMentalConditionInjury(index, isInjury)
-            }
-            removeCondition={() => {
-              charSheetService.removeMentalCondition(index);
-            }}
-          />
-        ))}
+        <MentalConditionSectionBody />
       </div>
       <div>
         <SectionHeader
@@ -163,24 +96,7 @@ export const CharSheetEditor = observer(() => {
         >
           Телесные раны
         </SectionHeader>
-        {bodyWounds.map((bw, index) => (
-          <CharacterConditionInput
-            key={index}
-            characterCondition={bw}
-            onChangeName={(name) =>
-              charSheetService.setBodyWoundName(index, name)
-            }
-            onChangeValue={(value) =>
-              charSheetService.setBodyWoundValue(index, value)
-            }
-            onChangeInjury={(isInjury) =>
-              charSheetService.setBodyWoundInjury(index, isInjury)
-            }
-            removeCondition={() => {
-              charSheetService.removeBodyWound(index);
-            }}
-          />
-        ))}
+        <BodyWoundSectionBody />
       </div>
       <div>
         <SectionHeader
@@ -190,21 +106,7 @@ export const CharSheetEditor = observer(() => {
         >
           Трудности и преимущества
         </SectionHeader>
-        {temporalConditions.map((condition, index) => (
-          <TemporalConditionInput
-            key={index}
-            temporalCondition={condition}
-            onChangeName={(name) =>
-              charSheetService.setTemporalConditionName(index, name)
-            }
-            onChangeValue={(value) =>
-              charSheetService.setTemporalConditionValue(index, value)
-            }
-            removeCondition={() => {
-              charSheetService.removeTemporalCondition(index);
-            }}
-          />
-        ))}
+        <TemporalConditionSectionBody />
       </div>
       <div>
         <SectionHeader
@@ -214,19 +116,12 @@ export const CharSheetEditor = observer(() => {
         >
           Снаряжение
         </SectionHeader>
-        {items.map((item, index) => (
-          <div key={index} className="tw-flex tw-items-center">
-            <Input value={item} onChange={(e) => charSheetService.setItemName(index, e.target.value)}/>
-            <Button onClick={() => charSheetService.removeItem(index)}>
-              <XMarkIcon className="tw-h-3" />
-            </Button>
-          </div>
-        ))}
+        <ItemSectionBody />
       </div>
       <div>
         <SectionHeader>Удача</SectionHeader>
         <Segmented<number>
-          options={[0, 1, 2, 3, 4, 5, 6,7,8,9,10,11,12]}
+          options={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]}
           value={luck}
           onChange={(value) => charSheetService.setLuck(value)}
         />
@@ -236,7 +131,7 @@ export const CharSheetEditor = observer(() => {
         <Input.TextArea
           value={notes}
           onChange={(e) => charSheetService.setNotes(e.target.value)}
-          autoSize={{minRows: 5}}
+          autoSize={{ minRows: 5 }}
         />
       </div>
     </div>

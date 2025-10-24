@@ -23,6 +23,8 @@ export const CharSheetEditor = observer(() => {
     bodyWounds,
     temporalConditions,
     items,
+    luck,
+    notes
   } = charSheetService._charSheet;
   return (
     <div>
@@ -220,6 +222,14 @@ export const CharSheetEditor = observer(() => {
             </Button>
           </div>
         ))}
+      </div>
+      <div>
+        <SectionHeader>Удача</SectionHeader>
+        <Segmented<number>
+          options={[0, 1, 2, 3, 4, 5, 6,7,8,9,10,11,12]}
+          value={luck}
+          onChange={(value) => charSheetService.setLuck(value)}
+        />
       </div>
     </div>
   );

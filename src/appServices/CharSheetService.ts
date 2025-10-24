@@ -56,6 +56,8 @@ export class CharSheetService {
       createItem: action,
       setItemName: action,
       removeItem: action,
+      // luck
+      setLuck: action,
     });
   }
 
@@ -247,6 +249,12 @@ export class CharSheetService {
 
   removeItem(index: number) {
     this._charSheet.items = this._charSheet.items.filter((_, i) => i !== index);
+  }
+  // #endregion
+
+  // #region Luck
+  setLuck(value: number) {
+    this._charSheet.luck = value;
   }
   // #endregion
 }

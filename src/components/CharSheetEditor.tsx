@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { Form, Input } from "antd";
+import { Col, Form, Input, Row } from "antd";
 import { Segmented } from "antd";
 
 import { charSheetService } from "../appServices/CharSheetService";
@@ -17,19 +17,31 @@ export const CharSheetEditor = observer(() => {
   const { playerName, characterName, weakness, luck, notes } =
     charSheetService._charSheet;
   return (
-    <div>
-      <Form.Item label="Имя персонажа" name="characterName" layout="vertical">
-        <Input
-          value={characterName}
-          onChange={(e) => charSheetService.setCharacterName(e.target.value)}
-        />
-      </Form.Item>
-      <Form.Item label="Имя игрока" name="playerName" layout="vertical">
-        <Input
-          value={playerName}
-          onChange={(e) => charSheetService.setPlayerName(e.target.value)}
-        />
-      </Form.Item>
+    <div style={{width: '40rem'}}>
+      <Row>
+        <Col span={12} className="tw-px-2">
+          <Form.Item
+            label="Имя персонажа"
+            name="characterName"
+            layout="vertical"
+          >
+            <Input
+              value={characterName}
+              onChange={(e) =>
+                charSheetService.setCharacterName(e.target.value)
+              }
+            />
+          </Form.Item>
+        </Col>
+        <Col span={12} className="tw-px-2">
+          <Form.Item label="Имя игрока" name="playerName" layout="vertical">
+            <Input
+              value={playerName}
+              onChange={(e) => charSheetService.setPlayerName(e.target.value)}
+            />
+          </Form.Item>
+        </Col>
+      </Row>
       <div>
         <SectionHeader
           buttonProps={{

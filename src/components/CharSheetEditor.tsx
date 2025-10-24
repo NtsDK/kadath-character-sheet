@@ -4,10 +4,11 @@ import { Segmented } from "antd";
 import { charSheetService } from "../appServices/CharSheetService";
 
 import { PowerInput } from "./PowerInput";
+import { RecollectionInput } from "./RecollectionInput";
 import { SectionHeader } from "./SectionHeader";
 
 export const CharSheetEditor = observer(() => {
-  const { playerName, characterName, powers, dreamlandPowers, weakness } =
+  const { playerName, characterName, powers, dreamlandPowers, weakness, recollections } =
     charSheetService._charSheet;
   return (
     <div>
@@ -83,6 +84,31 @@ export const CharSheetEditor = observer(() => {
             onChange={(value) => charSheetService.setWeaknessValue(value)}
           />
         </div>
+      </div>
+      <div>
+        <SectionHeader
+          buttonProps={{
+            onCreate: () => charSheetService.createRecollection(),
+            disabled: !charSheetService.canCreateRecollection,
+          }}
+        >
+          Воспоминания
+        </SectionHeader>
+        {recollections.map((recollection, index) => (
+          <RecollectionInput
+            key={index}
+            recollection={recollection}
+            onChangeName={(name) =>
+              charSheetService.setRecollectionName(index, name)
+            }
+            onChangeValue={(value) =>
+              charSheetService.setRecollectionValue(index, value)
+            }
+            removeRecollection={() => {
+              charSheetService.removeRecollection(index);
+            }}
+          />
+        ))}
       </div>
     </div>
   );

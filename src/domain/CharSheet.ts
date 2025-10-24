@@ -11,12 +11,12 @@ export interface CharSheet {
   weakness: Weakness;
   /** Воспоминания, до 3 единиц */
   recollections: Recollection[];
-  /** Трудности и преимущества */
-  temporalConditions: TemporalCondition[];
   /** Душевные раны и силы, до 3 единиц */
   mentalConditions: MentalCondition[];
   /** Телесные раны, до 6 единиц */
   bodyWounds: BodyWound[];
+  /** Трудности и преимущества */
+  temporalConditions: TemporalCondition[];
   /** Кубики удачи, макс. 12 */
   luck: number;
   /** Предметы снаряжения */

@@ -1,11 +1,12 @@
 import { action, computed, makeObservable, observable } from "mobx";
 import { CharSheet } from "../domain/CharSheet";
-import { getNewCharSheet, getNewDefinedCharSheet } from "../domainServices/charSheet";
+import { ClaudiaCharSheet, getNewCharSheet, getNewDefinedCharSheet } from "../domainServices/charSheet";
 
 export class CharSheetService {
 
   // _charSheet: CharSheet = getNewCharSheet();
-  _charSheet: CharSheet = getNewDefinedCharSheet();
+  // _charSheet: CharSheet = getNewDefinedCharSheet();
+  _charSheet: CharSheet = ClaudiaCharSheet();
 
   constructor() {
     makeObservable(this, {

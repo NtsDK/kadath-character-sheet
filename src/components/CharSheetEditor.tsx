@@ -17,29 +17,21 @@ export const CharSheetEditor = observer(() => {
   const { playerName, characterName, weakness, luck, notes } =
     charSheetService._charSheet;
   return (
-    <div style={{width: '40rem'}}>
+    <div style={{ width: "40rem" }}>
       <Row>
         <Col span={12} className="tw-px-2">
-          <Form.Item
-            label="Имя персонажа"
-            name="characterName"
-            layout="vertical"
-          >
-            <Input
-              value={characterName}
-              onChange={(e) =>
-                charSheetService.setCharacterName(e.target.value)
-              }
-            />
-          </Form.Item>
+          <SectionHeader>Имя персонажа</SectionHeader>
+          <Input
+            value={characterName}
+            onChange={(e) => charSheetService.setCharacterName(e.target.value)}
+          />
         </Col>
         <Col span={12} className="tw-px-2">
-          <Form.Item label="Имя игрока" name="playerName" layout="vertical">
-            <Input
-              value={playerName}
-              onChange={(e) => charSheetService.setPlayerName(e.target.value)}
-            />
-          </Form.Item>
+          <SectionHeader>Имя игрока</SectionHeader>
+          <Input
+            value={playerName}
+            onChange={(e) => charSheetService.setPlayerName(e.target.value)}
+          />
         </Col>
       </Row>
       <div>

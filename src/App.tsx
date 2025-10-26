@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { Breadcrumb, Layout, Menu, MenuProps, theme } from "antd";
 import { useState } from "react";
-import {
+import Icon, {
   InfoCircleOutlined,
   QuestionCircleOutlined,
   TeamOutlined,
@@ -9,50 +9,55 @@ import {
 } from "@ant-design/icons";
 import { CharSheetPage } from "./charSheetPage";
 
+import { BrowserRouter, Routes, Route, HashRouter, Link } from "react-router";
+import { CatalogPage } from "./pages/CatalogPage";
+import { AboutPage } from "./pages/AboutPage";
+import { InstructionPage } from "./pages/InstructionPage";
+
 const { Header, Content, Footer, Sider } = Layout;
-
-type MenuItem = Required<MenuProps>["items"][number];
-
-function getItem(
-  label: React.ReactNode,
-  key: React.Key,
-  icon?: React.ReactNode,
-  children?: MenuItem[]
-): MenuItem {
-  return {
-    key,
-    icon,
-    children,
-    label,
-  };
-}
-
-const items: MenuItem[] = [
-  getItem("Каталог персонажей", "1", <TeamOutlined />),
-  getItem("Лист персонажа", "2", <UserOutlined />),
-  getItem("Инструкция", "3", <QuestionCircleOutlined />),
-  getItem("О программе", "4", <InfoCircleOutlined />),
-];
 
 export const App = observer(() => {
   const [collapsed, setCollapsed] = useState(false);
 
   return (
-    <Layout style={{ minHeight: "100vh" }}>
-      <Sider
-        collapsible
-        collapsed={collapsed}
-        onCollapse={(value) => setCollapsed(value)}
-        width={220}
-      >
-        <Menu
-          theme="dark"
-          defaultSelectedKeys={["1"]}
-          mode="inline"
-          items={items}
-        />
-      </Sider>
-      <CharSheetPage />
-    </Layout>
+    <HashRouter>
+      <Layout style={{ minHeight: "100vh" }}>
+        <Sider
+          collapsible
+          collapsed={collapsed}
+          onCollapse={(value) => setCollapsed(value)}
+          width={220}
+        >
+          <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
+            <Menu.Item key="1">
+              <TeamOutlined />
+              <span>Каталог персонажей</span>
+              <Link to="/" />
+            </Menu.Item>
+            <Menu.Item key="2">
+              <UserOutlined />
+              <span>Лист персонажа</span>
+              <Link to="/charSheet" />
+            </Menu.Item>
+            <Menu.Item key="3">
+              <QuestionCircleOutlined />
+              <span>Инструкция</span>
+              <Link to="/instruction" />
+            </Menu.Item>
+            <Menu.Item key="4">
+              <InfoCircleOutlined />
+              <span>О программе</span>
+              <Link to="/about" />
+            </Menu.Item>
+          </Menu>
+        </Sider>
+        <Routes>
+          <Route path="/" element={<CatalogPage />} />
+          <Route path="charSheet" element={<CharSheetPage />} />
+          <Route path="instruction" element={<InstructionPage />} />
+          <Route path="about" element={<AboutPage />} />
+        </Routes>
+      </Layout>
+    </HashRouter>
   );
 });

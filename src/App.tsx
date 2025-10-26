@@ -1,5 +1,4 @@
 import { observer } from "mobx-react-lite";
-import { CharSheetEditor } from "./components/CharSheetEditor";
 import { Breadcrumb, Layout, Menu, MenuProps, theme } from "antd";
 import { useState } from "react";
 import {
@@ -8,6 +7,7 @@ import {
   TeamOutlined,
   UserOutlined,
 } from "@ant-design/icons";
+import { CharSheetPage } from "./charSheetPage";
 
 const { Header, Content, Footer, Sider } = Layout;
 
@@ -24,7 +24,6 @@ function getItem(
     icon,
     children,
     label,
-
   };
 }
 
@@ -53,10 +52,7 @@ export const App = observer(() => {
           items={items}
         />
       </Sider>
-      <Content>
-        <div>Hello, Kadath!</div>
-        <CharSheetEditor />
-      </Content>
+      <CharSheetPage />
     </Layout>
   );
 });

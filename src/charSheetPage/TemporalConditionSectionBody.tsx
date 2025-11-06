@@ -7,7 +7,7 @@ type Props = {
 };
 
 export const TemporalConditionSectionBody = observer(({ className }: Props) => {
-  const { temporalConditions } = charSheetService._charSheet;
+  const { temporalConditions } = charSheetService._content;
 
   return (
     <div className={className}>

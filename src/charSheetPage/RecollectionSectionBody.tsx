@@ -7,7 +7,7 @@ type Props = {
 };
 
 export const RecollectionSectionBody = observer(({ className }: Props) => {
-  const { recollections } = charSheetService._charSheet;
+  const { recollections } = charSheetService._content;
 
   return (
     <div className={className}>

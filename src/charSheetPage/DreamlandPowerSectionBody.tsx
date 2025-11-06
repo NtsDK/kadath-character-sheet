@@ -7,7 +7,7 @@ type Props = {
 };
 
 export const DreamlandPowerSectionBody = observer(({className}: Props) => {
-  const { dreamlandPowers } = charSheetService._charSheet;
+  const { dreamlandPowers } = charSheetService._content;
 
   return (
     <div className={className}>

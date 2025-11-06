@@ -14,11 +14,13 @@ import { TemporalConditionSectionBody } from "./TemporalConditionSectionBody";
 import { ItemSectionBody } from "./ItemSectionBody";
 
 export const CharSheetEditor = observer(() => {
-  const { playerName, characterName, weakness, luck, notes } =
-    charSheetService._charSheet;
+  // const { playerName, characterName, weakness, luck, notes } =
+  //   charSheetService._charSheet;
+  const { weakness, luck, notes } =
+    charSheetService._content;
   return (
     <div style={{ width: "40rem" }}>
-      <Row>
+      {/* <Row>
         <Col span={12} className="tw-px-2">
           <SectionHeader>Имя персонажа</SectionHeader>
           <Input
@@ -33,7 +35,8 @@ export const CharSheetEditor = observer(() => {
             onChange={(e) => charSheetService.setPlayerName(e.target.value)}
           />
         </Col>
-      </Row>
+      </Row> */}
+      <h1 className="tw-text-2xl">{charSheetService._name}</h1>
       <div>
         <SectionHeader
           buttonProps={{

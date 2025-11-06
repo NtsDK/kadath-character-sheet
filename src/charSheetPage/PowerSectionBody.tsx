@@ -7,7 +7,7 @@ type Props = {
 };
 
 export const PowerSectionBody = observer(({className}: Props) => {
-  const { powers } = charSheetService._charSheet;
+  const { powers } = charSheetService._content;
   return (
     <div className={className}>
       {powers.map((power, index) => (

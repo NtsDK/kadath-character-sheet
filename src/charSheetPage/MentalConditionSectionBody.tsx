@@ -7,7 +7,7 @@ type Props = {
 };
 
 export const MentalConditionSectionBody = observer(({ className }: Props) => {
-  const { mentalConditions } = charSheetService._charSheet;
+  const { mentalConditions } = charSheetService._content;
 
   return (
     <div className={className}>

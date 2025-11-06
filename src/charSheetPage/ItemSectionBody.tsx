@@ -8,7 +8,7 @@ type Props = {
 };
 
 export const ItemSectionBody = observer(({ className }: Props) => {
-  const { items } = charSheetService._charSheet;
+  const { items } = charSheetService._content;
 
   return (
     <div className={className}>

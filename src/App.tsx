@@ -1,23 +1,19 @@
 import { observer } from "mobx-react-lite";
-import { Breadcrumb, Layout, Menu, MenuProps, theme } from "antd";
+import { Layout } from "antd";
 import { useState } from "react";
-import Icon, {
-  InfoCircleOutlined,
-  QuestionCircleOutlined,
-  TeamOutlined,
-  UserOutlined,
-} from "@ant-design/icons";
 import { CharSheetPage } from "./charSheetPage";
 
-import { BrowserRouter, Routes, Route, HashRouter, Link } from "react-router";
+import { Routes, Route, HashRouter } from "react-router";
 import { CatalogPage } from "./pages/CatalogPage";
 import { AboutPage } from "./pages/AboutPage";
 import { InstructionPage } from "./pages/InstructionPage";
+import { NavMenu } from "./NavMenu";
 
-const { Header, Content, Footer, Sider } = Layout;
+const { Sider } = Layout;
 
 export const App = observer(() => {
   const [collapsed, setCollapsed] = useState(false);
+
 
   return (
     <HashRouter>
@@ -28,28 +24,7 @@ export const App = observer(() => {
           onCollapse={(value) => setCollapsed(value)}
           width={220}
         >
-          <Menu theme="dark" defaultSelectedKeys={["1"]} mode="inline">
-            <Menu.Item key="1">
-              <TeamOutlined />
-              <span>Каталог персонажей</span>
-              <Link to="/" />
-            </Menu.Item>
-            <Menu.Item key="2">
-              <UserOutlined />
-              <span>Лист персонажа</span>
-              <Link to="/charSheet" />
-            </Menu.Item>
-            <Menu.Item key="3">
-              <QuestionCircleOutlined />
-              <span>Инструкция</span>
-              <Link to="/instruction" />
-            </Menu.Item>
-            <Menu.Item key="4">
-              <InfoCircleOutlined />
-              <span>О программе</span>
-              <Link to="/about" />
-            </Menu.Item>
-          </Menu>
+          <NavMenu />
         </Sider>
         <Routes>
           <Route path="/" element={<CatalogPage />} />

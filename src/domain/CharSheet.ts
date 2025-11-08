@@ -1,10 +1,13 @@
 export interface CharSheet {
-  meta: {
-    name: string;
-    type: "char-sheet/beyond-the-gates"
-  },
-  content: {
+  // мета информация о листе персонажа
+  /** Уникальное название файла, имя персонажа + игрока */
+  name: string;
+  /** Тип листа персонажа, ожидаются другие виды листов в будущем */
+  type: "char-sheet/beyond-the-gates";
+  /** Идентификатор файла, используется в памяти, но не в экспортных архивах */
+  id: string;
 
+  content: {
     /** Имя персонажа */
     // characterName: string;
     // /** Имя игрока */
@@ -29,12 +32,10 @@ export interface CharSheet {
     items: string[];
     /** Заметки */
     notes: string;
-  }
+  };
 }
 
-export type CharSheetMeta = CharSheet["meta"];
 export type CharSheetContent = CharSheet["content"];
-
 
 // Описание предмета
 // - название + ступень силы
@@ -42,7 +43,6 @@ export type CharSheetContent = CharSheet["content"];
 // - предел прочности = floor(прочность / 2)
 // - исходная прочность
 // - 1-2 силы + ступень силы (если есть)
-
 
 export interface Power {
   name: string;

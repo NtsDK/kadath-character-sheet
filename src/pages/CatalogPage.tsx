@@ -18,7 +18,10 @@ export const CatalogPage = observer(() => {
       </div>
       <div>
         {_charSheets.map((el) => (
-          <div className="tw-bg-gray-300 tw-mb-2 tw-px-4 tw-py-2 tw-flex" key={el.meta.name}>
+          <div
+            className="tw-bg-gray-300 tw-mb-2 tw-px-4 tw-py-2 tw-flex"
+            key={el.name}
+          >
             <div
               className="tw-cursor-pointer tw-flex-1"
               onClick={() => {
@@ -26,7 +29,7 @@ export const CatalogPage = observer(() => {
                 navigate("/charSheet");
               }}
             >
-              {el.meta.name}
+              {el.name}
             </div>
           </div>
         ))}

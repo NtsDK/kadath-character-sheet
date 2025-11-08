@@ -1,12 +1,12 @@
 import { CharSheet } from "../domain/CharSheet";
 import * as R from "ramda";
+import { v4 as uuid } from "uuid";
 
 export function getNewCharSheet(): CharSheet {
   return {
-    meta: {
-      name: "",
-      type: "char-sheet/beyond-the-gates",
-    },
+    name: "",
+    type: "char-sheet/beyond-the-gates",
+    id: uuid(),
     content: {
       // characterName: "",
       // playerName: "",
@@ -26,10 +26,9 @@ export function getNewCharSheet(): CharSheet {
 
 export function ClaudiaCharSheet(): CharSheet {
   return {
-    meta: {
-      name: "Клодия",
-      type: "char-sheet/beyond-the-gates",
-    },
+    name: "Клодия",
+    type: "char-sheet/beyond-the-gates",
+    id: uuid(),
     // characterName: "Клодия",
     // playerName: "",
     content: {
@@ -82,10 +81,10 @@ export function ClaudiaCharSheet(): CharSheet {
 
 export function getNewDefinedCharSheet(): CharSheet {
   return {
-    meta: {
-      name: "characterName playerName",
-      type: "char-sheet/beyond-the-gates",
-    },
+    name: "characterName playerName",
+    type: "char-sheet/beyond-the-gates",
+    id: uuid(),
+
     content: {
       // characterName: "characterName",
       // playerName: "playerName",

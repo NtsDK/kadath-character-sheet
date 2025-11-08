@@ -17,7 +17,7 @@ export class CharSheetService {
   constructor() {
     const charSheet = getNewCharSheet();
     this._name = charSheet.name;
-    this._content = charSheet.content;
+    this._content = { ...charSheet };
 
     makeObservable(this, {
       _content: observable,
@@ -77,7 +77,7 @@ export class CharSheetService {
   setCharSheet(charSheet: CharSheet) {
     // this._charSheet = charSheet;
     this._name = charSheet.name;
-    this._content = charSheet.content;
+    this._content = { ...charSheet };
   }
 
   get canCreatePower() {

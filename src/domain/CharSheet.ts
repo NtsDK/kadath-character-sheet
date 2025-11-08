@@ -7,35 +7,34 @@ export interface CharSheet {
   /** Идентификатор файла, используется в памяти, но не в экспортных архивах */
   id: string;
 
-  content: {
-    /** Имя персонажа */
-    // characterName: string;
-    // /** Имя игрока */
-    // playerName: string;
-    /** Силы, до 15 единиц */
-    powers: Power[];
-    /** Силы Мира Грёз, до 3 единиц */
-    dreamlandPowers: Power[];
-    /** Слабость */
-    weakness: Weakness;
-    /** Воспоминания, до 3 единиц */
-    recollections: Recollection[];
-    /** Душевные раны и силы, до 3 единиц */
-    mentalConditions: MentalCondition[];
-    /** Телесные раны, до 6 единиц */
-    bodyWounds: BodyWound[];
-    /** Трудности и преимущества */
-    temporalConditions: TemporalCondition[];
-    /** Кубики удачи, макс. 12 */
-    luck: number;
-    /** Предметы снаряжения */
-    items: string[];
-    /** Заметки */
-    notes: string;
-  };
+  // содержательная часть листа персонажа
+  /** Имя персонажа */
+  // characterName: string;
+  // /** Имя игрока */
+  // playerName: string;
+  /** Силы, до 15 единиц */
+  powers: Power[];
+  /** Силы Мира Грёз, до 3 единиц */
+  dreamlandPowers: Power[];
+  /** Слабость */
+  weakness: Weakness;
+  /** Воспоминания, до 3 единиц */
+  recollections: Recollection[];
+  /** Душевные раны и силы, до 3 единиц */
+  mentalConditions: MentalCondition[];
+  /** Телесные раны, до 6 единиц */
+  bodyWounds: BodyWound[];
+  /** Трудности и преимущества */
+  temporalConditions: TemporalCondition[];
+  /** Кубики удачи, макс. 12 */
+  luck: number;
+  /** Предметы снаряжения */
+  items: string[];
+  /** Заметки */
+  notes: string;
 }
 
-export type CharSheetContent = CharSheet["content"];
+export type CharSheetContent = Omit<CharSheet, "name" | "type" | "id">;
 
 // Описание предмета
 // - название + ступень силы

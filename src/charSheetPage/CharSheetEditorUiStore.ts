@@ -6,7 +6,7 @@ import {
   getNewDefinedCharSheet,
 } from "../domainServices/charSheet";
 
-export class CharSheetService {
+export class CharSheetEditorUiStore {
   // _charSheet: CharSheet = getNewCharSheet();
   // _charSheet: CharSheet = getNewDefinedCharSheet();
 
@@ -296,6 +296,6 @@ export class CharSheetService {
   // #endregion
 }
 
-export const charSheetService = new CharSheetService();
+export const charSheetEditorUiStore = new CharSheetEditorUiStore();
 
-charSheetService.setCharSheet(ClaudiaCharSheet());
+charSheetEditorUiStore.setCharSheet(ClaudiaCharSheet());

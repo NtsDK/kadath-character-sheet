@@ -1,13 +1,13 @@
 import { observer } from "mobx-react-lite";
-import { RecollectionInput } from "../unitComponents/RecollectionInput";
-import { charSheetService } from "../appServices/CharSheetService";
+import { RecollectionInput } from "../../unitComponents/RecollectionInput";
+import { charSheetEditorUiStore } from "../CharSheetEditorUiStore";
 
 type Props = {
   className?: string;
 };
 
 export const RecollectionSectionBody = observer(({ className }: Props) => {
-  const { recollections } = charSheetService._content;
+  const { recollections } = charSheetEditorUiStore._content;
 
   return (
     <div className={className}>
@@ -16,13 +16,13 @@ export const RecollectionSectionBody = observer(({ className }: Props) => {
           key={index}
           recollection={recollection}
           onChangeName={(name) =>
-            charSheetService.setRecollectionName(index, name)
+            charSheetEditorUiStore.setRecollectionName(index, name)
           }
           onChangeValue={(value) =>
-            charSheetService.setRecollectionValue(index, value)
+            charSheetEditorUiStore.setRecollectionValue(index, value)
           }
           removeRecollection={() => {
-            charSheetService.removeRecollection(index);
+            charSheetEditorUiStore.removeRecollection(index);
           }}
         />
       ))}

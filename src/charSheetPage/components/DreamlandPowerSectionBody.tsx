@@ -1,13 +1,13 @@
 import { observer } from "mobx-react-lite";
-import { PowerInput } from "../unitComponents/PowerInput";
-import { charSheetService } from "../appServices/CharSheetService";
+import { PowerInput } from "../../unitComponents/PowerInput";
+import { charSheetEditorUiStore } from "../CharSheetEditorUiStore";
 
 type Props = {
   className?: string;
 };
 
 export const DreamlandPowerSectionBody = observer(({className}: Props) => {
-  const { dreamlandPowers } = charSheetService._content;
+  const { dreamlandPowers } = charSheetEditorUiStore._content;
 
   return (
     <div className={className}>
@@ -16,13 +16,13 @@ export const DreamlandPowerSectionBody = observer(({className}: Props) => {
           key={index}
           power={power}
           onChangeName={(name) =>
-            charSheetService.setDreamlandPowerName(index, name)
+            charSheetEditorUiStore.setDreamlandPowerName(index, name)
           }
           onChangeValue={(value) =>
-            charSheetService.setDreamlandPowerValue(index, value)
+            charSheetEditorUiStore.setDreamlandPowerValue(index, value)
           }
           removePower={() => {
-            charSheetService.removeDreamlandPower(index);
+            charSheetEditorUiStore.removeDreamlandPower(index);
           }}
         />
       ))}

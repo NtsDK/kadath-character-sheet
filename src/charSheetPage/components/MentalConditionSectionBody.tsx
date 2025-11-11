@@ -1,13 +1,13 @@
 import { observer } from "mobx-react-lite";
-import { CharacterConditionInput } from "../unitComponents/CharacterConditionInput";
-import { charSheetService } from "../appServices/CharSheetService";
+import { CharacterConditionInput } from "../../unitComponents/CharacterConditionInput";
+import { charSheetEditorUiStore } from "../CharSheetEditorUiStore";
 
 type Props = {
   className?: string;
 };
 
 export const MentalConditionSectionBody = observer(({ className }: Props) => {
-  const { mentalConditions } = charSheetService._content;
+  const { mentalConditions } = charSheetEditorUiStore._content;
 
   return (
     <div className={className}>
@@ -16,16 +16,16 @@ export const MentalConditionSectionBody = observer(({ className }: Props) => {
           key={index}
           characterCondition={mc}
           onChangeName={(name) =>
-            charSheetService.setMentalConditionName(index, name)
+            charSheetEditorUiStore.setMentalConditionName(index, name)
           }
           onChangeValue={(value) =>
-            charSheetService.setMentalConditionValue(index, value)
+            charSheetEditorUiStore.setMentalConditionValue(index, value)
           }
           onChangeInjury={(isInjury) =>
-            charSheetService.setMentalConditionInjury(index, isInjury)
+            charSheetEditorUiStore.setMentalConditionInjury(index, isInjury)
           }
           removeCondition={() => {
-            charSheetService.removeMentalCondition(index);
+            charSheetEditorUiStore.removeMentalCondition(index);
           }}
         />
       ))}

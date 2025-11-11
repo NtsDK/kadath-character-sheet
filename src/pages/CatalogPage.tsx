@@ -1,12 +1,12 @@
 import { observer } from "mobx-react-lite";
-import { catalogService } from "../appServices/CatalogService";
+import { catalogPageUiStore } from "./CatalogPageUiStore";
 import { Button } from "antd";
 import { PlusIcon } from "@heroicons/react/24/outline";
-import { charSheetService } from "../appServices/CharSheetService";
+import { charSheetEditorUiStore } from "../charSheetPage/CharSheetEditorUiStore";
 import { useNavigate } from "react-router";
 
 export const CatalogPage = observer(() => {
-  const { _charSheets } = catalogService;
+  const { charSheets } = catalogPageUiStore;
   const navigate = useNavigate();
 
   return (
@@ -17,7 +17,7 @@ export const CatalogPage = observer(() => {
         </Button>
       </div>
       <div>
-        {_charSheets.map((el) => (
+        {charSheets.map((el) => (
           <div
             className="tw-bg-gray-300 tw-mb-2 tw-px-4 tw-py-2 tw-flex"
             key={el.name}
@@ -25,7 +25,7 @@ export const CatalogPage = observer(() => {
             <div
               className="tw-cursor-pointer tw-flex-1"
               onClick={() => {
-                charSheetService.setCharSheet(el);
+                charSheetEditorUiStore.setCharSheet(el);
                 navigate("/charSheet");
               }}
             >

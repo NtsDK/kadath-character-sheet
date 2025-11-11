@@ -2,22 +2,22 @@ import { observer } from "mobx-react-lite";
 import { Col, Form, Input, Row } from "antd";
 import { Segmented } from "antd";
 
-import { charSheetService } from "../appServices/CharSheetService";
+import { charSheetEditorUiStore } from "./CharSheetEditorUiStore";
 
 import { SectionHeader } from "../unitComponents/SectionHeader";
-import { PowerSectionBody } from "./PowerSectionBody";
-import { DreamlandPowerSectionBody } from "./DreamlandPowerSectionBody";
-import { RecollectionSectionBody } from "./RecollectionSectionBody";
-import { MentalConditionSectionBody } from "./MentalConditionSectionBody";
-import { BodyWoundSectionBody } from "./BodyWoundSectionBody";
-import { TemporalConditionSectionBody } from "./TemporalConditionSectionBody";
-import { ItemSectionBody } from "./ItemSectionBody";
+import { PowerSectionBody } from "./components/PowerSectionBody";
+import { DreamlandPowerSectionBody } from "./components/DreamlandPowerSectionBody";
+import { RecollectionSectionBody } from "./components/RecollectionSectionBody";
+import { MentalConditionSectionBody } from "./components/MentalConditionSectionBody";
+import { BodyWoundSectionBody } from "./components/BodyWoundSectionBody";
+import { TemporalConditionSectionBody } from "./components/TemporalConditionSectionBody";
+import { ItemSectionBody } from "./components/ItemSectionBody";
 
 export const CharSheetEditor = observer(() => {
   // const { playerName, characterName, weakness, luck, notes } =
   //   charSheetService._charSheet;
   const { weakness, luck, notes } =
-    charSheetService._content;
+    charSheetEditorUiStore._content;
   return (
     <div style={{ width: "40rem" }}>
       {/* <Row>
@@ -36,12 +36,12 @@ export const CharSheetEditor = observer(() => {
           />
         </Col>
       </Row> */}
-      <h1 className="tw-text-2xl">{charSheetService._name}</h1>
+      <h1 className="tw-text-2xl">{charSheetEditorUiStore._name}</h1>
       <div>
         <SectionHeader
           buttonProps={{
-            onCreate: () => charSheetService.createPower(),
-            disabled: !charSheetService.canCreatePower,
+            onCreate: () => charSheetEditorUiStore.createPower(),
+            disabled: !charSheetEditorUiStore.canCreatePower,
           }}
         >
           Силы
@@ -51,8 +51,8 @@ export const CharSheetEditor = observer(() => {
       <div>
         <SectionHeader
           buttonProps={{
-            onCreate: () => charSheetService.createDreamlandPower(),
-            disabled: !charSheetService.canCreateDreamlandPower,
+            onCreate: () => charSheetEditorUiStore.createDreamlandPower(),
+            disabled: !charSheetEditorUiStore.canCreateDreamlandPower,
           }}
         >
           Силы Мира Грёз
@@ -64,19 +64,19 @@ export const CharSheetEditor = observer(() => {
         <div className="tw-flex">
           <Input
             value={weakness.name}
-            onChange={(e) => charSheetService.setWeaknessName(e.target.value)}
+            onChange={(e) => charSheetEditorUiStore.setWeaknessName(e.target.value)}
           />
           <Segmented<number>
             options={[1, 2, 3, 4, 5, 6]}
-            onChange={(value) => charSheetService.setWeaknessValue(value)}
+            onChange={(value) => charSheetEditorUiStore.setWeaknessValue(value)}
           />
         </div>
       </div>
       <div>
         <SectionHeader
           buttonProps={{
-            onCreate: () => charSheetService.createRecollection(),
-            disabled: !charSheetService.canCreateRecollection,
+            onCreate: () => charSheetEditorUiStore.createRecollection(),
+            disabled: !charSheetEditorUiStore.canCreateRecollection,
           }}
         >
           Воспоминания
@@ -86,8 +86,8 @@ export const CharSheetEditor = observer(() => {
       <div>
         <SectionHeader
           buttonProps={{
-            onCreate: () => charSheetService.createMentalCondition(),
-            disabled: !charSheetService.canCreateMentalCondition,
+            onCreate: () => charSheetEditorUiStore.createMentalCondition(),
+            disabled: !charSheetEditorUiStore.canCreateMentalCondition,
           }}
         >
           Душевные состояния
@@ -97,8 +97,8 @@ export const CharSheetEditor = observer(() => {
       <div>
         <SectionHeader
           buttonProps={{
-            onCreate: () => charSheetService.createBodyWound(),
-            disabled: !charSheetService.canCreateBodyWound,
+            onCreate: () => charSheetEditorUiStore.createBodyWound(),
+            disabled: !charSheetEditorUiStore.canCreateBodyWound,
           }}
         >
           Телесные раны
@@ -108,7 +108,7 @@ export const CharSheetEditor = observer(() => {
       <div>
         <SectionHeader
           buttonProps={{
-            onCreate: () => charSheetService.createTemporalCondition(),
+            onCreate: () => charSheetEditorUiStore.createTemporalCondition(),
           }}
         >
           Трудности и преимущества
@@ -118,7 +118,7 @@ export const CharSheetEditor = observer(() => {
       <div>
         <SectionHeader
           buttonProps={{
-            onCreate: () => charSheetService.createItem(),
+            onCreate: () => charSheetEditorUiStore.createItem(),
           }}
         >
           Снаряжение
@@ -130,14 +130,14 @@ export const CharSheetEditor = observer(() => {
         <Segmented<number>
           options={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]}
           value={luck}
-          onChange={(value) => charSheetService.setLuck(value)}
+          onChange={(value) => charSheetEditorUiStore.setLuck(value)}
         />
       </div>
       <div>
         <SectionHeader>Заметки</SectionHeader>
         <Input.TextArea
           value={notes}
-          onChange={(e) => charSheetService.setNotes(e.target.value)}
+          onChange={(e) => charSheetEditorUiStore.setNotes(e.target.value)}
           autoSize={{ minRows: 5 }}
         />
       </div>

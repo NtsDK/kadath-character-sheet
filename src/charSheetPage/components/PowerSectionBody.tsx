@@ -1,25 +1,25 @@
 import { observer } from "mobx-react-lite";
-import { PowerInput } from "../unitComponents/PowerInput";
-import { charSheetService } from "../appServices/CharSheetService";
+import { PowerInput } from "../../unitComponents/PowerInput";
+import { charSheetEditorUiStore } from "../CharSheetEditorUiStore";
 
 type Props = {
   className?: string;
 };
 
 export const PowerSectionBody = observer(({className}: Props) => {
-  const { powers } = charSheetService._content;
+  const { powers } = charSheetEditorUiStore._content;
   return (
     <div className={className}>
       {powers.map((power, index) => (
         <PowerInput
           key={index}
           power={power}
-          onChangeName={(name) => charSheetService.setPowerName(index, name)}
+          onChangeName={(name) => charSheetEditorUiStore.setPowerName(index, name)}
           onChangeValue={(value) =>
-            charSheetService.setPowerValue(index, value)
+            charSheetEditorUiStore.setPowerValue(index, value)
           }
           removePower={() => {
-            charSheetService.removePower(index);
+            charSheetEditorUiStore.removePower(index);
           }}
         />
       ))}

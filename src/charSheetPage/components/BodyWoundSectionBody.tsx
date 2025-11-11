@@ -1,13 +1,13 @@
 import { observer } from "mobx-react-lite";
-import { CharacterConditionInput } from "../unitComponents/CharacterConditionInput";
-import { charSheetService } from "../appServices/CharSheetService";
+import { CharacterConditionInput } from "../../unitComponents/CharacterConditionInput";
+import { charSheetEditorUiStore } from "../CharSheetEditorUiStore";
 
 type Props = {
   className?: string;
 };
 
 export const BodyWoundSectionBody = observer(({ className }: Props) => {
-  const { bodyWounds } = charSheetService._content;
+  const { bodyWounds } = charSheetEditorUiStore._content;
 
   return (
     <div className={className}>
@@ -16,16 +16,16 @@ export const BodyWoundSectionBody = observer(({ className }: Props) => {
           key={index}
           characterCondition={bw}
           onChangeName={(name) =>
-            charSheetService.setBodyWoundName(index, name)
+            charSheetEditorUiStore.setBodyWoundName(index, name)
           }
           onChangeValue={(value) =>
-            charSheetService.setBodyWoundValue(index, value)
+            charSheetEditorUiStore.setBodyWoundValue(index, value)
           }
           onChangeInjury={(isInjury) =>
-            charSheetService.setBodyWoundInjury(index, isInjury)
+            charSheetEditorUiStore.setBodyWoundInjury(index, isInjury)
           }
           removeCondition={() => {
-            charSheetService.removeBodyWound(index);
+            charSheetEditorUiStore.removeBodyWound(index);
           }}
         />
       ))}

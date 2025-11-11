@@ -1,13 +1,13 @@
 import { observer } from "mobx-react-lite";
-import { TemporalConditionInput } from "../unitComponents/TemporalConditionInput";
-import { charSheetService } from "../appServices/CharSheetService";
+import { TemporalConditionInput } from "../../unitComponents/TemporalConditionInput";
+import { charSheetEditorUiStore } from "../CharSheetEditorUiStore";
 
 type Props = {
   className?: string;
 };
 
 export const TemporalConditionSectionBody = observer(({ className }: Props) => {
-  const { temporalConditions } = charSheetService._content;
+  const { temporalConditions } = charSheetEditorUiStore._content;
 
   return (
     <div className={className}>
@@ -16,13 +16,13 @@ export const TemporalConditionSectionBody = observer(({ className }: Props) => {
           key={index}
           temporalCondition={condition}
           onChangeName={(name) =>
-            charSheetService.setTemporalConditionName(index, name)
+            charSheetEditorUiStore.setTemporalConditionName(index, name)
           }
           onChangeValue={(value) =>
-            charSheetService.setTemporalConditionValue(index, value)
+            charSheetEditorUiStore.setTemporalConditionValue(index, value)
           }
           removeCondition={() => {
-            charSheetService.removeTemporalCondition(index);
+            charSheetEditorUiStore.removeTemporalCondition(index);
           }}
         />
       ))}

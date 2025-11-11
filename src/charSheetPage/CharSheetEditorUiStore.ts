@@ -5,22 +5,32 @@ import {
   getNewCharSheet,
   getNewDefinedCharSheet,
 } from "../domainServices/charSheet";
+import { charSheetStore } from "../domainServices/CharSheetStore";
 
 export class CharSheetEditorUiStore {
   // _charSheet: CharSheet = getNewCharSheet();
   // _charSheet: CharSheet = getNewDefinedCharSheet();
 
   // _content: CharSheetContent = ClaudiaCharSheet().content;
-  _name: string;
-  _content: CharSheetContent;
+  // _name: string;
+  // _content: CharSheetContent;
 
-  constructor() {
-    const charSheet = getNewCharSheet();
-    this._name = charSheet.name;
-    this._content = { ...charSheet };
+  _id: string = "";
+
+  constructor(id?: string) {
+    // const charSheet = getNewCharSheet();
+    // this._name = charSheet.name;
+    // this._content = { ...charSheet };
 
     makeObservable(this, {
-      _content: observable,
+      _id: observable,
+      // _content: observable,
+      _name: computed,
+      _content: computed,
+      charSheet: computed,
+      charSheetExists: computed,
+
+      setId: action,
       // setPlayerName: action,
       // setCharacterName: action,
       // powers
@@ -72,16 +82,40 @@ export class CharSheetEditorUiStore {
       // notes
       setNotes: action,
     });
+
+    if (id) {
+      this.setId(id);
+    }
   }
 
-  setCharSheet(charSheet: CharSheet) {
-    // this._charSheet = charSheet;
-    this._name = charSheet.name;
-    this._content = { ...charSheet };
+  get charSheet(): CharSheet {
+    return charSheetStore.get(this._id)!;
   }
+
+  get _name(): string {
+    return this.charSheet.name;
+  }
+
+  get _content(): CharSheetContent {
+    return this.charSheet;
+  }
+
+  get charSheetExists(): boolean {
+    return this.charSheet !== undefined;
+  }
+
+  setId(id: string) {
+    this._id = id;
+  }
+
+  // setCharSheet(charSheet: CharSheet) {
+  //   // this._charSheet = charSheet;
+  //   this._name = charSheet.name;
+  //   this._content = { ...charSheet };
+  // }
 
   get canCreatePower() {
-    return this._content.powers.length < 15;
+    return this.charSheet.powers.length < 15;
   }
 
   // setCharacterName(name: string) {
@@ -94,8 +128,9 @@ export class CharSheetEditorUiStore {
 
   // #region Powers
   setPowerName(index: number, name: string) {
-    const p = this._content.powers[index];
-    p.name = name;
+    const powers = [...this.charSheet.powers];
+    powers[index] = { ...powers[index], name };
+    charSheetStore.update(this._id, { powers });
   }
 
   createPower() {
@@ -103,23 +138,26 @@ export class CharSheetEditorUiStore {
       return;
     }
 
-    this._content.powers.push({ name: "", value: 1 });
+    const powers = [...this.charSheet.powers, { name: "", value: 1 }];
+    charSheetStore.update(this._id, { powers });
   }
 
   setPowerValue(index: number, value: number) {
-    const p = this._content.powers[index];
-    p.value = value;
+    const powers = [...this.charSheet.powers];
+    powers[index] = { ...powers[index], value };
+    charSheetStore.update(this._id, { powers });
   }
 
   removePower(index: number) {
-    this._content.powers = this._content.powers.filter((_, i) => i !== index);
+    const powers = this.charSheet.powers.filter((_, i) => i !== index);
+    charSheetStore.update(this._id, { powers });
   }
 
   // #endregion
 
   // #region Dreamland Powers
   get canCreateDreamlandPower() {
-    return this._content.dreamlandPowers.length < 3;
+    return this.charSheet.dreamlandPowers.length < 3;
   }
 
   createDreamlandPower() {
@@ -157,7 +195,7 @@ export class CharSheetEditorUiStore {
 
   // #region Recollections
   get canCreateRecollection() {
-    return this._content.recollections.length < 3;
+    return this.charSheet.recollections.length < 3;
   }
 
   createRecollection() {
@@ -183,7 +221,7 @@ export class CharSheetEditorUiStore {
 
   // #region Mental Conditions
   get canCreateMentalCondition() {
-    return this._content.mentalConditions.length < 3;
+    return this.charSheet.mentalConditions.length < 3;
   }
 
   createMentalCondition() {
@@ -218,7 +256,7 @@ export class CharSheetEditorUiStore {
 
   // #region Body Wounds
   get canCreateBodyWound() {
-    return this._content.bodyWounds.length < 6;
+    return this.charSheet.bodyWounds.length < 6;
   }
 
   createBodyWound() {
@@ -296,6 +334,7 @@ export class CharSheetEditorUiStore {
   // #endregion
 }
 
-export const charSheetEditorUiStore = new CharSheetEditorUiStore();
+const list = Object.values(charSheetStore.charSheets);
+export const charSheetEditorUiStore = new CharSheetEditorUiStore(list[0]?.id);
 
-charSheetEditorUiStore.setCharSheet(ClaudiaCharSheet());
+// charSheetEditorUiStore.setCharSheet(ClaudiaCharSheet());

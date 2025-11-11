@@ -1,4 +1,4 @@
-import { action, makeObservable, observable } from "mobx";
+import { action, computed, makeObservable, observable } from "mobx";
 import { CharSheet } from "../domain/CharSheet";
 import { ClaudiaCharSheet, getNewDefinedCharSheet } from "./charSheet";
 
@@ -8,17 +8,33 @@ class CharSheetStore {
   constructor() {
     makeObservable(this, {
       _charSheets: observable,
-      addCharSheet: action
+      charSheets: computed,
+      add: action,
+      update: action,
     });
   }
 
-  addCharSheet(charSheet: CharSheet) {
+  get charSheets(): Record<string, CharSheet> {
+    return this._charSheets;
+  }
+
+  add(charSheet: CharSheet) {
     this._charSheets[charSheet.id] = charSheet;
+  }
+
+  get(id: string): CharSheet | undefined {
+    return this._charSheets[id];
+  }
+
+  update(id: string, charSheetPatch: Partial<CharSheet>) {
+    this._charSheets[id] = {
+      ...this._charSheets[id],
+      ...charSheetPatch,
+    };
   }
 }
 
 export const charSheetStore = new CharSheetStore();
 
-
-charSheetStore.addCharSheet(ClaudiaCharSheet());
-charSheetStore.addCharSheet(getNewDefinedCharSheet());
+charSheetStore.add(ClaudiaCharSheet());
+charSheetStore.add(getNewDefinedCharSheet());

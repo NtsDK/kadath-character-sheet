@@ -7,7 +7,7 @@ type Props = {
 };
 
 export const RecollectionSectionBody = observer(({ className }: Props) => {
-  const { recollections } = charSheetEditorUiStore._content;
+  const { recollections } = charSheetEditorUiStore.charSheet;
 
   return (
     <div className={className}>

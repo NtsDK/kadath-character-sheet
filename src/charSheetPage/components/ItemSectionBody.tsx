@@ -8,7 +8,7 @@ type Props = {
 };
 
 export const ItemSectionBody = observer(({ className }: Props) => {
-  const { items } = charSheetEditorUiStore._content;
+  const { items } = charSheetEditorUiStore.charSheet;
 
   return (
     <div className={className}>

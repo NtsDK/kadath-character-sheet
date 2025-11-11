@@ -17,7 +17,7 @@ export const CharSheetEditor = observer(() => {
   // const { playerName, characterName, weakness, luck, notes } =
   //   charSheetService._charSheet;
   const { weakness, luck, notes } =
-    charSheetEditorUiStore._content;
+    charSheetEditorUiStore.charSheet;
   return (
     <div style={{ width: "40rem" }}>
       {/* <Row>

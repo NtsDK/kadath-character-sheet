@@ -17,7 +17,7 @@ export class CatalogPageUiStore {
   }
 
   get charSheets(): CharSheet[] {
-    const list = Object.values(charSheetStore._charSheets);
+    const list = Object.values(charSheetStore.charSheets);
     list.sort((a, b) => a.name.localeCompare(b.name));
     return list;
   }

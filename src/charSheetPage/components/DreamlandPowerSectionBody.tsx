@@ -7,7 +7,7 @@ type Props = {
 };
 
 export const DreamlandPowerSectionBody = observer(({className}: Props) => {
-  const { dreamlandPowers } = charSheetEditorUiStore._content;
+  const { dreamlandPowers } = charSheetEditorUiStore.charSheet;
 
   return (
     <div className={className}>

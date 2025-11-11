@@ -7,7 +7,7 @@ type Props = {
 };
 
 export const PowerSectionBody = observer(({className}: Props) => {
-  const { powers } = charSheetEditorUiStore._content;
+  const { powers } = charSheetEditorUiStore.charSheet;
   return (
     <div className={className}>
       {powers.map((power, index) => (

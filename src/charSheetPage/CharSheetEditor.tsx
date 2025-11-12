@@ -36,7 +36,7 @@ export const CharSheetEditor = observer(() => {
           />
         </Col>
       </Row> */}
-      <h1 className="tw-text-2xl">{charSheetEditorUiStore._name}</h1>
+      <h1 className="tw-text-2xl">{charSheetEditorUiStore.charSheet.name}</h1>
       <div>
         <SectionHeader
           buttonProps={{

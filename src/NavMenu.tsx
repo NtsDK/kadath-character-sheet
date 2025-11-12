@@ -7,26 +7,29 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import { Link, useLocation } from "react-router";
+import { charSheetEditorUiStore } from "./charSheetPage/CharSheetEditorUiStore";
+import { charSheetStore } from "./domainServices/CharSheetStore";
 
 export const NavMenu = observer(() => {
   const location = useLocation();
 
+  const key = location.pathname;
+  const charId = charSheetEditorUiStore.id;
+
   return (
-    <Menu
-      theme="dark"
-      defaultSelectedKeys={[location.pathname]}
-      mode="inline"
-      key={location.pathname}
-    >
+    <Menu theme="dark" defaultSelectedKeys={[key]} mode="inline" key={key}>
       <Menu.Item key="/">
         <TeamOutlined />
         <span>Каталог персонажей</span>
         <Link to="/" />
       </Menu.Item>
-      <Menu.Item key="/charSheet">
+      <Menu.Item
+        key={"/charSheet/" + charId}
+        disabled={!charSheetStore.exists(charId)}
+      >
         <UserOutlined />
         <span>Лист персонажа</span>
-        <Link to="/charSheet" />
+        <Link to={"/charSheet/" + charId} />
       </Menu.Item>
       <Menu.Item key="/instruction">
         <QuestionCircleOutlined />

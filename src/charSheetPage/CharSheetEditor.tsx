@@ -12,12 +12,25 @@ import { MentalConditionSectionBody } from "./components/MentalConditionSectionB
 import { BodyWoundSectionBody } from "./components/BodyWoundSectionBody";
 import { TemporalConditionSectionBody } from "./components/TemporalConditionSectionBody";
 import { ItemSectionBody } from "./components/ItemSectionBody";
+import { useParams } from "react-router";
+import { useEffect } from "react";
 
 export const CharSheetEditor = observer(() => {
+  const params = useParams();
+
+  useEffect(() => {
+    if (params.charSheetId) {
+      charSheetEditorUiStore.setId(params.charSheetId);
+    }
+  }, [params.charSheetId]);
+
+  if (!charSheetEditorUiStore.charSheetExists) {
+    return null;
+  }
+
   // const { playerName, characterName, weakness, luck, notes } =
   //   charSheetService._charSheet;
-  const { weakness, luck, notes } =
-    charSheetEditorUiStore.charSheet;
+  const { weakness, luck, notes } = charSheetEditorUiStore.charSheet;
   return (
     <div style={{ width: "40rem" }}>
       {/* <Row>
@@ -64,7 +77,9 @@ export const CharSheetEditor = observer(() => {
         <div className="tw-flex">
           <Input
             value={weakness.name}
-            onChange={(e) => charSheetEditorUiStore.setWeaknessName(e.target.value)}
+            onChange={(e) =>
+              charSheetEditorUiStore.setWeaknessName(e.target.value)
+            }
           />
           <Segmented<number>
             options={[1, 2, 3, 4, 5, 6]}

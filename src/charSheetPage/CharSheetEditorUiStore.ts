@@ -86,6 +86,10 @@ export class CharSheetEditorUiStore {
     this._id = id;
   }
 
+  get id(): string {
+    return this._id;
+  }
+
   get canCreatePower() {
     return this.charSheet.powers.length < 15;
   }

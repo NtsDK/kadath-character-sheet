@@ -25,9 +25,9 @@ export const CatalogPage = observer(() => {
             <div
               className="tw-cursor-pointer tw-flex-1"
               onClick={() => {
-                charSheetEditorUiStore.setId(el.id);
+                // charSheetEditorUiStore.setId(el.id);
                 // charSheetEditorUiStore.setCharSheet(el);
-                navigate("/charSheet");
+                navigate("/charSheet/" + el.id);
               }}
             >
               {el.name}

@@ -28,7 +28,7 @@ export const App = observer(() => {
         </Sider>
         <Routes>
           <Route path="/" element={<CatalogPage />} />
-          <Route path="charSheet" element={<CharSheetPage />} />
+          <Route path="charSheet/:charSheetId" element={<CharSheetPage />} />
           <Route path="instruction" element={<InstructionPage />} />
           <Route path="about" element={<AboutPage />} />
         </Routes>

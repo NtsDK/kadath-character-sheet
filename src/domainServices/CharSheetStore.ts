@@ -26,6 +26,10 @@ class CharSheetStore {
     return this._charSheets[id];
   }
 
+  exists(id: string): boolean {
+    return !!this._charSheets[id];
+  }
+
   update(id: string, charSheetPatch: Partial<CharSheet>) {
     this._charSheets[id] = {
       ...this._charSheets[id],

@@ -1,10 +1,15 @@
-import { action, computed, makeObservable, observable } from "mobx";
+import { action, computed, makeObservable, observable, toJS } from "mobx";
 import { CharSheet } from "../domain/CharSheet";
 import {
   ClaudiaCharSheet,
   getNewDefinedCharSheet,
   getNewCharSheet,
 } from "./charSheet";
+import { clone } from "ramda";
+import { assert } from "../utils/assert";
+
+import { v4 as uuid } from "uuid";
+import { generateCopyName } from "../utils/generateCopyName";
 
 class CharSheetStore {
   _charSheets: Record<string, CharSheet> = {};
@@ -13,9 +18,11 @@ class CharSheetStore {
     makeObservable(this, {
       _charSheets: observable,
       charSheets: computed,
-      add: action,
-      update: action,
       create: action,
+      add: action,
+      copy: action,
+      delete: action,
+      update: action,
     });
   }
 
@@ -23,6 +30,22 @@ class CharSheetStore {
     return this._charSheets;
   }
 
+  // #region getters
+  get(id: string): CharSheet | undefined {
+    return this._charSheets[id];
+  }
+
+  exists(id: string): boolean {
+    return !!this._charSheets[id];
+  }
+
+  isNameUsed(name: string): boolean {
+    return Object.values(this._charSheets).some((el) => el.name === name);
+  }
+
+  // #endregion
+
+  // #region actions
   create(name: string): void {
     if (this.isNameUsed(name)) {
       return;
@@ -36,16 +59,20 @@ class CharSheetStore {
     this._charSheets[charSheet.id] = charSheet;
   }
 
-  get(id: string): CharSheet | undefined {
-    return this._charSheets[id];
+  copy(id: string): void {
+    const original = this.get(id);
+    assert(!!original);
+    const copy = clone(toJS(original));
+    copy.id = uuid();
+    copy.name = generateCopyName(
+      original.name,
+      new Set(Object.values(this._charSheets).map((el) => el.name))
+    );
+    this._charSheets[copy.id] = copy;
   }
 
-  exists(id: string): boolean {
-    return !!this._charSheets[id];
-  }
-
-  isNameUsed(name: string): boolean {
-    return Object.values(this._charSheets).some((el) => el.name === name);
+  delete(id: string): void {
+    delete this._charSheets[id];
   }
 
   update(id: string, charSheetPatch: Partial<CharSheet>) {
@@ -54,6 +81,7 @@ class CharSheetStore {
       ...charSheetPatch,
     };
   }
+  // #endregion
 }
 
 export const charSheetStore = new CharSheetStore();

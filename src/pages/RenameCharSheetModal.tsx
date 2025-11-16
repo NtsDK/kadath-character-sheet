@@ -10,11 +10,12 @@ type Props = {
   handleOk: (name: string) => void;
   validateName?: (name: string) => string | null;
   handleCancel: () => void;
+  defaultValue?: string;
 };
 
 export const RenameCharSheetModal = observer(
-  ({ title, isModalOpen, handleCancel, handleOk }: Props) => {
-    const [name, setName] = useState("");
+  ({ title, isModalOpen, handleCancel, handleOk, defaultValue }: Props) => {
+    const [name, setName] = useState(defaultValue || "");
     const [error, setError] = useState<undefined | string>();
 
     function onChange(event: React.ChangeEvent<HTMLInputElement>) {

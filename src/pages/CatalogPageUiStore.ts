@@ -12,7 +12,6 @@ export class CatalogPageUiStore {
   constructor() {
     makeObservable(this, {
       charSheets: computed,
-      // _charSheets: observable,
     });
   }
 

@@ -8,12 +8,12 @@ import { CatalogPage } from "./pages/CatalogPage";
 import { AboutPage } from "./pages/AboutPage";
 import { InstructionPage } from "./pages/InstructionPage";
 import { NavMenu } from "./NavMenu";
+import { ConfirmModal } from "./unitComponents/ConfirmModal";
 
 const { Sider } = Layout;
 
 export const App = observer(() => {
   const [collapsed, setCollapsed] = useState(false);
-
 
   return (
     <HashRouter>
@@ -32,6 +32,7 @@ export const App = observer(() => {
           <Route path="instruction" element={<InstructionPage />} />
           <Route path="about" element={<AboutPage />} />
         </Routes>
+        <ConfirmModal />
       </Layout>
     </HashRouter>
   );

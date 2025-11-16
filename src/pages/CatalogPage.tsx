@@ -8,6 +8,7 @@ import { useState } from "react";
 import { v4 as uuid } from "uuid";
 import { charSheetStore } from "../domainServices/CharSheetStore";
 import { assert } from "../utils/assert";
+import { confirmModalUiStore } from "../unitComponents/ConfirmModalUiStore";
 
 const CHAR_SHEET_MENU_KEYS = ["rename", "copy", "delete"] as const;
 
@@ -40,7 +41,7 @@ export const CatalogPage = observer(() => {
   const [renameCharId, setRenameCharId] = useState(uuid());
 
   const makeOnClick =
-    (id: string): MenuProps["onClick"] =>
+    (id: string, name: string): MenuProps["onClick"] =>
     ({ key }) => {
       assert(CHAR_SHEET_MENU_KEYS.includes(key as CharSheetMenuKey));
       // console.log(`Click on item ${key} for char sheet ${id}`);
@@ -50,7 +51,12 @@ export const CatalogPage = observer(() => {
       } else if (key === "copy") {
         charSheetStore.copy(id);
       } else if (key === "delete") {
-        charSheetStore.delete(id);
+        confirmModalUiStore.confirm(
+          `Вы уверены, что хотите удалить персонажа ${name}?`,
+          () => {
+            charSheetStore.delete(id);
+          }
+        );
       }
     };
 
@@ -82,7 +88,10 @@ export const CatalogPage = observer(() => {
               {el.name}
             </div>
             <div>
-              <Dropdown menu={{ items, onClick: makeOnClick(el.id) }}>
+              <Dropdown
+                menu={{ items, onClick: makeOnClick(el.id, el.name) }}
+                trigger={["click"]}
+              >
                 <Button
                   type="text"
                   shape="round"

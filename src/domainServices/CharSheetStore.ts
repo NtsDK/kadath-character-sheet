@@ -4,6 +4,7 @@ import {
   ClaudiaCharSheet,
   getNewDefinedCharSheet,
   getNewCharSheet,
+  ClaudiaCharSheet2,
 } from "./charSheet";
 import { clone } from "ramda";
 import { assert } from "../utils/assert";
@@ -87,4 +88,5 @@ class CharSheetStore {
 export const charSheetStore = new CharSheetStore();
 
 charSheetStore.add(ClaudiaCharSheet());
+charSheetStore.add(ClaudiaCharSheet2());
 charSheetStore.add(getNewDefinedCharSheet());

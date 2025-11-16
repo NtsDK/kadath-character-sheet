@@ -74,6 +74,73 @@ export function ClaudiaCharSheet(): CharSheet {
     notes: "Упырица, амбициозная смотрительница музея.",
   };
 }
+export function ClaudiaCharSheet2(): CharSheet {
+  return {
+    name: "Клодия 2",
+    type: "char-sheet/beyond-the-gates",
+    id: uuid(),
+    // characterName: "Клодия",
+    // playerName: "",
+    powers: [
+      {
+        name: "Внимание к деталям",
+        value: 2,
+      },
+      {
+        name: "Впечатляющий интеллект",
+        value: 1,
+      },
+      { name: "Ловкая упырица", value: 2 },
+      { name: "Мастерица запугивания", value: 1 },
+      {
+        name: "Мощные когти и острые зубы",
+        value: 1,
+      },
+      {
+        name: "Невероятная эрудиция",
+        value: 1,
+      },
+      {
+        name: "Расчёт вероятностей",
+        value: 2,
+      },
+      {
+        name: "Сверхъестественное обоняние",
+        value: 1,
+      },
+      { name: "Стратег и и тактик", value: 1 },
+      { name: "Хлёсткие речи", value: 1 },
+    ],
+    dreamlandPowers: [{
+      name: "Dreamland Power 1",
+      value: 2,
+    }],
+    weakness: { name: "Перфекционизм", value: 2 },
+    recollections: [{
+      name: "Recollection 1",
+      value: 2,
+    }],
+    temporalConditions: [{
+      name: "Temporal Condition 1",
+      value: 2,
+    }],
+    mentalConditions: [{
+      name: "Mental Condition 1",
+      value: 2, isInjury: false,
+    }],
+    bodyWounds: [{
+      name: "Body Wound 1",
+      value: 2, isInjury: false,
+    }],
+    luck: 4,
+    items: [
+      "Сумка с разными лакомствами в дорогу 2",
+      "Тёплая и практичная одежда",
+      "Яркий фонарь",
+    ],
+    notes: "Упырица, амбициозная смотрительница музея.",
+  };
+}
 
 export function getNewDefinedCharSheet(): CharSheet {
   return {

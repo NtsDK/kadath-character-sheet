@@ -1,7 +1,9 @@
 import { Button, Input } from "antd";
 import { observer } from "mobx-react-lite";
 import { Segmented } from "antd";
-import { XMarkIcon } from "@heroicons/react/24/outline";
+import classnames from "classnames";
+import { CloseOutlined } from "@ant-design/icons";
+
 import { Power } from "../domain/CharSheet";
 
 type Props = {
@@ -9,20 +11,26 @@ type Props = {
   onChangeName: (name: string) => void;
   onChangeValue: (value: number) => void;
   removePower: () => void;
+  className?: string;
 };
 
 export const PowerInput = observer(
-  ({ power, onChangeName, onChangeValue, removePower }: Props) => {
+  ({ power, onChangeName, onChangeValue, removePower, className }: Props) => {
     return (
-      <div className="tw-flex">
+      <div className={classnames("tw-flex", className)}>
         <Input
           value={power.name}
           onChange={(e) => onChangeName(e.target.value)}
         />
-        <Segmented<number> options={[1, 2, 3]} onChange={onChangeValue} value={power.value}/>
-        <Button onClick={removePower}>
-          <XMarkIcon className="tw-h-3" />
-        </Button>
+        <Segmented<number>
+          options={[1, 2, 3]}
+          onChange={onChangeValue}
+          value={power.value}
+        />
+        <Button
+          onClick={removePower}
+          icon={<CloseOutlined className="tw-w-2" />}
+        />
       </div>
     );
   }

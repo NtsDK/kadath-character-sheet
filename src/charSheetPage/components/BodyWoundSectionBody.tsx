@@ -15,6 +15,7 @@ export const BodyWoundSectionBody = observer(({ className }: Props) => {
         <CharacterConditionInput
           key={index}
           characterCondition={bw}
+          className="tw-mb-1"
           onChangeName={(name) =>
             charSheetEditorUiStore.setBodyWoundName(index, name)
           }

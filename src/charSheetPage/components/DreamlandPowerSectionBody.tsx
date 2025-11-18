@@ -15,6 +15,7 @@ export const DreamlandPowerSectionBody = observer(({className}: Props) => {
         <PowerInput
           key={index}
           power={power}
+          className="tw-mb-1"
           onChangeName={(name) =>
             charSheetEditorUiStore.setDreamlandPowerName(index, name)
           }

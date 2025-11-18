@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
 import { Input, Button } from "antd";
-import { XMarkIcon } from "@heroicons/react/24/outline";
+import { CloseOutlined } from "@ant-design/icons";
 import { charSheetEditorUiStore } from "../CharSheetEditorUiStore";
 
 type Props = {
@@ -13,16 +13,17 @@ export const ItemSectionBody = observer(({ className }: Props) => {
   return (
     <div className={className}>
       {items.map((item, index) => (
-        <div key={index} className="tw-flex tw-items-center">
+        <div key={index} className="tw-flex tw-items-center tw-mb-1">
           <Input
             value={item}
             onChange={(e) =>
               charSheetEditorUiStore.setItemName(index, e.target.value)
             }
           />
-          <Button onClick={() => charSheetEditorUiStore.removeItem(index)}>
-            <XMarkIcon className="tw-h-3" />
-          </Button>
+          <Button
+            onClick={() => charSheetEditorUiStore.removeItem(index)}
+            icon={<CloseOutlined className="tw-w-2" />}
+          />
         </div>
       ))}
     </div>

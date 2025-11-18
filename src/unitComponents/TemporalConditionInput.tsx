@@ -1,6 +1,6 @@
 import { Button, Input, InputNumber, Radio } from "antd";
 import { observer } from "mobx-react-lite";
-import { XMarkIcon } from "@heroicons/react/24/outline";
+import { CloseOutlined } from "@ant-design/icons";
 
 import { TemporalCondition } from "../domain/CharSheet";
 
@@ -12,7 +12,12 @@ type Props = {
 };
 
 export const TemporalConditionInput = observer(
-  ({ temporalCondition, onChangeName, onChangeValue, removeCondition }: Props) => {
+  ({
+    temporalCondition,
+    onChangeName,
+    onChangeValue,
+    removeCondition,
+  }: Props) => {
     return (
       <div className="tw-flex tw-items-center">
         <Input
@@ -20,11 +25,15 @@ export const TemporalConditionInput = observer(
           onChange={(e) => onChangeName(e.target.value)}
         />
 
-        <InputNumber value={temporalCondition.value} onChange={(value) => onChangeValue(value || 0)}/>
+        <InputNumber
+          value={temporalCondition.value}
+          onChange={(value) => onChangeValue(value || 0)}
+        />
 
-        <Button onClick={removeCondition}>
-          <XMarkIcon className="tw-h-3" />
-        </Button>
+        <Button
+          onClick={removeCondition}
+          icon={<CloseOutlined className="tw-w-2" />}
+        />
       </div>
     );
   }

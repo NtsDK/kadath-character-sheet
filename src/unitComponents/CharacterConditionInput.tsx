@@ -1,7 +1,8 @@
 import { Button, Input, InputNumber, Radio } from "antd";
 import { observer } from "mobx-react-lite";
-import { XMarkIcon, HandThumbDownIcon } from "@heroicons/react/24/outline";
-import classnames from "classnames";
+import { HandThumbDownIcon } from "@heroicons/react/24/outline";
+import classNames from "classnames";
+import { CloseOutlined } from "@ant-design/icons";
 
 import { CharacterCondition } from "../domain/CharSheet";
 
@@ -11,28 +12,42 @@ type Props = {
   onChangeValue: (value: number) => void;
   onChangeInjury: (isInjury: boolean) => void;
   removeCondition: () => void;
+  className?: string;
 };
 
 export const CharacterConditionInput = observer(
-  ({ characterCondition, onChangeName, onChangeValue, onChangeInjury, removeCondition }: Props) => {
+  ({
+    characterCondition,
+    onChangeName,
+    onChangeValue,
+    onChangeInjury,
+    removeCondition,
+    className,
+  }: Props) => {
     return (
-      <div className="tw-flex tw-items-center">
+      <div className={classNames("tw-flex tw-items-center", className)}>
         <Input
           value={characterCondition.name}
           onChange={(e) => onChangeName(e.target.value)}
         />
 
-        <InputNumber value={characterCondition.value} onChange={(value) => onChangeValue(value || 0)}/>
+        <InputNumber
+          value={characterCondition.value}
+          onChange={(value) => onChangeValue(value || 0)}
+        />
 
         <Button onClick={() => onChangeInjury(!characterCondition.isInjury)}>
-          <HandThumbDownIcon className={classnames("tw-h-4", {
-            "tw-invisible": !characterCondition.isInjury
-          })} />
+          <HandThumbDownIcon
+            className={classNames("tw-h-4", {
+              "tw-invisible": !characterCondition.isInjury,
+            })}
+          />
         </Button>
 
-        <Button onClick={removeCondition}>
-          <XMarkIcon className="tw-h-3" />
-        </Button>
+        <Button
+          onClick={removeCondition}
+          icon={<CloseOutlined className="tw-w-2" />}
+        />
       </div>
     );
   }

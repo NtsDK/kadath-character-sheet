@@ -32,7 +32,7 @@ export const CharSheetEditor = observer(() => {
   //   charSheetService._charSheet;
   const { weakness, luck, notes } = charSheetEditorUiStore.charSheet;
   return (
-    <div style={{ width: "40rem" }}>
+    <div style={{ width: "40rem" }} className="tw-px-8 tw-py-4">
       {/* <Row>
         <Col span={12} className="tw-px-2">
           <SectionHeader>Имя персонажа</SectionHeader>
@@ -49,8 +49,8 @@ export const CharSheetEditor = observer(() => {
           />
         </Col>
       </Row> */}
-      <h1 className="tw-text-2xl">{charSheetEditorUiStore.charSheet.name}</h1>
-      <div>
+      <h1 className="tw-text-2xl tw-mb-4">{charSheetEditorUiStore.charSheet.name}</h1>
+      <Section>
         <SectionHeader
           buttonProps={{
             onCreate: () => charSheetEditorUiStore.createPower(),
@@ -60,8 +60,8 @@ export const CharSheetEditor = observer(() => {
           Силы
         </SectionHeader>
         <PowerSectionBody />
-      </div>
-      <div>
+      </Section>
+      <Section>
         <SectionHeader
           buttonProps={{
             onCreate: () => charSheetEditorUiStore.createDreamlandPower(),
@@ -71,8 +71,8 @@ export const CharSheetEditor = observer(() => {
           Силы Мира Грёз
         </SectionHeader>
         <DreamlandPowerSectionBody />
-      </div>
-      <div>
+      </Section>
+      <Section>
         <SectionHeader>Слабость</SectionHeader>
         <div className="tw-flex">
           <Input
@@ -84,10 +84,11 @@ export const CharSheetEditor = observer(() => {
           <Segmented<number>
             options={[1, 2, 3, 4, 5, 6]}
             onChange={(value) => charSheetEditorUiStore.setWeaknessValue(value)}
+            value={weakness.value}
           />
         </div>
-      </div>
-      <div>
+      </Section>
+      <Section>
         <SectionHeader
           buttonProps={{
             onCreate: () => charSheetEditorUiStore.createRecollection(),
@@ -97,8 +98,8 @@ export const CharSheetEditor = observer(() => {
           Воспоминания
         </SectionHeader>
         <RecollectionSectionBody />
-      </div>
-      <div>
+      </Section>
+      <Section>
         <SectionHeader
           buttonProps={{
             onCreate: () => charSheetEditorUiStore.createMentalCondition(),
@@ -108,8 +109,8 @@ export const CharSheetEditor = observer(() => {
           Душевные состояния
         </SectionHeader>
         <MentalConditionSectionBody />
-      </div>
-      <div>
+      </Section>
+      <Section>
         <SectionHeader
           buttonProps={{
             onCreate: () => charSheetEditorUiStore.createBodyWound(),
@@ -119,8 +120,8 @@ export const CharSheetEditor = observer(() => {
           Телесные раны
         </SectionHeader>
         <BodyWoundSectionBody />
-      </div>
-      <div>
+      </Section>
+      <Section>
         <SectionHeader
           buttonProps={{
             onCreate: () => charSheetEditorUiStore.createTemporalCondition(),
@@ -129,8 +130,8 @@ export const CharSheetEditor = observer(() => {
           Трудности и преимущества
         </SectionHeader>
         <TemporalConditionSectionBody />
-      </div>
-      <div>
+      </Section>
+      <Section>
         <SectionHeader
           buttonProps={{
             onCreate: () => charSheetEditorUiStore.createItem(),
@@ -139,23 +140,28 @@ export const CharSheetEditor = observer(() => {
           Снаряжение
         </SectionHeader>
         <ItemSectionBody />
-      </div>
-      <div>
+      </Section>
+      <Section>
         <SectionHeader>Удача</SectionHeader>
         <Segmented<number>
           options={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]}
           value={luck}
           onChange={(value) => charSheetEditorUiStore.setLuck(value)}
         />
-      </div>
-      <div>
+      </Section>
+      <Section>
         <SectionHeader>Заметки</SectionHeader>
         <Input.TextArea
           value={notes}
           onChange={(e) => charSheetEditorUiStore.setNotes(e.target.value)}
           autoSize={{ minRows: 5 }}
         />
-      </div>
+      </Section>
     </div>
   );
 });
+
+
+function Section ({children}: {children: React.ReactNode} ) {
+  return <div className="tw-mb-4">{children}</div>
+}

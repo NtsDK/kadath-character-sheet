@@ -15,6 +15,7 @@ export const RecollectionSectionBody = observer(({ className }: Props) => {
         <RecollectionInput
           key={index}
           recollection={recollection}
+          className="tw-mb-1"
           onChangeName={(name) =>
             charSheetEditorUiStore.setRecollectionName(index, name)
           }

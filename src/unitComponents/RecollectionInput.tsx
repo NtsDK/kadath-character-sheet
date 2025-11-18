@@ -1,20 +1,28 @@
 import { Button, Input } from "antd";
 import { observer } from "mobx-react-lite";
 import { Segmented } from "antd";
-import { XMarkIcon } from "@heroicons/react/24/outline";
 import { Recollection } from "../domain/CharSheet";
+import classNames from "classnames";
+import { CloseOutlined } from "@ant-design/icons";
 
 type Props = {
   recollection: Recollection;
   onChangeName: (name: string) => void;
   onChangeValue: (value: number) => void;
   removeRecollection: () => void;
+  className?: string;
 };
 
 export const RecollectionInput = observer(
-  ({ recollection, onChangeName, onChangeValue, removeRecollection }: Props) => {
+  ({
+    recollection,
+    onChangeName,
+    onChangeValue,
+    removeRecollection,
+    className,
+  }: Props) => {
     return (
-      <div className="tw-flex">
+      <div className={classNames("tw-flex", className)}>
         <Input
           value={recollection.name}
           onChange={(e) => onChangeName(e.target.value)}
@@ -24,9 +32,10 @@ export const RecollectionInput = observer(
           value={recollection.value}
           onChange={onChangeValue}
         />
-        <Button onClick={removeRecollection}>
-          <XMarkIcon className="tw-h-3" />
-        </Button>
+        <Button
+          onClick={removeRecollection}
+          icon={<CloseOutlined className="tw-w-2" />}
+        />
       </div>
     );
   }

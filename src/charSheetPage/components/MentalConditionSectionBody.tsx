@@ -15,6 +15,7 @@ export const MentalConditionSectionBody = observer(({ className }: Props) => {
         <CharacterConditionInput
           key={index}
           characterCondition={mc}
+          className="tw-mb-1"
           onChangeName={(name) =>
             charSheetEditorUiStore.setMentalConditionName(index, name)
           }

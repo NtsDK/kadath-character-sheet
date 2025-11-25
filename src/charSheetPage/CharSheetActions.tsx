@@ -1,4 +1,4 @@
-import { Button, Checkbox } from "antd";
+import { Button, Checkbox, Tag } from "antd";
 import { observer } from "mobx-react-lite";
 import { charSheetEditorUiStore } from "./CharSheetEditorUiStore";
 import { charSheetActionsUiStore } from "./CharSheetActionsUiStore";
@@ -8,28 +8,45 @@ export const CharSheetActions = observer(() => {
     return null;
   }
 
-  const { id, powers, checkedValues, diceRollResult } = charSheetActionsUiStore;
+  const { id, powers, checkedValues, diceRollResult, dreamlandPowers } = charSheetActionsUiStore;
 
   return (
     <div key={id}>
+      <Button type="primary" onClick={() => charSheetActionsUiStore.newAction()}>Новое действие</Button>
       {powers.length > 0 && (
         <div>
           <div>Силы</div>
           {powers.map((power, index) => (
             <Checkbox
               key={power.name}
-              onChange={(e) =>
+              onChange={() =>
                 charSheetActionsUiStore.togglePowerSelection(index)
               }
+              checked={charSheetActionsUiStore.selectedPowers.has(index)}
             >
               {power.name + " " + power.value}
             </Checkbox>
           ))}
         </div>
       )}
-      <div>
-        <div>Силы Мира Грёз</div>
-      </div>
+      {
+        dreamlandPowers.length > 0 && (
+          <div>
+            <div>Силы Мира Грёз</div>
+            {dreamlandPowers.map((power, index) => (
+              <Checkbox
+                key={power.name}
+                onChange={() =>
+                  charSheetActionsUiStore.toggleDreamlandPowerSelection(index)
+                }
+                checked={charSheetActionsUiStore.selectedDreamlandPowers.has(index)}
+              >
+                {power.name + " " + power.value}
+              </Checkbox>
+            ))}
+          </div>
+        )
+      }
       <div>
         <div>Слабость</div>
       </div>
@@ -55,9 +72,11 @@ export const CharSheetActions = observer(() => {
           Бросить кости
         </Button>
         <div>
-          {diceRollResult.map((value) => (
+          {diceRollResult.rawDiceRollResult.map((value) => (
             <span>{value} </span>
           ))}
+          <div>Успехов: {diceRollResult.successCount} {diceRollResult.isFiasco && <Tag color="red">Фиаско</Tag>}</div>
+
         </div>
       </div>
     </div>

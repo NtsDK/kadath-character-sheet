@@ -125,8 +125,14 @@ export function ClaudiaCharSheet2(): CharSheet {
       value: 2,
     }],
     mentalConditions: [{
-      name: "Mental Condition 1",
-      value: 2, isInjury: false,
+      name: "Воодушевлён",
+      value: 3, isInjury: false,
+    }, {
+      name: "Испуган",
+      value: -3, isInjury: false,
+    }, {
+      name: "Унижен",
+      value: -1, isInjury: false,
     }],
     bodyWounds: [{
       name: "Body Wound 1",

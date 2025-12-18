@@ -121,7 +121,7 @@ export function ClaudiaCharSheet2(): CharSheet {
       value: 2,
     }],
     temporalConditions: [{
-      name: "Temporal Condition 1",
+      name: "Отборные ингредиенты",
       value: 2,
     }],
     mentalConditions: [{
@@ -135,8 +135,8 @@ export function ClaudiaCharSheet2(): CharSheet {
       value: -1, isInjury: false,
     }],
     bodyWounds: [{
-      name: "Body Wound 1",
-      value: 2, isInjury: false,
+      name: "Вывихнутая нога",
+      value: -2, isInjury: false,
     }],
     luck: 4,
     items: [

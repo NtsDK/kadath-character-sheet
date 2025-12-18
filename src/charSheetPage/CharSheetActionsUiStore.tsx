@@ -1,19 +1,30 @@
 import { action, computed, makeObservable, observable, reaction } from "mobx";
 import { charSheetEditorUiStore } from "./CharSheetEditorUiStore";
+import { strToNumber } from "../utils/strToNumber";
 
 export class CharSheetActionsUiStore {
   _selectedPowers = new Set<number>();
   _selectedDreamlandPowers = new Set<number>();
   _selectedMentalCondition: null | number = null;
+  _selectedBodyWounds = new Set<number>();
+  _selectedTemporalConditions = new Set<number>();
   _applyWeakness = false;
+  _otherConditionEffect: number = 0;
+  _selectedItems = new Set<number>();
+  _useLuckPoints: number = 0;
   _rawDiceRollResult: number[] = [];
 
   constructor() {
     makeObservable(this, {
       _selectedPowers: observable,
       _selectedDreamlandPowers: observable,
-      _selectedMentalCondition: observable,
       _applyWeakness: observable,
+      _selectedMentalCondition: observable,
+      _selectedBodyWounds: observable,
+      _selectedTemporalConditions: observable,
+      _otherConditionEffect: observable,
+      _selectedItems: observable,
+      _useLuckPoints: observable,
 
       _rawDiceRollResult: observable,
 
@@ -38,6 +49,36 @@ export class CharSheetActionsUiStore {
       () => charSheetEditorUiStore.charSheet?.dreamlandPowers.length,
       () => {
         this._selectedDreamlandPowers.clear();
+      }
+    );
+    reaction(
+      () => charSheetEditorUiStore.charSheet?.mentalConditions.length,
+      () => {
+        this._selectedMentalCondition = null;
+      }
+    );
+    reaction(
+      () => charSheetEditorUiStore.charSheet?.bodyWounds.length,
+      () => {
+        this._selectedBodyWounds.clear();
+      }
+    );
+    reaction(
+      () => charSheetEditorUiStore.charSheet?.temporalConditions.length,
+      () => {
+        this._selectedTemporalConditions.clear();
+      }
+    );
+    reaction(
+      () => charSheetEditorUiStore.charSheet?.items.length,
+      () => {
+        this._selectedItems.clear();
+      }
+    );
+    reaction(
+      () => charSheetEditorUiStore.charSheet?.luck,
+      () => {
+        this._useLuckPoints = 0;
       }
     );
   }
@@ -78,6 +119,42 @@ export class CharSheetActionsUiStore {
     return this._selectedMentalCondition;
   }
 
+  get bodyWounds() {
+    return charSheetEditorUiStore.charSheet.bodyWounds;
+  }
+
+  get selectedBodyWounds() {
+    return this._selectedBodyWounds;
+  }
+
+  get temporalConditions() {
+    return charSheetEditorUiStore.charSheet.temporalConditions;
+  }
+
+  get selectedTemporalConditions() {
+    return this._selectedTemporalConditions;
+  }
+
+  get otherConditionEffect() {
+    return this._otherConditionEffect;
+  }
+
+  get items() {
+    return charSheetEditorUiStore.charSheet.items;
+  }
+
+  get selectedItems() {
+    return this._selectedItems;
+  }
+
+  get luck() {
+    return charSheetEditorUiStore.charSheet.luck;
+  }
+
+  get useLuckPoints() {
+    return this._useLuckPoints;
+  }
+
   get diceRollResult() {
     const successCount = this._rawDiceRollResult.filter((v) => v >= 5).length;
     return {
@@ -92,6 +169,11 @@ export class CharSheetActionsUiStore {
     this._selectedDreamlandPowers.clear();
     this._applyWeakness = false;
     this._selectedMentalCondition = null;
+    this._selectedBodyWounds.clear();
+    this._selectedTemporalConditions.clear();
+    this._otherConditionEffect = 0;
+    this._selectedItems.clear();
+    this._useLuckPoints = 0;
     this._rawDiceRollResult = [];
   }
 
@@ -127,6 +209,38 @@ export class CharSheetActionsUiStore {
     }
   }
 
+  toggleBodyWoundSelection(index: number) {
+    if (this._selectedBodyWounds.has(index)) {
+      this._selectedBodyWounds.delete(index);
+    } else {
+      this._selectedBodyWounds.add(index);
+    }
+  }
+
+  toggleTemporalConditionSelection(index: number) {
+    if (this._selectedTemporalConditions.has(index)) {
+      this._selectedTemporalConditions.delete(index);
+    } else {
+      this._selectedTemporalConditions.add(index);
+    }
+  }
+
+  toggleItemSelection(index: number) {
+    if (this._selectedItems.has(index)) {
+      this._selectedItems.delete(index);
+    } else {
+      this._selectedItems.add(index);
+    }
+  }
+
+  changeOtherConditionEffect(value: number) {
+    this._otherConditionEffect = value;
+  }
+
+  changeUseLuckPoints(value: number) {
+    this._useLuckPoints = value;
+  }
+
   selectMentalCondition(index: number | null) {
     this._selectedMentalCondition = index;
   }
@@ -153,9 +267,41 @@ export class CharSheetActionsUiStore {
     }
 
     if (this._selectedMentalCondition !== null) {
-      const condition =
-        this.mentalConditions[this._selectedMentalCondition];
+      const condition = this.mentalConditions[this._selectedMentalCondition];
       values.push(condition.value);
+    }
+
+    const bodyWoundIndexes = Array.from(this._selectedBodyWounds);
+    bodyWoundIndexes.sort();
+    bodyWoundIndexes.forEach((index) => {
+      const wound = this.bodyWounds[index];
+      values.push(wound.value);
+    });
+
+    const temporalConditionIndexes = Array.from(
+      this._selectedTemporalConditions
+    );
+    temporalConditionIndexes.sort();
+    temporalConditionIndexes.forEach((index) => {
+      const condition = this.temporalConditions[index];
+      values.push(condition.value);
+    });
+
+    if (this._otherConditionEffect !== 0) {
+      values.push(this._otherConditionEffect);
+    }
+
+    const itemIndexes = Array.from(this._selectedItems);
+    itemIndexes.sort();
+    itemIndexes.forEach((index) => {
+      const number = strToNumber(this.items[index]);
+      if (number !== 0) {
+        values.push(number);
+      }
+    });
+
+    if (this._useLuckPoints !== 0) {
+      values.push(this._useLuckPoints);
     }
 
     return {

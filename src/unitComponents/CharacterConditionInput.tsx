@@ -36,7 +36,7 @@ export const CharacterConditionInput = observer(
           onChange={(value) => onChangeValue(value || 0)}
         />
 
-        <Button onClick={() => onChangeInjury(!characterCondition.isInjury)}>
+        <Button onClick={() => onChangeInjury(!characterCondition.isInjury)} title="Увечье">
           <HandThumbDownIcon
             className={classNames("tw-h-4", {
               "tw-invisible": !characterCondition.isInjury,

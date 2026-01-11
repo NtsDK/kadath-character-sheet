@@ -25,48 +25,53 @@ export const CharSheetActions = observer(() => {
   } = charSheetActionsUiStore;
 
   return (
-    <div key={id}>
+    <div key={id} className="tw-p-2">
       <Button
         type="primary"
         onClick={() => charSheetActionsUiStore.newAction()}
+        className="tw-mb-4"
       >
         Новое действие
       </Button>
       {powers.length > 0 && (
-        <div>
+        <div className="tw-mb-4">
           <div>Силы</div>
-          {powers.map((power, index) => (
-            <Checkbox
-              key={power.name}
-              onChange={() =>
-                charSheetActionsUiStore.togglePowerSelection(index)
-              }
-              checked={charSheetActionsUiStore.selectedPowers.has(index)}
-            >
-              {power.name + " " + power.value}
-            </Checkbox>
-          ))}
+          <div className="tw-flex tw-flex-col">
+            {powers.map((power, index) => (
+              <Checkbox
+                key={power.name}
+                onChange={() =>
+                  charSheetActionsUiStore.togglePowerSelection(index)
+                }
+                checked={charSheetActionsUiStore.selectedPowers.has(index)}
+              >
+                {power.name + " " + power.value}
+              </Checkbox>
+            ))}
+          </div>
         </div>
       )}
       {dreamlandPowers.length > 0 && (
-        <div>
+        <div className="tw-mb-4">
           <div>Силы Мира Грёз</div>
-          {dreamlandPowers.map((power, index) => (
-            <Checkbox
-              key={power.name}
-              onChange={() =>
-                charSheetActionsUiStore.toggleDreamlandPowerSelection(index)
-              }
-              checked={charSheetActionsUiStore.selectedDreamlandPowers.has(
-                index
-              )}
-            >
-              {power.name + " " + power.value}
-            </Checkbox>
-          ))}
+          <div className="tw-flex tw-flex-col">
+            {dreamlandPowers.map((power, index) => (
+              <Checkbox
+                key={power.name}
+                onChange={() =>
+                  charSheetActionsUiStore.toggleDreamlandPowerSelection(index)
+                }
+                checked={charSheetActionsUiStore.selectedDreamlandPowers.has(
+                  index
+                )}
+              >
+                {power.name + " " + power.value}
+              </Checkbox>
+            ))}
+          </div>
         </div>
       )}
-      <div>
+      <div className="tw-mb-4">
         <div>Слабость</div>
         <Checkbox
           key={weakness.name}
@@ -77,42 +82,46 @@ export const CharSheetActions = observer(() => {
         </Checkbox>
       </div>
       {mentalConditions.length > 0 && (
-        <div>
+        <div className="tw-mb-4">
           <div>Душевные состояния</div>
-          <MentalConditionSelect />
+          <MentalConditionSelect className="tw-flex tw-flex-col" />
         </div>
       )}
       {bodyWounds.length > 0 && (
-        <div>
+        <div className="tw-mb-4">
           <div>Телесные раны</div>
-          {bodyWounds.map((wound, index) => (
+          <div className="tw-flex tw-flex-col">
+            {bodyWounds.map((wound, index) => (
+              <Checkbox
+                key={wound.name}
+                onChange={() =>
+                  charSheetActionsUiStore.toggleBodyWoundSelection(index)
+                }
+                checked={charSheetActionsUiStore.selectedBodyWounds.has(index)}
+              >
+                {wound.name + " " + wound.value}
+              </Checkbox>
+            ))}
+          </div>
+        </div>
+      )}
+      <div className="tw-mb-4">
+        <div>Трудности и преимущества</div>
+        <div className="tw-flex tw-flex-col">
+          {temporalConditions.map((condition, index) => (
             <Checkbox
-              key={wound.name}
+              key={condition.name}
               onChange={() =>
-                charSheetActionsUiStore.toggleBodyWoundSelection(index)
+                charSheetActionsUiStore.toggleTemporalConditionSelection(index)
               }
-              checked={charSheetActionsUiStore.selectedBodyWounds.has(index)}
+              checked={charSheetActionsUiStore.selectedTemporalConditions.has(
+                index
+              )}
             >
-              {wound.name + " " + wound.value}
+              {condition.name + " " + condition.value}
             </Checkbox>
           ))}
         </div>
-      )}
-      <div>
-        <div>Трудности и преимущества</div>
-        {temporalConditions.map((condition, index) => (
-          <Checkbox
-            key={condition.name}
-            onChange={() =>
-              charSheetActionsUiStore.toggleTemporalConditionSelection(index)
-            }
-            checked={charSheetActionsUiStore.selectedTemporalConditions.has(
-              index
-            )}
-          >
-            {condition.name + " " + condition.value}
-          </Checkbox>
-        ))}
         <div>
           Другое:{" "}
           <InputNumber
@@ -124,7 +133,7 @@ export const CharSheetActions = observer(() => {
         </div>
       </div>
       {items.length > 0 && (
-        <div>
+        <div className="tw-mb-4">
           <div>Снаряжение</div>
           {items.map((item, index) => (
             <Checkbox
@@ -141,7 +150,7 @@ export const CharSheetActions = observer(() => {
       )}
 
       {luck > 0 && (
-        <div>
+        <div className="tw-mb-4">
           <div>Удача</div>
           <InputNumber
             value={charSheetActionsUiStore.useLuckPoints}
@@ -154,11 +163,13 @@ export const CharSheetActions = observer(() => {
         </div>
       )}
       <div className="tw-mt-4">
-        <div>Выбранные значения</div>
-        {checkedValues.values.map((value) => (
-          <span>{value} </span>
-        ))}
-        <div>Сумма: {checkedValues.sum}</div>
+        <div  className="tw-mb-4">
+          <div>Выбранные значения</div>
+          {checkedValues.values.map((value) => (
+            <span>{value} </span>
+          ))}
+          <div>Сумма: {checkedValues.sum}</div>
+        </div>
         <Button
           type="primary"
           onClick={() => charSheetActionsUiStore.rollDices()}

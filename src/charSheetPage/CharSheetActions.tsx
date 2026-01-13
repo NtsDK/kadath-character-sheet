@@ -3,6 +3,7 @@ import { observer } from "mobx-react-lite";
 import { charSheetEditorUiStore } from "./CharSheetEditorUiStore";
 import { charSheetActionsUiStore } from "./CharSheetActionsUiStore";
 import { MentalConditionSelect } from "./actionComponents/MentalConditionSelect";
+import { PostActionEffectView } from "./PostActionEffectView";
 
 export const CharSheetActions = observer(() => {
   if (!charSheetEditorUiStore.charSheetExists) {
@@ -22,6 +23,7 @@ export const CharSheetActions = observer(() => {
     otherConditionEffect,
     items,
     luck,
+    postActionEffects,
   } = charSheetActionsUiStore;
 
   return (
@@ -187,12 +189,20 @@ export const CharSheetActions = observer(() => {
           </div>
         </div>
         <div>
-          <div>TODO душевное состояние +-1</div>
+          {/* <pre>
+            {JSON.stringify(postActionEffects, null, 2)}
+          </pre> */}
+          {
+            postActionEffects.map((effect, index) => (
+              <PostActionEffectView key={index} effect={effect} />
+            ))
+          }
+          {/* <div>TODO душевное состояние +-1</div>
           <div>TODO расход удачи</div>
 
           <div>TODO при достижении успеха при влиянии слабости слабость растет</div>
           <div>TODO преодоление слабости - удачный бросок при слабости 5, то слабость сбрасывается до 1, +6 удачи, можно изменить слабость</div>
-          <div>TODO при фиаско и слабости - дается удача за каждую единицу слабости, слабость сбрасывается до 1</div>
+          <div>TODO при фиаско и слабости - дается удача за каждую единицу слабости, слабость сбрасывается до 1</div> */}
         </div>
 
       </div>

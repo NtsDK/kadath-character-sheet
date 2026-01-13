@@ -1,6 +1,7 @@
 import { action, computed, makeObservable, observable, reaction } from "mobx";
 import { charSheetEditorUiStore } from "./CharSheetEditorUiStore";
 import { strToNumber } from "../utils/strToNumber";
+import { PostActionEffect } from "../domain/PostActionEffect";
 
 export class CharSheetActionsUiStore {
   _selectedPowers = new Set<number>();
@@ -13,6 +14,7 @@ export class CharSheetActionsUiStore {
   _selectedItems = new Set<number>();
   _useLuckPoints: number = 0;
   _rawDiceRollResult: number[] = [];
+  _postActionEffects: PostActionEffect[] = [];
 
   constructor() {
     makeObservable(this, {
@@ -27,6 +29,7 @@ export class CharSheetActionsUiStore {
       _useLuckPoints: observable,
 
       _rawDiceRollResult: observable,
+      _postActionEffects: observable,
 
       togglePowerSelection: action,
       toggleDreamlandPowerSelection: action,
@@ -156,12 +159,23 @@ export class CharSheetActionsUiStore {
   }
 
   get diceRollResult() {
-    const successCount = this._rawDiceRollResult.filter((v) => v >= 5).length;
     return {
       rawDiceRollResult: this._rawDiceRollResult,
-      successCount,
-      isFiasco: successCount === 0 && this._rawDiceRollResult.length > 0,
+      successCount: this.successCount,
+      isFiasco: this.isFiasco,
     };
+  }
+
+  get successCount() {
+    return this._rawDiceRollResult.filter((v) => v >= 5).length;
+  }
+
+  get isFiasco() {
+    return this.successCount === 0 && this._rawDiceRollResult.length > 0;
+  }
+
+  get postActionEffects() {
+    return this._postActionEffects;
   }
 
   newAction() {
@@ -175,6 +189,7 @@ export class CharSheetActionsUiStore {
     this._selectedItems.clear();
     this._useLuckPoints = 0;
     this._rawDiceRollResult = [];
+    this._postActionEffects = [];
   }
 
   rollDices() {
@@ -186,6 +201,24 @@ export class CharSheetActionsUiStore {
         .fill(0)
         .map(() => Math.floor(Math.random() * 6) + 1);
       this._rawDiceRollResult.sort().reverse();
+    }
+    this._postActionEffects = [];
+    if (this.selectedMentalConditionObject) {
+      this._postActionEffects.push("weakenMentalCondition");
+    }
+    if(this._useLuckPoints > 0) {
+      this._postActionEffects.push("deductLuckPoints");
+    }
+    if(this._applyWeakness) {
+      if (!this.isFiasco) {
+        if (this.weakness.value == 5) {
+          this._postActionEffects.push("overcomingWeakness");
+        } else {
+          this._postActionEffects.push("increaseWeakness");
+        }
+      } else {
+        this._postActionEffects.push("fiascoWeaknessReset");
+      }
     }
   }
 
@@ -245,6 +278,13 @@ export class CharSheetActionsUiStore {
     this._selectedMentalCondition = index;
   }
 
+  get selectedMentalConditionObject() {
+    if (this._selectedMentalCondition === null) {
+      return null;
+    }
+    return this.mentalConditions[this._selectedMentalCondition];
+  }
+
   get checkedValues() {
     const values: number[] = [];
 
@@ -266,9 +306,8 @@ export class CharSheetActionsUiStore {
       values.push(-this.weakness.value);
     }
 
-    if (this._selectedMentalCondition !== null) {
-      const condition = this.mentalConditions[this._selectedMentalCondition];
-      values.push(condition.value);
+    if (this.selectedMentalConditionObject) {
+      values.push(this.selectedMentalConditionObject.value);
     }
 
     const bodyWoundIndexes = Array.from(this._selectedBodyWounds);

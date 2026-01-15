@@ -165,7 +165,7 @@ export const CharSheetActions = observer(() => {
         </div>
       )}
       <div className="tw-mt-4">
-        <div  className="tw-mb-4">
+        <div className="tw-mb-4">
           <div>Выбранные значения</div>
           {checkedValues.values.map((value) => (
             <span>{value} </span>
@@ -192,11 +192,16 @@ export const CharSheetActions = observer(() => {
           {/* <pre>
             {JSON.stringify(postActionEffects, null, 2)}
           </pre> */}
-          {
-            postActionEffects.map((effect, index) => (
-              <PostActionEffectView key={index} effect={effect} />
-            ))
-          }
+          {postActionEffects.map((effect, index) => (
+            <PostActionEffectView key={index} effect={effect} />
+          ))}
+          <Button
+            type="primary"
+            onClick={() => charSheetActionsUiStore.applyPostActionEffects()}
+            disabled={postActionEffects.length == 0}
+          >
+            Применить последствия
+          </Button>
           {/* <div>TODO душевное состояние +-1</div>
           <div>TODO расход удачи</div>
 
@@ -204,7 +209,6 @@ export const CharSheetActions = observer(() => {
           <div>TODO преодоление слабости - удачный бросок при слабости 5, то слабость сбрасывается до 1, +6 удачи, можно изменить слабость</div>
           <div>TODO при фиаско и слабости - дается удача за каждую единицу слабости, слабость сбрасывается до 1</div> */}
         </div>
-
       </div>
     </div>
   );

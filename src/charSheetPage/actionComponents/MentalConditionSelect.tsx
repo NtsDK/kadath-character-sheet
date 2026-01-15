@@ -18,12 +18,9 @@ export const MentalConditionSelect = observer(({ className }: Props) => {
   return (
     <div className={className}>
       {mentalConditions.map((condition, index) => {
-        if (Math.abs(condition.value) !== maxAbs) {
-          return null;
-        }
-
         return (
           <Checkbox
+            disabled={Math.abs(condition.value) !== maxAbs}
             key={condition.name}
             onChange={() =>
               charSheetActionsUiStore.selectMentalCondition(index)

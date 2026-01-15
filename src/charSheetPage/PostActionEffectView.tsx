@@ -2,6 +2,7 @@ import { observer } from "mobx-react-lite";
 import { PostActionEffect } from "../domain/PostActionEffect";
 import { charSheetActionsUiStore } from "./CharSheetActionsUiStore";
 import { assert } from "../utils/assert";
+import { MAX_LUCK } from "../domain/constants";
 
 type Props = {
   effect: PostActionEffect;
@@ -28,7 +29,7 @@ export const PostActionEffectView = observer(({ effect }: Props) => {
     return (
       <div>{`Слабость ${weakness.value} => 1, Удача ${luck} => ${Math.min(
         luck + 6,
-        12
+        MAX_LUCK
       )}`}</div>
     );
   }
@@ -43,7 +44,7 @@ export const PostActionEffectView = observer(({ effect }: Props) => {
     return (
       <div>{`Слабость ${weakness.value} => 1, Удача ${luck} => ${Math.min(
         luck + weakness.value,
-        12
+        MAX_LUCK
       )}`}</div>
     );
   }

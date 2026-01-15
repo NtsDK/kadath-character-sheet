@@ -2,6 +2,9 @@ import { action, computed, makeObservable, observable, reaction } from "mobx";
 import { charSheetEditorUiStore } from "./CharSheetEditorUiStore";
 import { strToNumber } from "../utils/strToNumber";
 import { PostActionEffect } from "../domain/PostActionEffect";
+import { assert } from "../utils/assert";
+import { MAX_LUCK, MAX_WEAKNESS } from "../domain/constants";
+import { limit } from "../utils/limit";
 
 export class CharSheetActionsUiStore {
   _selectedPowers = new Set<number>();
@@ -40,6 +43,7 @@ export class CharSheetActionsUiStore {
       newAction: action,
       toggleApplyWeakness: action,
       selectMentalCondition: action,
+      applyPostActionEffects: action,
     });
 
     reaction(
@@ -206,12 +210,12 @@ export class CharSheetActionsUiStore {
     if (this.selectedMentalConditionObject) {
       this._postActionEffects.push("weakenMentalCondition");
     }
-    if(this._useLuckPoints > 0) {
+    if (this._useLuckPoints > 0) {
       this._postActionEffects.push("deductLuckPoints");
     }
-    if(this._applyWeakness) {
+    if (this._applyWeakness) {
       if (!this.isFiasco) {
-        if (this.weakness.value == 5) {
+        if (this.weakness.value == MAX_WEAKNESS) {
           this._postActionEffects.push("overcomingWeakness");
         } else {
           this._postActionEffects.push("increaseWeakness");
@@ -220,6 +224,45 @@ export class CharSheetActionsUiStore {
         this._postActionEffects.push("fiascoWeaknessReset");
       }
     }
+  }
+
+  applyPostActionEffects() {
+    let luck = charSheetEditorUiStore.charSheet.luck;
+    for (const effect of this._postActionEffects) {
+      if (effect === "weakenMentalCondition") {
+        const mentalCondition = this.selectedMentalConditionObject;
+        assert(this._selectedMentalCondition !== null && mentalCondition);
+        if (mentalCondition.value > 0) {
+          charSheetEditorUiStore.setMentalConditionValue(
+            this._selectedMentalCondition,
+            mentalCondition.value - 1
+          );
+        } else {
+          charSheetEditorUiStore.setMentalConditionValue(
+            this._selectedMentalCondition,
+            mentalCondition.value + 1
+          );
+        }
+      }
+      if (effect === "deductLuckPoints") {
+        luck -= this._useLuckPoints;
+      }
+      if (effect === "increaseWeakness") {
+        charSheetEditorUiStore.setWeaknessValue(this.weakness.value + 1);
+      }
+      if (effect === "overcomingWeakness") {
+        luck += 6;
+        charSheetEditorUiStore.setWeaknessValue(1);
+      }
+      if (effect === "fiascoWeaknessReset") {
+        luck += this.weakness.value;
+        charSheetEditorUiStore.setWeaknessValue(1);
+      }
+    }
+    luck = limit(luck, { min: 0, max: MAX_LUCK });
+    charSheetEditorUiStore.setLuck(luck);
+
+    this._postActionEffects = [];
   }
 
   toggleApplyWeakness() {

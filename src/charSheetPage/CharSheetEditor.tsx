@@ -14,6 +14,8 @@ import { TemporalConditionSectionBody } from "./components/TemporalConditionSect
 import { ItemSectionBody } from "./components/ItemSectionBody";
 import { useParams } from "react-router";
 import { useEffect } from "react";
+import { MAX_LUCK, MAX_WEAKNESS } from "../domain/constants";
+import { range } from "../utils/range";
 
 export const CharSheetEditor = observer(() => {
   const params = useParams();
@@ -49,7 +51,9 @@ export const CharSheetEditor = observer(() => {
           />
         </Col>
       </Row> */}
-      <h1 className="tw-text-2xl tw-mb-4">{charSheetEditorUiStore.charSheet.name}</h1>
+      <h1 className="tw-text-2xl tw-mb-4">
+        {charSheetEditorUiStore.charSheet.name}
+      </h1>
       <Section>
         <SectionHeader
           buttonProps={{
@@ -82,7 +86,7 @@ export const CharSheetEditor = observer(() => {
             }
           />
           <Segmented<number>
-            options={[1, 2, 3, 4, 5, 6]}
+            options={range(1, MAX_WEAKNESS + 1)}
             onChange={(value) => charSheetEditorUiStore.setWeaknessValue(value)}
             value={weakness.value}
           />
@@ -144,7 +148,7 @@ export const CharSheetEditor = observer(() => {
       <Section>
         <SectionHeader>Удача</SectionHeader>
         <Segmented<number>
-          options={[0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]}
+          options={range(0, MAX_LUCK + 1)}
           value={luck}
           onChange={(value) => charSheetEditorUiStore.setLuck(value)}
         />
@@ -161,7 +165,6 @@ export const CharSheetEditor = observer(() => {
   );
 });
 
-
-function Section ({children}: {children: React.ReactNode} ) {
-  return <div className="tw-mb-4">{children}</div>
+function Section({ children }: { children: React.ReactNode }) {
+  return <div className="tw-mb-4">{children}</div>;
 }

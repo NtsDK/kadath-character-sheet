@@ -1,5 +1,5 @@
 import { action, computed, makeObservable, observable } from "mobx";
-import { CharSheet, CharSheetContent } from "../domain/CharSheet";
+import { CharSheet, CharSheetContent, Project } from "../domain/CharSheet";
 import {
   ClaudiaCharSheet,
   getNewCharSheet,
@@ -65,6 +65,11 @@ export class CharSheetEditorUiStore {
       removeItem: action,
       // luck
       setLuck: action,
+      // projects
+      createProject: action,
+      setProjectProgress: action,
+      updateProject: action,
+      removeProject: action,
       // notes
       setNotes: action,
     });
@@ -160,7 +165,7 @@ export class CharSheetEditorUiStore {
 
   removeDreamlandPower(index: number) {
     const dreamlandPowers = this.charSheet.dreamlandPowers.filter(
-      (_, i) => i !== index
+      (_, i) => i !== index,
     );
     charSheetStore.updateContent(this._id, { dreamlandPowers });
   }
@@ -211,7 +216,7 @@ export class CharSheetEditorUiStore {
 
   removeRecollection(index: number) {
     const recollections = this.charSheet.recollections.filter(
-      (_, i) => i !== index
+      (_, i) => i !== index,
     );
     charSheetStore.updateContent(this._id, { recollections });
   }
@@ -258,7 +263,7 @@ export class CharSheetEditorUiStore {
 
   removeMentalCondition(index: number) {
     const mentalConditions = this.charSheet.mentalConditions.filter(
-      (_, i) => i !== index
+      (_, i) => i !== index,
     );
     charSheetStore.updateContent(this._id, { mentalConditions });
   }
@@ -332,7 +337,7 @@ export class CharSheetEditorUiStore {
 
   removeTemporalCondition(index: number) {
     const temporalConditions = this.charSheet.temporalConditions.filter(
-      (_, i) => i !== index
+      (_, i) => i !== index,
     );
     charSheetStore.updateContent(this._id, { temporalConditions });
   }
@@ -353,6 +358,33 @@ export class CharSheetEditorUiStore {
   removeItem(index: number) {
     const items = this.charSheet.items.filter((_, i) => i !== index);
     charSheetStore.updateContent(this._id, { items });
+  }
+  // #endregion
+
+  // #region Projects
+  createProject(project: Project) {
+    const projects = [
+      ...this.charSheet.projects,
+      project,
+    ];
+    charSheetStore.updateContent(this._id, { projects });
+  }
+
+  setProjectProgress(index: number, progress: number) {
+    const projects = [...this.charSheet.projects];
+    projects[index] = { ...projects[index], progress };
+    charSheetStore.updateContent(this._id, { projects });
+  }
+
+  updateProject(index: number, project: Project) {
+    const projects = [...this.charSheet.projects];
+    projects[index] = project;
+    charSheetStore.updateContent(this._id, { projects });
+  }
+
+  removeProject(index: number) {
+    const projects = this.charSheet.projects.filter((_, i) => i !== index);
+    charSheetStore.updateContent(this._id, { projects });
   }
   // #endregion
 

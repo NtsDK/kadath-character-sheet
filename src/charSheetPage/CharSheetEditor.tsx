@@ -1,6 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { Col, Form, Input, Row } from "antd";
 import { Segmented } from "antd";
+import { v4 as uuid } from "uuid";
 
 import { charSheetEditorUiStore } from "./CharSheetEditorUiStore";
 
@@ -13,12 +14,17 @@ import { BodyWoundSectionBody } from "./components/BodyWoundSectionBody";
 import { TemporalConditionSectionBody } from "./components/TemporalConditionSectionBody";
 import { ItemSectionBody } from "./components/ItemSectionBody";
 import { useParams } from "react-router";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { MAX_LUCK, MAX_WEAKNESS } from "../domain/constants";
 import { range } from "../utils/range";
+import { ProjectSectionBody } from "./components/ProjectSectionBody";
+import { EditProjectModal } from "../pages/EditProjectModal";
 
 export const CharSheetEditor = observer(() => {
   const params = useParams();
+  const [isCreateProjectModalOpen, setIsCreateProjectModalOpen] =
+    useState(false);
+  const [createProjectKey, setCreateProjectKey] = useState(uuid());
 
   useEffect(() => {
     if (params.charSheetId) {
@@ -154,6 +160,19 @@ export const CharSheetEditor = observer(() => {
         />
       </Section>
       <Section>
+        <SectionHeader
+          buttonProps={{
+            onCreate: () => {
+              setIsCreateProjectModalOpen(true);
+              setCreateProjectKey(uuid());
+            },
+          }}
+        >
+          Замыслы
+        </SectionHeader>
+        <ProjectSectionBody />
+      </Section>
+      <Section>
         <SectionHeader>Заметки</SectionHeader>
         <Input.TextArea
           value={notes}
@@ -161,6 +180,17 @@ export const CharSheetEditor = observer(() => {
           autoSize={{ minRows: 5 }}
         />
       </Section>
+
+      <EditProjectModal
+        key={createProjectKey}
+        title="Создать замысел"
+        isModalOpen={isCreateProjectModalOpen}
+        handleOk={(project) => {
+          charSheetEditorUiStore.createProject(project);
+          setIsCreateProjectModalOpen(false);
+        }}
+        handleCancel={() => setIsCreateProjectModalOpen(false)}
+      />
     </div>
   );
 });

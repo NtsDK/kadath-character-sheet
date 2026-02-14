@@ -34,6 +34,8 @@ export interface CharSheet {
   luck: number;
   /** Предметы снаряжения */
   items: string[];
+  /** Замыслы */
+  projects: Project[];
   /** Заметки */
   notes: string;
 }
@@ -79,6 +81,13 @@ export interface BodyWound {
   name: string;
   value: number;
   isInjury: boolean;
+}
+
+export interface Project {
+  name: string;
+  progress: number;
+  successThreshold: number;
+  description: string;
 }
 
 export type CharacterCondition = MentalCondition | BodyWound;

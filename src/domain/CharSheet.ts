@@ -7,7 +7,7 @@ export interface CharSheet {
   /** Идентификатор файла, используется в памяти, но не в экспортных архивах */
   id: string;
   /** Дата последнего обновления файла */
-  updated: Date;
+  updatedAt: Date;
   /** Версия файла */
   version: string;
 
@@ -38,7 +38,7 @@ export interface CharSheet {
   notes: string;
 }
 
-export type CharSheetMetaProps = "name" | "type" | "id" | "updated" | "version";
+export type CharSheetMetaProps = "name" | "type" | "id" | "updatedAt" | "version";
 export type CharSheetMeta = Pick<CharSheet, CharSheetMetaProps>;
 export type CharSheetContent = Omit<CharSheet, CharSheetMetaProps>;
 

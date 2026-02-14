@@ -87,7 +87,7 @@ class CharSheetStore {
   updateContent(id: string, charSheetPatch: Partial<CharSheetContent>) {
     this._charSheets[id] = {
       ...this._charSheets[id],
-      updated: new Date(),
+      updatedAt: new Date(),
       ...charSheetPatch,
     };
   }

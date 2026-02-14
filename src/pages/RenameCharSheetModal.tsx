@@ -3,6 +3,7 @@ import { observer } from "mobx-react-lite";
 import { useState } from "react";
 import classnames from "classnames";
 import { charSheetStore } from "../domainServices/CharSheetStore";
+import { VALIDATE_NAME_REGEX } from "../utils/nameValidation";
 
 type Props = {
   title?: string;
@@ -27,6 +28,10 @@ export const RenameCharSheetModal = observer(
       const trimmedName = name.trim();
       if (trimmedName === "") {
         setError("Имя не может быть пустым");
+        return;
+      }
+      if (!VALIDATE_NAME_REGEX.test(trimmedName)) {
+        setError("Имя может содержать только буквы, цифры, пробелы и символ подчеркивания");
         return;
       }
       if (charSheetStore.isNameUsed(trimmedName)) {

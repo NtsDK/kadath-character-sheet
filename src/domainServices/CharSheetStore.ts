@@ -1,5 +1,5 @@
 import { action, computed, makeObservable, observable, toJS } from "mobx";
-import { CharSheet } from "../domain/CharSheet";
+import { CharSheet, CharSheetContent, CharSheetMeta } from "../domain/CharSheet";
 import {
   ClaudiaCharSheet,
   getNewDefinedCharSheet,
@@ -23,7 +23,8 @@ class CharSheetStore {
       add: action,
       copy: action,
       delete: action,
-      update: action,
+      updateMeta: action,
+      updateContent: action,
     });
   }
 
@@ -76,9 +77,17 @@ class CharSheetStore {
     delete this._charSheets[id];
   }
 
-  update(id: string, charSheetPatch: Partial<CharSheet>) {
+  updateMeta(id: string, charSheetPatch: Partial<CharSheetMeta>) {
     this._charSheets[id] = {
       ...this._charSheets[id],
+      ...charSheetPatch,
+    };
+  }
+
+  updateContent(id: string, charSheetPatch: Partial<CharSheetContent>) {
+    this._charSheets[id] = {
+      ...this._charSheets[id],
+      updated: new Date(),
       ...charSheetPatch,
     };
   }

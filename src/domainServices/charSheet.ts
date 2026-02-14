@@ -7,6 +7,8 @@ export function getNewCharSheet(): CharSheet {
     name: "",
     type: "char-sheet/beyond-the-gates",
     id: uuid(),
+    updated: new Date(),
+    version: "0.1.0",
     // characterName: "",
     // playerName: "",
     powers: [],
@@ -27,6 +29,8 @@ export function ClaudiaCharSheet(): CharSheet {
     name: "Клодия",
     type: "char-sheet/beyond-the-gates",
     id: uuid(),
+    updated: new Date(),
+    version: "0.1.0",
     // characterName: "Клодия",
     // playerName: "",
     powers: [
@@ -79,6 +83,8 @@ export function ClaudiaCharSheet2(): CharSheet {
     name: "Клодия 2",
     type: "char-sheet/beyond-the-gates",
     id: uuid(),
+    updated: new Date(),
+    version: "0.1.0",
     // characterName: "Клодия",
     // playerName: "",
     powers: [
@@ -153,7 +159,8 @@ export function getNewDefinedCharSheet(): CharSheet {
     name: "characterName playerName",
     type: "char-sheet/beyond-the-gates",
     id: uuid(),
-
+    updated: new Date(),
+    version: "0.1.0",
     // characterName: "characterName",
     // playerName: "playerName",
     powers: cloneToArr({ name: "power1", value: 1 }, 15),

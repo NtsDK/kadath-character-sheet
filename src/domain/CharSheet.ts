@@ -6,6 +6,10 @@ export interface CharSheet {
   type: "char-sheet/beyond-the-gates";
   /** Идентификатор файла, используется в памяти, но не в экспортных архивах */
   id: string;
+  /** Дата последнего обновления файла */
+  updated: Date;
+  /** Версия файла */
+  version: string;
 
   // содержательная часть листа персонажа
   /** Имя персонажа */
@@ -34,7 +38,9 @@ export interface CharSheet {
   notes: string;
 }
 
-export type CharSheetContent = Omit<CharSheet, "name" | "type" | "id">;
+export type CharSheetMetaProps = "name" | "type" | "id" | "updated" | "version";
+export type CharSheetMeta = Pick<CharSheet, CharSheetMetaProps>;
+export type CharSheetContent = Omit<CharSheet, CharSheetMetaProps>;
 
 // Описание предмета
 // - название + ступень силы

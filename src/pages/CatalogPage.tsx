@@ -117,7 +117,7 @@ export const CatalogPage = observer(() => {
         title="Переименовать персонажа"
         isModalOpen={isRenameModalOpen}
         handleOk={(name) => {
-          charSheetStore.update(renameCharId, { name });
+          charSheetStore.updateMeta(renameCharId, { name });
           setIsRenameModalOpen(false);
         }}
         defaultValue={charSheetStore.get(renameCharId)?.name}

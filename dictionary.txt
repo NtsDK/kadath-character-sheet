@@ -27,8 +27,18 @@
   Mental gain
 Увечье
   Injury
+
 Снаряжение - предмет снаряжения
   item
+Прочность
+  strength
+Предел прочности
+  strength limit
+Текущая Прочность
+  current strength
+Максимальная Прочность
+  maximum strength
+
 Заметки
   Notes
 Замысел

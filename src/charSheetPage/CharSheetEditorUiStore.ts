@@ -1,5 +1,5 @@
 import { action, computed, makeObservable, observable } from "mobx";
-import { CharSheet, CharSheetContent, Project } from "../domain/CharSheet";
+import { CharSheet, CharSheetContent, Item, Project } from "../domain/CharSheet";
 import {
   ClaudiaCharSheet,
   getNewCharSheet,
@@ -61,7 +61,8 @@ export class CharSheetEditorUiStore {
       removeTemporalCondition: action,
       // items
       createItem: action,
-      setItemName: action,
+      updateItem: action,
+      setItemCurrentStrength: action,
       removeItem: action,
       // luck
       setLuck: action,
@@ -344,14 +345,20 @@ export class CharSheetEditorUiStore {
   // #endregion
 
   // #region Items
-  createItem() {
-    const items = [...this.charSheet.items, ""];
+  createItem(item: Item) {
+    const items = [...this.charSheet.items, item];
     charSheetStore.updateContent(this._id, { items });
   }
 
-  setItemName(index: number, name: string) {
+  updateItem(index: number, item: Item) {
     const items = [...this.charSheet.items];
-    items[index] = name;
+    items[index] = item;
+    charSheetStore.updateContent(this._id, { items });
+  }
+
+  setItemCurrentStrength(index: number, currentStrength: number) {
+    const items = [...this.charSheet.items];
+    items[index] = { ...items[index], currentStrength };
     charSheetStore.updateContent(this._id, { items });
   }
 

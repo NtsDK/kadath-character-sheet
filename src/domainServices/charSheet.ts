@@ -72,9 +72,24 @@ export function ClaudiaCharSheet(): CharSheet {
     bodyWounds: [],
     luck: 0,
     items: [
-      "Сумка с разными лакомствами в дорогу 2",
-      "Тёплая и практичная одежда",
-      "Яркий фонарь",
+      {
+        name: "Сумка с разными лакомствами в дорогу 2",
+        currentStrength: 4,
+        maxStrength: 4,
+        powers: [],
+      },
+      {
+        name: "Тёплая и практичная одежда 2",
+        currentStrength: 3,
+        maxStrength: 3,
+        powers: [],
+      },
+      {
+        name: "Яркий фонарь 1",
+        currentStrength: 2,
+        maxStrength: 2,
+        powers: [],
+      },
     ],
     projects: [],
     notes: "Упырица, амбициозная смотрительница музея.",
@@ -164,9 +179,24 @@ export function ClaudiaCharSheet2(): CharSheet {
     ],
     luck: 4,
     items: [
-      "Сумка с разными лакомствами в дорогу 2",
-      "Тёплая и практичная одежда",
-      "Яркий фонарь",
+      {
+        name: "Сумка с разными лакомствами в дорогу 2",
+        currentStrength: 4,
+        maxStrength: 4,
+        powers: [],
+      },
+      {
+        name: "Тёплая и практичная одежда 2",
+        currentStrength: 3,
+        maxStrength: 3,
+        powers: [],
+      },
+      {
+        name: "Яркий фонарь 1",
+        currentStrength: 2,
+        maxStrength: 2,
+        powers: [],
+      },
     ],
     projects: [
       {
@@ -204,7 +234,12 @@ export function getNewDefinedCharSheet(): CharSheet {
     ),
     temporalConditions: cloneToArr({ name: "temporalCondition1", value: 1 }, 5),
     luck: 3,
-    items: cloneToArr("item1", 5),
+    items: cloneToArr({
+      name: "item 1",
+      currentStrength: 1,
+      maxStrength: 1,
+      powers: [],
+    }, 5),
     projects: [
       {
         name: "project1",

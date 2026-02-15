@@ -4,6 +4,7 @@ import { useState } from "react";
 import classnames from "classnames";
 import { charSheetStore } from "../domainServices/CharSheetStore";
 import { VALIDATE_NAME_REGEX } from "../utils/nameValidation";
+import { InputError } from "../unitComponents/InputError";
 
 type Props = {
   title?: string;
@@ -57,13 +58,7 @@ export const RenameCharSheetModal = observer(
           status={error ? "error" : undefined}
           onPressEnter={() => onOk()}
         />
-        <div
-          className={classnames("tw-text-red-600 tw-mt-1", {
-            "tw-invisible": !error,
-          })}
-        >
-          {error}
-        </div>
+        <InputError error={error} />
       </Modal>
     );
   }

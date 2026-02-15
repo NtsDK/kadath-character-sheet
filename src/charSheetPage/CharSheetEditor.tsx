@@ -19,12 +19,15 @@ import { MAX_LUCK, MAX_WEAKNESS } from "../domain/constants";
 import { range } from "../utils/range";
 import { ProjectSectionBody } from "./components/ProjectSectionBody";
 import { EditProjectModal } from "../pages/EditProjectModal";
+import { EditItemModal } from "../pages/EditItemModal";
 
 export const CharSheetEditor = observer(() => {
   const params = useParams();
   const [isCreateProjectModalOpen, setIsCreateProjectModalOpen] =
     useState(false);
   const [createProjectKey, setCreateProjectKey] = useState(uuid());
+  const [isCreateItemModalOpen, setIsCreateItemModalOpen] = useState(false);
+  const [createItemKey, setCreateItemKey] = useState(uuid());
 
   useEffect(() => {
     if (params.charSheetId) {
@@ -144,7 +147,10 @@ export const CharSheetEditor = observer(() => {
       <Section>
         <SectionHeader
           buttonProps={{
-            onCreate: () => charSheetEditorUiStore.createItem(),
+            onCreate: () => {
+              setIsCreateItemModalOpen(true);
+              setCreateItemKey(uuid());
+            },
           }}
         >
           Снаряжение
@@ -190,6 +196,16 @@ export const CharSheetEditor = observer(() => {
           setIsCreateProjectModalOpen(false);
         }}
         handleCancel={() => setIsCreateProjectModalOpen(false)}
+      />
+      <EditItemModal
+        key={createItemKey}
+        title="Создать предмет"
+        isModalOpen={isCreateItemModalOpen}
+        handleOk={(item) => {
+          charSheetEditorUiStore.createItem(item);
+          setIsCreateItemModalOpen(false);
+        }}
+        handleCancel={() => setIsCreateItemModalOpen(false)}
       />
     </div>
   );

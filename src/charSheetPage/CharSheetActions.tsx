@@ -134,7 +134,7 @@ export const CharSheetActions = observer(() => {
           />
         </div>
       </div>
-      {items.length > 0 && (
+      {/* {items.length > 0 && (
         <div className="tw-mb-4">
           <div>Снаряжение</div>
           {items.map((item, index) => (
@@ -149,7 +149,7 @@ export const CharSheetActions = observer(() => {
             </Checkbox>
           ))}
         </div>
-      )}
+      )} */}
 
       {luck > 0 && (
         <div className="tw-mb-4">

@@ -36,5 +36,5 @@ const columns: ColumnsType<CharSheet> = [
 export const CatalogTable = observer(() => {
   const { charSheets } = catalogPageUiStore;
 
-  return <Table<CharSheet> columns={columns} dataSource={charSheets} />;
+  return <Table<CharSheet> columns={columns} dataSource={charSheets} size="small"/>;
 });

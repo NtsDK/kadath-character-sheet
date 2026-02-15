@@ -33,7 +33,7 @@ export interface CharSheet {
   /** Кубики удачи, макс. 12 */
   luck: number;
   /** Предметы снаряжения */
-  items: string[];
+  items: Item[];
   /** Замыслы */
   projects: Project[];
   /** Заметки */
@@ -88,6 +88,13 @@ export interface Project {
   progress: number;
   successThreshold: number;
   description: string;
+}
+
+export interface Item {
+  name: string;
+  currentStrength: number;
+  maxStrength: number;
+  powers: string[];
 }
 
 export type CharacterCondition = MentalCondition | BodyWound;

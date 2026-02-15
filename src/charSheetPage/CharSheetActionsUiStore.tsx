@@ -373,14 +373,14 @@ export class CharSheetActionsUiStore {
       values.push(this._otherConditionEffect);
     }
 
-    const itemIndexes = Array.from(this._selectedItems);
-    itemIndexes.sort();
-    itemIndexes.forEach((index) => {
-      const number = strToNumber(this.items[index]);
-      if (number !== 0) {
-        values.push(number);
-      }
-    });
+    // const itemIndexes = Array.from(this._selectedItems);
+    // itemIndexes.sort();
+    // itemIndexes.forEach((index) => {
+    //   const number = strToNumber(this.items[index]);
+    //   if (number !== 0) {
+    //     values.push(number);
+    //   }
+    // });
 
     if (this._useLuckPoints !== 0) {
       values.push(this._useLuckPoints);

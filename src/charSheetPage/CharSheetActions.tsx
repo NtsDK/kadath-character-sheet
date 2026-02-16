@@ -64,7 +64,7 @@ export const CharSheetActions = observer(() => {
                   charSheetActionsUiStore.toggleDreamlandPowerSelection(index)
                 }
                 checked={charSheetActionsUiStore.selectedDreamlandPowers.has(
-                  index
+                  index,
                 )}
               >
                 {power.name + " " + power.value}
@@ -117,7 +117,7 @@ export const CharSheetActions = observer(() => {
                 charSheetActionsUiStore.toggleTemporalConditionSelection(index)
               }
               checked={charSheetActionsUiStore.selectedTemporalConditions.has(
-                index
+                index,
               )}
             >
               {condition.name + " " + condition.value}
@@ -134,22 +134,44 @@ export const CharSheetActions = observer(() => {
           />
         </div>
       </div>
-      {/* {items.length > 0 && (
+      {items.length > 0 && (
         <div className="tw-mb-4">
           <div>Снаряжение</div>
           {items.map((item, index) => (
-            <Checkbox
-              key={item}
-              onChange={() =>
-                charSheetActionsUiStore.toggleItemSelection(index)
-              }
-              checked={charSheetActionsUiStore.selectedItems.has(index)}
-            >
-              {item}
-            </Checkbox>
+            <>
+              <Checkbox
+                key={`${index}_${item.name}`}
+                onChange={() =>
+                  charSheetActionsUiStore.toggleItemSelection(
+                    `${index}_${item.name}`,
+                  )
+                }
+                checked={charSheetActionsUiStore.selectedItems.has(
+                  `${index}_${item.name}`,
+                )}
+              >
+                {item.name}
+              </Checkbox>
+              {item.powers.map((power, index2) => (
+                <Checkbox
+                className="tw-pl-4"
+                  key={`${index}.${index2}_${power}`}
+                  onChange={() =>
+                    charSheetActionsUiStore.toggleItemSelection(
+                      `${index}.${index2}_${power}`,
+                    )
+                  }
+                  checked={charSheetActionsUiStore.selectedItems.has(
+                    `${index}.${index2}_${power}`,
+                  )}
+                >
+                  {power}
+                </Checkbox>
+              ))}
+            </>
           ))}
         </div>
-      )} */}
+      )}
 
       {luck > 0 && (
         <div className="tw-mb-4">

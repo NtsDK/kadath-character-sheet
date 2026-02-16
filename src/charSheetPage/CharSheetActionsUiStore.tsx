@@ -14,7 +14,7 @@ export class CharSheetActionsUiStore {
   _selectedTemporalConditions = new Set<number>();
   _applyWeakness = false;
   _otherConditionEffect: number = 0;
-  _selectedItems = new Set<number>();
+  _selectedItems = new Set<string>();
   _useLuckPoints: number = 0;
   _rawDiceRollResult: number[] = [];
   _postActionEffects: PostActionEffect[] = [];
@@ -301,11 +301,11 @@ export class CharSheetActionsUiStore {
     }
   }
 
-  toggleItemSelection(index: number) {
-    if (this._selectedItems.has(index)) {
-      this._selectedItems.delete(index);
+  toggleItemSelection(key: string) {
+    if (this._selectedItems.has(key)) {
+      this._selectedItems.delete(key);
     } else {
-      this._selectedItems.add(index);
+      this._selectedItems.add(key);
     }
   }
 
@@ -373,14 +373,14 @@ export class CharSheetActionsUiStore {
       values.push(this._otherConditionEffect);
     }
 
-    // const itemIndexes = Array.from(this._selectedItems);
-    // itemIndexes.sort();
-    // itemIndexes.forEach((index) => {
-    //   const number = strToNumber(this.items[index]);
-    //   if (number !== 0) {
-    //     values.push(number);
-    //   }
-    // });
+    const itemIndexes = Array.from(this._selectedItems);
+    itemIndexes.forEach((index) => {
+      const underscoreIndex = index.indexOf("_");
+      const number = strToNumber(index.substring(underscoreIndex + 1));
+      if (number !== 0) {
+        values.push(number);
+      }
+    });
 
     if (this._useLuckPoints !== 0) {
       values.push(this._useLuckPoints);

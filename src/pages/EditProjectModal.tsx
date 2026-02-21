@@ -14,13 +14,13 @@ type Props = {
 
 export const EditProjectModal = observer(
   ({ title, isModalOpen, handleCancel, handleOk, defaultProject }: Props) => {
-    const [name, setName] = useState(defaultProject?.name || "");
+    const [name, setName] = useState(defaultProject?.name ?? "");
     const [description, setDescription] = useState(
-      defaultProject?.description || "",
+      defaultProject?.description ?? ""
     );
-    const [progress, setProgress] = useState(defaultProject?.progress || 0);
+    const [progress, setProgress] = useState(defaultProject?.progress ?? 0);
     const [successThreshold, setSuccessThreshold] = useState(
-      defaultProject?.successThreshold || 0,
+      defaultProject?.successThreshold ?? 0
     );
 
     function onChangeName(event: React.ChangeEvent<HTMLInputElement>) {
@@ -32,11 +32,11 @@ export const EditProjectModal = observer(
     }
 
     function onChangeProgress(value: number | null) {
-      setProgress(value || 0);
+      setProgress(value ?? 0);
     }
 
     function onChangeSuccessThreshold(value: number | null) {
-      setSuccessThreshold(value || 0);
+      setSuccessThreshold(value ?? 0);
     }
 
     function onOk() {
@@ -80,5 +80,5 @@ export const EditProjectModal = observer(
         </Form>
       </Modal>
     );
-  },
+  }
 );

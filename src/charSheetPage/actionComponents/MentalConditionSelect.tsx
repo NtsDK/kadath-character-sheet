@@ -1,12 +1,13 @@
 import { observer } from "mobx-react-lite";
-import { charSheetActionsUiStore } from "../CharSheetActionsUiStore";
 import { Checkbox } from "antd";
+import { getCharSheetActionsUiStore } from "../../IoC";
 
 type Props = {
   className?: string;
 };
 
 export const MentalConditionSelect = observer(({ className }: Props) => {
+  const charSheetActionsUiStore = getCharSheetActionsUiStore();
   const { mentalConditions, selectedMentalCondition } = charSheetActionsUiStore;
 
   if (mentalConditions.length === 0) {

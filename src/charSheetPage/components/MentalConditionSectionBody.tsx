@@ -1,12 +1,13 @@
 import { observer } from "mobx-react-lite";
 import { CharacterConditionInput } from "../../unitComponents/CharacterConditionInput";
-import { charSheetEditorUiStore } from "../CharSheetEditorUiStore";
+import { getCharSheetEditorUiStore } from "../../IoC";
 
 type Props = {
   className?: string;
 };
 
 export const MentalConditionSectionBody = observer(({ className }: Props) => {
+  const charSheetEditorUiStore = getCharSheetEditorUiStore();
   const { mentalConditions } = charSheetEditorUiStore.charSheet;
 
   return (

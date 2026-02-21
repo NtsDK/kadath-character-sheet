@@ -7,14 +7,14 @@ import {
   UserOutlined,
 } from "@ant-design/icons";
 import { Link, useLocation } from "react-router";
-import { charSheetEditorUiStore } from "./charSheetPage/CharSheetEditorUiStore";
-import { charSheetStore } from "./domainServices/CharSheetStore";
+import { getCharSheetEditorUiStore, getCharSheetStore } from "./IoC";
 
 export const NavMenu = observer(() => {
   const location = useLocation();
 
   const key = location.pathname;
-  const charId = charSheetEditorUiStore.id;
+  const charId = getCharSheetEditorUiStore().id;
+  const charSheetStore = getCharSheetStore();
 
   return (
     <Menu theme="dark" defaultSelectedKeys={[key]} mode="inline" key={key}>

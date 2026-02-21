@@ -1,16 +1,22 @@
 import { action, computed, makeObservable, observable } from "mobx";
-import { CharSheet, CharSheetContent, Item, Project } from "../domain/CharSheet";
 import {
-  ClaudiaCharSheet,
-  getNewCharSheet,
-  getNewDefinedCharSheet,
-} from "../domainServices/charSheet";
-import { charSheetStore } from "../domainServices/CharSheetStore";
+  CharSheet,
+  CharSheetContent,
+  Item,
+  Project,
+} from "../domain/CharSheet";
+import { inject, injectable } from "inversify";
+import { IOC_IDS } from "../IoC";
+import { CharSheetStore } from "../domainServices/CharSheetStore";
 
+@injectable()
 export class CharSheetEditorUiStore {
   _id: string = "";
 
-  constructor(id?: string) {
+  constructor(
+    @inject(IOC_IDS.CharSheetStore)
+    public readonly charSheetStore: CharSheetStore,
+  ) {
     makeObservable(this, {
       _id: observable,
       charSheet: computed,
@@ -74,14 +80,10 @@ export class CharSheetEditorUiStore {
       // notes
       setNotes: action,
     });
-
-    if (id) {
-      this.setId(id);
-    }
   }
 
   get charSheet(): CharSheet {
-    return charSheetStore.get(this._id)!;
+    return this.charSheetStore.get(this._id)!;
   }
 
   get charSheetExists(): boolean {
@@ -116,24 +118,24 @@ export class CharSheetEditorUiStore {
     }
 
     const powers = [...this.charSheet.powers, { name: "", value: 1 }];
-    charSheetStore.updateContent(this._id, { powers });
+    this.charSheetStore.updateContent(this._id, { powers });
   }
 
   setPowerName(index: number, name: string) {
     const powers = [...this.charSheet.powers];
     powers[index] = { ...powers[index], name };
-    charSheetStore.updateContent(this._id, { powers });
+    this.charSheetStore.updateContent(this._id, { powers });
   }
 
   setPowerValue(index: number, value: number) {
     const powers = [...this.charSheet.powers];
     powers[index] = { ...powers[index], value };
-    charSheetStore.updateContent(this._id, { powers });
+    this.charSheetStore.updateContent(this._id, { powers });
   }
 
   removePower(index: number) {
     const powers = this.charSheet.powers.filter((_, i) => i !== index);
-    charSheetStore.updateContent(this._id, { powers });
+    this.charSheetStore.updateContent(this._id, { powers });
   }
 
   // #endregion
@@ -149,39 +151,39 @@ export class CharSheetEditorUiStore {
       ...this.charSheet.dreamlandPowers,
       { name: "", value: 1 },
     ];
-    charSheetStore.updateContent(this._id, { dreamlandPowers });
+    this.charSheetStore.updateContent(this._id, { dreamlandPowers });
   }
 
   setDreamlandPowerName(index: number, name: string) {
     const dreamlandPowers = [...this.charSheet.dreamlandPowers];
     dreamlandPowers[index] = { ...dreamlandPowers[index], name };
-    charSheetStore.updateContent(this._id, { dreamlandPowers });
+    this.charSheetStore.updateContent(this._id, { dreamlandPowers });
   }
 
   setDreamlandPowerValue(index: number, value: number) {
     const dreamlandPowers = [...this.charSheet.dreamlandPowers];
     dreamlandPowers[index] = { ...dreamlandPowers[index], value };
-    charSheetStore.updateContent(this._id, { dreamlandPowers });
+    this.charSheetStore.updateContent(this._id, { dreamlandPowers });
   }
 
   removeDreamlandPower(index: number) {
     const dreamlandPowers = this.charSheet.dreamlandPowers.filter(
       (_, i) => i !== index,
     );
-    charSheetStore.updateContent(this._id, { dreamlandPowers });
+    this.charSheetStore.updateContent(this._id, { dreamlandPowers });
   }
 
   // #endregion
 
   // #region Weakness
   setWeaknessName(name: string) {
-    charSheetStore.updateContent(this._id, {
+    this.charSheetStore.updateContent(this._id, {
       weakness: { ...this.charSheet.weakness, name },
     });
   }
 
   setWeaknessValue(value: number) {
-    charSheetStore.updateContent(this._id, {
+    this.charSheetStore.updateContent(this._id, {
       weakness: { ...this.charSheet.weakness, value },
     });
   }
@@ -200,26 +202,26 @@ export class CharSheetEditorUiStore {
       ...this.charSheet.recollections,
       { name: "", value: 1 },
     ];
-    charSheetStore.updateContent(this._id, { recollections });
+    this.charSheetStore.updateContent(this._id, { recollections });
   }
 
   setRecollectionName(index: number, name: string) {
     const recollections = [...this.charSheet.recollections];
     recollections[index] = { ...recollections[index], name };
-    charSheetStore.updateContent(this._id, { recollections });
+    this.charSheetStore.updateContent(this._id, { recollections });
   }
 
   setRecollectionValue(index: number, value: number) {
     const recollections = [...this.charSheet.recollections];
     recollections[index] = { ...recollections[index], value };
-    charSheetStore.updateContent(this._id, { recollections });
+    this.charSheetStore.updateContent(this._id, { recollections });
   }
 
   removeRecollection(index: number) {
     const recollections = this.charSheet.recollections.filter(
       (_, i) => i !== index,
     );
-    charSheetStore.updateContent(this._id, { recollections });
+    this.charSheetStore.updateContent(this._id, { recollections });
   }
   // #endregion
 
@@ -241,32 +243,32 @@ export class CharSheetEditorUiStore {
         isInjury: false,
       },
     ];
-    charSheetStore.updateContent(this._id, { mentalConditions });
+    this.charSheetStore.updateContent(this._id, { mentalConditions });
   }
 
   setMentalConditionName(index: number, name: string) {
     const mentalConditions = [...this.charSheet.mentalConditions];
     mentalConditions[index] = { ...mentalConditions[index], name };
-    charSheetStore.updateContent(this._id, { mentalConditions });
+    this.charSheetStore.updateContent(this._id, { mentalConditions });
   }
 
   setMentalConditionValue(index: number, value: number) {
     const mentalConditions = [...this.charSheet.mentalConditions];
     mentalConditions[index] = { ...mentalConditions[index], value };
-    charSheetStore.updateContent(this._id, { mentalConditions });
+    this.charSheetStore.updateContent(this._id, { mentalConditions });
   }
 
   setMentalConditionInjury(index: number, isInjury: boolean) {
     const mentalConditions = [...this.charSheet.mentalConditions];
     mentalConditions[index] = { ...mentalConditions[index], isInjury };
-    charSheetStore.updateContent(this._id, { mentalConditions });
+    this.charSheetStore.updateContent(this._id, { mentalConditions });
   }
 
   removeMentalCondition(index: number) {
     const mentalConditions = this.charSheet.mentalConditions.filter(
       (_, i) => i !== index,
     );
-    charSheetStore.updateContent(this._id, { mentalConditions });
+    this.charSheetStore.updateContent(this._id, { mentalConditions });
   }
   // #endregion
 
@@ -288,30 +290,30 @@ export class CharSheetEditorUiStore {
         isInjury: false,
       },
     ];
-    charSheetStore.updateContent(this._id, { bodyWounds });
+    this.charSheetStore.updateContent(this._id, { bodyWounds });
   }
 
   setBodyWoundName(index: number, name: string) {
     const bodyWounds = [...this.charSheet.bodyWounds];
     bodyWounds[index] = { ...bodyWounds[index], name };
-    charSheetStore.updateContent(this._id, { bodyWounds });
+    this.charSheetStore.updateContent(this._id, { bodyWounds });
   }
 
   setBodyWoundValue(index: number, value: number) {
     const bodyWounds = [...this.charSheet.bodyWounds];
     bodyWounds[index] = { ...bodyWounds[index], value };
-    charSheetStore.updateContent(this._id, { bodyWounds });
+    this.charSheetStore.updateContent(this._id, { bodyWounds });
   }
 
   setBodyWoundInjury(index: number, isInjury: boolean) {
     const bodyWounds = [...this.charSheet.bodyWounds];
     bodyWounds[index] = { ...bodyWounds[index], isInjury };
-    charSheetStore.updateContent(this._id, { bodyWounds });
+    this.charSheetStore.updateContent(this._id, { bodyWounds });
   }
 
   removeBodyWound(index: number) {
     const bodyWounds = this.charSheet.bodyWounds.filter((_, i) => i !== index);
-    charSheetStore.updateContent(this._id, { bodyWounds });
+    this.charSheetStore.updateContent(this._id, { bodyWounds });
   }
   // #endregion
 
@@ -321,92 +323,87 @@ export class CharSheetEditorUiStore {
       ...this.charSheet.temporalConditions,
       { name: "", value: 1 },
     ];
-    charSheetStore.updateContent(this._id, { temporalConditions });
+    this.charSheetStore.updateContent(this._id, { temporalConditions });
   }
 
   setTemporalConditionName(index: number, name: string) {
     const temporalConditions = [...this.charSheet.temporalConditions];
     temporalConditions[index] = { ...temporalConditions[index], name };
-    charSheetStore.updateContent(this._id, { temporalConditions });
+    this.charSheetStore.updateContent(this._id, { temporalConditions });
   }
 
   setTemporalConditionValue(index: number, value: number) {
     const temporalConditions = [...this.charSheet.temporalConditions];
     temporalConditions[index] = { ...temporalConditions[index], value };
-    charSheetStore.updateContent(this._id, { temporalConditions });
+    this.charSheetStore.updateContent(this._id, { temporalConditions });
   }
 
   removeTemporalCondition(index: number) {
     const temporalConditions = this.charSheet.temporalConditions.filter(
       (_, i) => i !== index,
     );
-    charSheetStore.updateContent(this._id, { temporalConditions });
+    this.charSheetStore.updateContent(this._id, { temporalConditions });
   }
   // #endregion
 
   // #region Items
   createItem(item: Item) {
     const items = [...this.charSheet.items, item];
-    charSheetStore.updateContent(this._id, { items });
+    this.charSheetStore.updateContent(this._id, { items });
   }
 
   updateItem(index: number, item: Item) {
     const items = [...this.charSheet.items];
     items[index] = item;
-    charSheetStore.updateContent(this._id, { items });
+    this.charSheetStore.updateContent(this._id, { items });
   }
 
   setItemCurrentStrength(index: number, currentStrength: number) {
     const items = [...this.charSheet.items];
     items[index] = { ...items[index], currentStrength };
-    charSheetStore.updateContent(this._id, { items });
+    this.charSheetStore.updateContent(this._id, { items });
   }
 
   removeItem(index: number) {
     const items = this.charSheet.items.filter((_, i) => i !== index);
-    charSheetStore.updateContent(this._id, { items });
+    this.charSheetStore.updateContent(this._id, { items });
   }
   // #endregion
 
   // #region Projects
   createProject(project: Project) {
-    const projects = [
-      ...this.charSheet.projects,
-      project,
-    ];
-    charSheetStore.updateContent(this._id, { projects });
+    const projects = [...this.charSheet.projects, project];
+    this.charSheetStore.updateContent(this._id, { projects });
   }
 
   setProjectProgress(index: number, progress: number) {
     const projects = [...this.charSheet.projects];
     projects[index] = { ...projects[index], progress };
-    charSheetStore.updateContent(this._id, { projects });
+    this.charSheetStore.updateContent(this._id, { projects });
   }
 
   updateProject(index: number, project: Project) {
     const projects = [...this.charSheet.projects];
     projects[index] = project;
-    charSheetStore.updateContent(this._id, { projects });
+    this.charSheetStore.updateContent(this._id, { projects });
   }
 
   removeProject(index: number) {
     const projects = this.charSheet.projects.filter((_, i) => i !== index);
-    charSheetStore.updateContent(this._id, { projects });
+    this.charSheetStore.updateContent(this._id, { projects });
   }
   // #endregion
 
   // #region Luck
   setLuck(value: number) {
-    charSheetStore.updateContent(this._id, { luck: value });
+    this.charSheetStore.updateContent(this._id, { luck: value });
   }
   // #endregion
 
   // #region Notes
   setNotes(value: string) {
-    charSheetStore.updateContent(this._id, { notes: value });
+    this.charSheetStore.updateContent(this._id, { notes: value });
   }
   // #endregion
 }
 
-const list = Object.values(charSheetStore.charSheets);
-export const charSheetEditorUiStore = new CharSheetEditorUiStore(list[0]?.id);

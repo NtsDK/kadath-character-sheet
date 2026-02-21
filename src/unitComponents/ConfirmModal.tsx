@@ -1,8 +1,9 @@
 import { observer } from "mobx-react-lite";
-import { confirmModalUiStore } from "./ConfirmModalUiStore";
 import { Modal } from "antd";
+import { getConfirmModalUiStore } from "../IoC";
 
 export const ConfirmModal = observer(() => {
+  const confirmModalUiStore = getConfirmModalUiStore();
   const { status } = confirmModalUiStore;
 
   if (status.type === "close") {

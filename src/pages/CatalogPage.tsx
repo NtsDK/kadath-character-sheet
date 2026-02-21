@@ -4,10 +4,11 @@ import { PlusIcon } from "@heroicons/react/24/outline";
 import { RenameCharSheetModal } from "./RenameCharSheetModal";
 import { useState } from "react";
 import { v4 as uuid } from "uuid";
-import { charSheetStore } from "../domainServices/CharSheetStore";
 import { CatalogTable } from "./CatalogTable";
+import { getCharSheetStore } from "../IoC";
 
 export const CatalogPage = observer(() => {
+  const charSheetStore = getCharSheetStore();
   const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   const [createKey, setCreateKey] = useState(uuid());
 

@@ -1,11 +1,11 @@
 import { Table } from "antd";
 import { observer } from "mobx-react-lite";
 import { CharSheet } from "../domain/CharSheet";
-import { catalogPageUiStore } from "./CatalogPageUiStore";
 import { ColumnsType } from "antd/es/table";
 import { CharacterMenu } from "./CharacterMenu";
 import { DateTime } from "luxon";
 import { CharacterLink } from "./CharacterLink";
+import { getCatalogPageUiStore } from "../IoC";
 
 const columns: ColumnsType<CharSheet> = [
   {
@@ -34,7 +34,7 @@ const columns: ColumnsType<CharSheet> = [
 ];
 
 export const CatalogTable = observer(() => {
-  const { charSheets } = catalogPageUiStore;
+  const { charSheets } = getCatalogPageUiStore();
 
   return <Table<CharSheet> columns={columns} dataSource={charSheets} size="small"/>;
 });

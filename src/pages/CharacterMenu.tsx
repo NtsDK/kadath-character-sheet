@@ -4,10 +4,9 @@ import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import { RenameCharSheetModal } from "./RenameCharSheetModal";
 import { useState } from "react";
 import { v4 as uuid } from "uuid";
-import { charSheetStore } from "../domainServices/CharSheetStore";
 import { assert } from "../utils/assert";
-import { confirmModalUiStore } from "../unitComponents/ConfirmModalUiStore";
 import { CharSheet } from "../domain/CharSheet";
+import { getCharSheetStore, getConfirmModalUiStore } from "../IoC";
 
 const CHAR_SHEET_MENU_KEYS = ["rename", "copy", "delete"] as const;
 
@@ -36,6 +35,7 @@ type Props = {
 };
 
 export const CharacterMenu = observer(({ charSheet }: Props) => {
+  const charSheetStore = getCharSheetStore();
   const [isRenameModalOpen, setIsRenameModalOpen] = useState(false);
   const [renameCharId, setRenameCharId] = useState(uuid());
 
@@ -52,7 +52,7 @@ export const CharacterMenu = observer(({ charSheet }: Props) => {
       } else if (key === "copy") {
         charSheetStore.copy(id);
       } else if (key === "delete") {
-        confirmModalUiStore.confirm(
+        getConfirmModalUiStore().confirm(
           `Вы уверены, что хотите удалить персонажа ${name}?`,
           () => {
             charSheetStore.delete(id);

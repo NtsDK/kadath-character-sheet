@@ -1,12 +1,13 @@
 import { observer } from "mobx-react-lite";
 import { TemporalConditionInput } from "../../unitComponents/TemporalConditionInput";
-import { charSheetEditorUiStore } from "../CharSheetEditorUiStore";
+import { getCharSheetEditorUiStore } from "../../IoC";
 
 type Props = {
   className?: string;
 };
 
 export const TemporalConditionSectionBody = observer(({ className }: Props) => {
+  const charSheetEditorUiStore = getCharSheetEditorUiStore();
   const { temporalConditions } = charSheetEditorUiStore.charSheet;
 
   return (

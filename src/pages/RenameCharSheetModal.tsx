@@ -2,9 +2,9 @@ import { Input, Modal } from "antd";
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
 import classnames from "classnames";
-import { charSheetStore } from "../domainServices/CharSheetStore";
 import { VALIDATE_NAME_REGEX } from "../utils/nameValidation";
 import { InputError } from "../unitComponents/InputError";
+import { getCharSheetStore } from "../IoC";
 
 type Props = {
   title?: string;
@@ -35,7 +35,7 @@ export const RenameCharSheetModal = observer(
         setError("Имя может содержать только буквы, цифры, пробелы, символ подчеркивания и круглые скобки");
         return;
       }
-      if (charSheetStore.isNameUsed(trimmedName)) {
+      if (getCharSheetStore().isNameUsed(trimmedName)) {
         setError("Имя уже используется");
         return;
       }

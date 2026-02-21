@@ -1,12 +1,13 @@
 import { observer } from "mobx-react-lite";
 import { RecollectionInput } from "../../unitComponents/RecollectionInput";
-import { charSheetEditorUiStore } from "../CharSheetEditorUiStore";
+import { getCharSheetEditorUiStore } from "../../IoC";
 
 type Props = {
   className?: string;
 };
 
 export const RecollectionSectionBody = observer(({ className }: Props) => {
+  const charSheetEditorUiStore = getCharSheetEditorUiStore();
   const { recollections } = charSheetEditorUiStore.charSheet;
 
   return (

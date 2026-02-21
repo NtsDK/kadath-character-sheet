@@ -1,3 +1,4 @@
+import { injectable } from "inversify";
 import { action, computed, makeObservable, observable } from "mobx";
 
 type ConfirmModalStatus =
@@ -10,7 +11,8 @@ type ConfirmModalStatus =
       onConfirm: () => void;
     };
 
-class ConfirmModalUiStore {
+@injectable()
+export class ConfirmModalUiStore {
   _status: ConfirmModalStatus = { type: "close" };
 
   constructor() {
@@ -41,5 +43,3 @@ class ConfirmModalUiStore {
     this._status = { type: "close" };
   }
 }
-
-export const confirmModalUiStore = new ConfirmModalUiStore();

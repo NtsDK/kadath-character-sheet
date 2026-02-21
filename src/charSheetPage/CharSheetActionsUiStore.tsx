@@ -1,11 +1,14 @@
 import { action, computed, makeObservable, observable, reaction } from "mobx";
-import { charSheetEditorUiStore } from "./CharSheetEditorUiStore";
 import { strToNumber } from "../utils/strToNumber";
 import { PostActionEffect } from "../domain/PostActionEffect";
 import { assert } from "../utils/assert";
 import { MAX_LUCK, MAX_WEAKNESS } from "../domain/constants";
 import { limit } from "../utils/limit";
+import { inject, injectable } from "inversify";
+import { CharSheetEditorUiStore } from "./CharSheetEditorUiStore";
+import { IOC_IDS } from "../IoC";
 
+@injectable()
 export class CharSheetActionsUiStore {
   _selectedPowers = new Set<number>();
   _selectedDreamlandPowers = new Set<number>();
@@ -19,7 +22,10 @@ export class CharSheetActionsUiStore {
   _rawDiceRollResult: number[] = [];
   _postActionEffects: PostActionEffect[] = [];
 
-  constructor() {
+  constructor(
+    @inject(IOC_IDS.CharSheetEditorUiStore)
+    public readonly charSheetEditorUiStore: CharSheetEditorUiStore,
+  ) {
     makeObservable(this, {
       _selectedPowers: observable,
       _selectedDreamlandPowers: observable,
@@ -50,52 +56,52 @@ export class CharSheetActionsUiStore {
       () => charSheetEditorUiStore.charSheet?.powers.length,
       () => {
         this._selectedPowers.clear();
-      }
+      },
     );
     reaction(
       () => charSheetEditorUiStore.charSheet?.dreamlandPowers.length,
       () => {
         this._selectedDreamlandPowers.clear();
-      }
+      },
     );
     reaction(
       () => charSheetEditorUiStore.charSheet?.mentalConditions.length,
       () => {
         this._selectedMentalCondition = null;
-      }
+      },
     );
     reaction(
       () => charSheetEditorUiStore.charSheet?.bodyWounds.length,
       () => {
         this._selectedBodyWounds.clear();
-      }
+      },
     );
     reaction(
       () => charSheetEditorUiStore.charSheet?.temporalConditions.length,
       () => {
         this._selectedTemporalConditions.clear();
-      }
+      },
     );
     reaction(
       () => charSheetEditorUiStore.charSheet?.items.length,
       () => {
         this._selectedItems.clear();
-      }
+      },
     );
     reaction(
       () => charSheetEditorUiStore.charSheet?.luck,
       () => {
         this._useLuckPoints = 0;
-      }
+      },
     );
   }
 
   get id() {
-    return charSheetEditorUiStore.charSheet.id;
+    return this.charSheetEditorUiStore.charSheet.id;
   }
 
   get powers() {
-    return charSheetEditorUiStore.charSheet.powers;
+    return this.charSheetEditorUiStore.charSheet.powers;
   }
 
   get selectedPowers() {
@@ -103,7 +109,7 @@ export class CharSheetActionsUiStore {
   }
 
   get dreamlandPowers() {
-    return charSheetEditorUiStore.charSheet.dreamlandPowers;
+    return this.charSheetEditorUiStore.charSheet.dreamlandPowers;
   }
 
   get selectedDreamlandPowers() {
@@ -111,7 +117,7 @@ export class CharSheetActionsUiStore {
   }
 
   get weakness() {
-    return charSheetEditorUiStore.charSheet.weakness;
+    return this.charSheetEditorUiStore.charSheet.weakness;
   }
 
   get applyWeakness() {
@@ -119,7 +125,7 @@ export class CharSheetActionsUiStore {
   }
 
   get mentalConditions() {
-    return charSheetEditorUiStore.charSheet.mentalConditions;
+    return this.charSheetEditorUiStore.charSheet.mentalConditions;
   }
 
   get selectedMentalCondition() {
@@ -127,7 +133,7 @@ export class CharSheetActionsUiStore {
   }
 
   get bodyWounds() {
-    return charSheetEditorUiStore.charSheet.bodyWounds;
+    return this.charSheetEditorUiStore.charSheet.bodyWounds;
   }
 
   get selectedBodyWounds() {
@@ -135,7 +141,7 @@ export class CharSheetActionsUiStore {
   }
 
   get temporalConditions() {
-    return charSheetEditorUiStore.charSheet.temporalConditions;
+    return this.charSheetEditorUiStore.charSheet.temporalConditions;
   }
 
   get selectedTemporalConditions() {
@@ -147,7 +153,7 @@ export class CharSheetActionsUiStore {
   }
 
   get items() {
-    return charSheetEditorUiStore.charSheet.items;
+    return this.charSheetEditorUiStore.charSheet.items;
   }
 
   get selectedItems() {
@@ -155,7 +161,7 @@ export class CharSheetActionsUiStore {
   }
 
   get luck() {
-    return charSheetEditorUiStore.charSheet.luck;
+    return this.charSheetEditorUiStore.charSheet.luck;
   }
 
   get useLuckPoints() {
@@ -227,20 +233,20 @@ export class CharSheetActionsUiStore {
   }
 
   applyPostActionEffects() {
-    let luck = charSheetEditorUiStore.charSheet.luck;
+    let luck = this.charSheetEditorUiStore.charSheet.luck;
     for (const effect of this._postActionEffects) {
       if (effect === "weakenMentalCondition") {
         const mentalCondition = this.selectedMentalConditionObject;
         assert(this._selectedMentalCondition !== null && mentalCondition);
         if (mentalCondition.value > 0) {
-          charSheetEditorUiStore.setMentalConditionValue(
+          this.charSheetEditorUiStore.setMentalConditionValue(
             this._selectedMentalCondition,
-            mentalCondition.value - 1
+            mentalCondition.value - 1,
           );
         } else {
-          charSheetEditorUiStore.setMentalConditionValue(
+          this.charSheetEditorUiStore.setMentalConditionValue(
             this._selectedMentalCondition,
-            mentalCondition.value + 1
+            mentalCondition.value + 1,
           );
         }
       }
@@ -248,19 +254,19 @@ export class CharSheetActionsUiStore {
         luck -= this._useLuckPoints;
       }
       if (effect === "increaseWeakness") {
-        charSheetEditorUiStore.setWeaknessValue(this.weakness.value + 1);
+        this.charSheetEditorUiStore.setWeaknessValue(this.weakness.value + 1);
       }
       if (effect === "overcomingWeakness") {
         luck += 6;
-        charSheetEditorUiStore.setWeaknessValue(1);
+        this.charSheetEditorUiStore.setWeaknessValue(1);
       }
       if (effect === "fiascoWeaknessReset") {
         luck += this.weakness.value;
-        charSheetEditorUiStore.setWeaknessValue(1);
+        this.charSheetEditorUiStore.setWeaknessValue(1);
       }
     }
     luck = limit(luck, { min: 0, max: MAX_LUCK });
-    charSheetEditorUiStore.setLuck(luck);
+    this.charSheetEditorUiStore.setLuck(luck);
 
     this._postActionEffects = [];
   }
@@ -361,7 +367,7 @@ export class CharSheetActionsUiStore {
     });
 
     const temporalConditionIndexes = Array.from(
-      this._selectedTemporalConditions
+      this._selectedTemporalConditions,
     );
     temporalConditionIndexes.sort();
     temporalConditionIndexes.forEach((index) => {
@@ -392,5 +398,3 @@ export class CharSheetActionsUiStore {
     };
   }
 }
-
-export const charSheetActionsUiStore = new CharSheetActionsUiStore();

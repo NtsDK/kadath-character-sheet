@@ -3,8 +3,6 @@ import { Col, Form, Input, Row } from "antd";
 import { Segmented } from "antd";
 import { v4 as uuid } from "uuid";
 
-import { charSheetEditorUiStore } from "./CharSheetEditorUiStore";
-
 import { SectionHeader } from "../unitComponents/SectionHeader";
 import { PowerSectionBody } from "./components/PowerSectionBody";
 import { DreamlandPowerSectionBody } from "./components/DreamlandPowerSectionBody";
@@ -20,8 +18,10 @@ import { range } from "../utils/range";
 import { ProjectSectionBody } from "./components/ProjectSectionBody";
 import { EditProjectModal } from "../pages/EditProjectModal";
 import { EditItemModal } from "../pages/EditItemModal";
+import { getCharSheetEditorUiStore } from "../IoC";
 
 export const CharSheetEditor = observer(() => {
+  const charSheetEditorUiStore = getCharSheetEditorUiStore();
   const params = useParams();
   const [isCreateProjectModalOpen, setIsCreateProjectModalOpen] =
     useState(false);

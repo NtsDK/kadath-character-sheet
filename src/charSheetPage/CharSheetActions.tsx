@@ -1,11 +1,13 @@
 import { Button, Checkbox, InputNumber, Tag } from "antd";
 import { observer } from "mobx-react-lite";
-import { charSheetEditorUiStore } from "./CharSheetEditorUiStore";
-import { charSheetActionsUiStore } from "./CharSheetActionsUiStore";
 import { MentalConditionSelect } from "./actionComponents/MentalConditionSelect";
 import { PostActionEffectView } from "./PostActionEffectView";
+import { getCharSheetActionsUiStore, getCharSheetEditorUiStore } from "../IoC";
 
 export const CharSheetActions = observer(() => {
+  const charSheetActionsUiStore = getCharSheetActionsUiStore();
+  const charSheetEditorUiStore = getCharSheetEditorUiStore();
+
   if (!charSheetEditorUiStore.charSheetExists) {
     return null;
   }

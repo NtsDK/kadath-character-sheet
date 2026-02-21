@@ -11,8 +11,10 @@ import { assert } from "../utils/assert";
 
 import { v4 as uuid } from "uuid";
 import { generateCopyName } from "../utils/generateCopyName";
+import { injectable } from "inversify";
 
-class CharSheetStore {
+@injectable()
+export class CharSheetStore {
   _charSheets: Record<string, CharSheet> = {};
 
   constructor() {
@@ -94,8 +96,3 @@ class CharSheetStore {
   // #endregion
 }
 
-export const charSheetStore = new CharSheetStore();
-
-charSheetStore.add(ClaudiaCharSheet());
-charSheetStore.add(ClaudiaCharSheet2());
-charSheetStore.add(getNewDefinedCharSheet());

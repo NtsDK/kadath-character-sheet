@@ -1,15 +1,16 @@
 import { observer } from "mobx-react-lite";
 import { Input, Button, InputNumber } from "antd";
 import { CloseOutlined, EditOutlined } from "@ant-design/icons";
-import { charSheetEditorUiStore } from "../CharSheetEditorUiStore";
 import { useState } from "react";
 import { EditItemModal } from "../../pages/EditItemModal";
+import { getCharSheetEditorUiStore } from "../../IoC";
 
 type Props = {
   className?: string;
 };
 
 export const ItemSectionBody = observer(({ className }: Props) => {
+  const charSheetEditorUiStore = getCharSheetEditorUiStore();
   const { items } = charSheetEditorUiStore.charSheet;
   const [isEditItemModalOpen, setIsEditItemModalOpen] = useState(false);
   const [editItemIndex, setEditItemIndex] = useState(0);

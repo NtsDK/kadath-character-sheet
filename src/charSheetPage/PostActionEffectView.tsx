@@ -1,14 +1,15 @@
 import { observer } from "mobx-react-lite";
 import { PostActionEffect } from "../domain/PostActionEffect";
-import { charSheetActionsUiStore } from "./CharSheetActionsUiStore";
 import { assert } from "../utils/assert";
 import { MAX_LUCK } from "../domain/constants";
+import { getCharSheetActionsUiStore } from "../IoC";
 
 type Props = {
   effect: PostActionEffect;
 };
 
 export const PostActionEffectView = observer(({ effect }: Props) => {
+  const charSheetActionsUiStore = getCharSheetActionsUiStore();
   if (effect === "weakenMentalCondition") {
     const condition = charSheetActionsUiStore.selectedMentalConditionObject;
     assert(condition);

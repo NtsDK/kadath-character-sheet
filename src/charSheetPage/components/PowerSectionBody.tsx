@@ -1,12 +1,13 @@
 import { observer } from "mobx-react-lite";
 import { PowerInput } from "../../unitComponents/PowerInput";
-import { charSheetEditorUiStore } from "../CharSheetEditorUiStore";
+import { getCharSheetEditorUiStore } from "../../IoC";
 
 type Props = {
   className?: string;
 };
 
 export const PowerSectionBody = observer(({className}: Props) => {
+  const charSheetEditorUiStore = getCharSheetEditorUiStore();
   const { powers } = charSheetEditorUiStore.charSheet;
   return (
     <div className={className}>

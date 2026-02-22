@@ -4,4 +4,5 @@ export const IOC_IDS = {
   CharSheetActionsUiStore: Symbol("CharSheetActionsUiStore"),
   CharSheetEditorUiStore: Symbol("CharSheetEditorUiStore"),
   CharSheetStore: Symbol("CharSheetStore"),
+  TempStorage: Symbol("TempStorage"),
 };

@@ -6,6 +6,8 @@
   ],
   "compilerOptions": {
     "experimentalDecorators": true,
-    "emitDecoratorMetadata": true
+    "emitDecoratorMetadata": true,
+    "declaration": true,
+    "isolatedDeclarations" : true
   }
 }

@@ -2,6 +2,7 @@ import { CharSheetActionsUiStore } from "../charSheetPage/CharSheetActionsUiStor
 import { CharSheetEditorUiStore } from "../charSheetPage/CharSheetEditorUiStore";
 import { CharSheetStore } from "../domainServices/CharSheetStore";
 import { CatalogPageUiStore } from "../pages/CatalogPageUiStore";
+import { ITempStorage } from "../ports";
 import { ConfirmModalUiStore } from "../unitComponents/ConfirmModalUiStore";
 import { iocContainer } from "./container";
 import { IOC_IDS } from "./Symbols";
@@ -24,4 +25,8 @@ export function getCharSheetEditorUiStore(): CharSheetEditorUiStore {
 
 export function getCharSheetStore(): CharSheetStore {
   return iocContainer.get<CharSheetStore>(IOC_IDS.CharSheetStore);
+}
+
+export function getTempStorage(): ITempStorage {
+  return iocContainer.get<ITempStorage>(IOC_IDS.TempStorage);
 }

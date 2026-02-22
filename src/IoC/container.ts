@@ -5,6 +5,7 @@ import { ConfirmModalUiStore } from "../unitComponents/ConfirmModalUiStore";
 import { CharSheetActionsUiStore } from "../charSheetPage/CharSheetActionsUiStore";
 import { CharSheetEditorUiStore } from "../charSheetPage/CharSheetEditorUiStore";
 import { CharSheetStore } from "../domainServices/CharSheetStore";
+import { TempStorage } from "../infrastructure/TempStorage";
 
 export const iocContainer = new Container();
 
@@ -13,3 +14,4 @@ iocContainer.bind(IOC_IDS.ConfirmModalUiStore).to(ConfirmModalUiStore).inSinglet
 iocContainer.bind(IOC_IDS.CharSheetActionsUiStore).to(CharSheetActionsUiStore).inSingletonScope();
 iocContainer.bind(IOC_IDS.CharSheetEditorUiStore).to(CharSheetEditorUiStore).inSingletonScope();
 iocContainer.bind(IOC_IDS.CharSheetStore).to(CharSheetStore).inSingletonScope();
+iocContainer.bind(IOC_IDS.TempStorage).to(TempStorage).inSingletonScope();

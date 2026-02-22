@@ -1,15 +1,12 @@
-import {
-  ClaudiaCharSheet,
-  ClaudiaCharSheet2,
-  getNewDefinedCharSheet,
-} from "./domainServices/charSheet";
-import { getCharSheetEditorUiStore, getCharSheetStore } from "./IoC";
+import { getCharSheetEditorUiStore, getCharSheetStore, getTempStorage } from "./IoC";
 
-export function initApp() {
+export async function initApp() {
+
+  const tempStorage = getTempStorage();
+  await tempStorage.init();
+  const charSheets = await tempStorage.getAllCharSheets();
   const charSheetStore = getCharSheetStore();
-  charSheetStore.add(ClaudiaCharSheet());
-  charSheetStore.add(ClaudiaCharSheet2());
-  charSheetStore.add(getNewDefinedCharSheet());
+  charSheetStore.init(charSheets);
 
   const list = Object.values(charSheetStore.charSheets);
   const charSheetEditorUiStore = getCharSheetEditorUiStore();

@@ -1,28 +1,32 @@
 import { action, computed, makeObservable, observable, toJS } from "mobx";
-import { CharSheet, CharSheetContent, CharSheetMeta } from "../domain/CharSheet";
 import {
-  ClaudiaCharSheet,
-  getNewDefinedCharSheet,
-  getNewCharSheet,
-  ClaudiaCharSheet2,
-} from "./charSheet";
+  CharSheet,
+  CharSheetContent,
+  CharSheetMeta,
+} from "../domain/CharSheet";
+import { getNewCharSheet } from "./charSheet";
 import { clone } from "ramda";
 import { assert } from "../utils/assert";
 
 import { v4 as uuid } from "uuid";
 import { generateCopyName } from "../utils/generateCopyName";
-import { injectable } from "inversify";
+import { inject, injectable } from "inversify";
+import { IOC_IDS } from "../IoC";
+import type { ITempStorage } from "../ports";
 
 @injectable()
 export class CharSheetStore {
   _charSheets: Record<string, CharSheet> = {};
 
-  constructor() {
+  constructor(
+    @inject(IOC_IDS.TempStorage)
+    public readonly tempStorage: ITempStorage,
+  ) {
     makeObservable(this, {
       _charSheets: observable,
       charSheets: computed,
       create: action,
-      add: action,
+      init: action,
       copy: action,
       delete: action,
       updateMeta: action,
@@ -50,6 +54,13 @@ export class CharSheetStore {
   // #endregion
 
   // #region actions
+
+  init(charSheets: CharSheet[]): void {
+    charSheets.forEach((charSheet) => {
+      this._charSheets[charSheet.id] = charSheet;
+    });
+  }
+
   create(name: string): void {
     if (this.isNameUsed(name)) {
       return;
@@ -57,10 +68,7 @@ export class CharSheetStore {
     const newCharSheet = getNewCharSheet();
     newCharSheet.name = name;
     this._charSheets[newCharSheet.id] = newCharSheet;
-  }
-
-  add(charSheet: CharSheet) {
-    this._charSheets[charSheet.id] = charSheet;
+    this.tempStorage.create(newCharSheet);
   }
 
   copy(id: string): void {
@@ -70,13 +78,15 @@ export class CharSheetStore {
     copy.id = uuid();
     copy.name = generateCopyName(
       original.name,
-      new Set(Object.values(this._charSheets).map((el) => el.name))
+      new Set(Object.values(this._charSheets).map((el) => el.name)),
     );
     this._charSheets[copy.id] = copy;
+    this.tempStorage.create(copy);
   }
 
   delete(id: string): void {
     delete this._charSheets[id];
+    this.tempStorage.delete(id);
   }
 
   updateMeta(id: string, charSheetPatch: Partial<CharSheetMeta>) {
@@ -84,6 +94,7 @@ export class CharSheetStore {
       ...this._charSheets[id],
       ...charSheetPatch,
     };
+    this.tempStorage.update(toJS(this._charSheets[id]));
   }
 
   updateContent(id: string, charSheetPatch: Partial<CharSheetContent>) {
@@ -92,7 +103,7 @@ export class CharSheetStore {
       updatedAt: new Date(),
       ...charSheetPatch,
     };
+    this.tempStorage.update(toJS(this._charSheets[id]));
   }
   // #endregion
 }
-

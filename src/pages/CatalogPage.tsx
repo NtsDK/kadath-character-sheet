@@ -6,6 +6,7 @@ import { useState } from "react";
 import { v4 as uuid } from "uuid";
 import { CatalogTable } from "./CatalogTable";
 import { getCharSheetStore } from "../IoC";
+import { MainMenu } from "./MainMenu";
 
 export const CatalogPage = observer(() => {
   const charSheetStore = getCharSheetStore();
@@ -14,7 +15,7 @@ export const CatalogPage = observer(() => {
 
   return (
     <div className="tw-px-8 tw-py-4 tw-w-full">
-      <div className="tw-mb-4">
+      <div className="tw-mb-4 tw-flex tw-justify-between">
         <Button
           type="primary"
           onClick={() => {
@@ -24,6 +25,7 @@ export const CatalogPage = observer(() => {
         >
           <PlusIcon className="tw-h-4" /> Создать
         </Button>
+        <MainMenu />
       </div>
       <CatalogTable />
       <RenameCharSheetModal

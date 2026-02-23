@@ -89,6 +89,11 @@ export class CharSheetStore {
     this.tempStorage.delete(id);
   }
 
+  deleteAll(): void {
+    this._charSheets = {};
+    this.tempStorage.deleteAll();
+  }
+
   updateMeta(id: string, charSheetPatch: Partial<CharSheetMeta>) {
     this._charSheets[id] = {
       ...this._charSheets[id],

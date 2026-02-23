@@ -52,6 +52,10 @@ export class TempStorage implements ITempStorage {
     await this.db.delete(FILES_STORE, id);
   }
 
+  async deleteAll(): Promise<void> {
+    await this.db.clear(FILES_STORE);
+  }
+
   async dropDB() {
     return deleteDB(DB_NAME);
   }

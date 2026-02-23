@@ -10,4 +10,6 @@ export interface ITempStorage {
   update(charSheet: CharSheet): Promise<void>;
 
   delete(id: string): Promise<void>;
+
+  deleteAll(): Promise<void>;
 }

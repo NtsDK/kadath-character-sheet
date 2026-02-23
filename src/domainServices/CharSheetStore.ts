@@ -43,6 +43,10 @@ export class CharSheetStore {
     return this._charSheets[id];
   }
 
+  getAll(): CharSheet[] {
+    return Object.values(this._charSheets);
+  }
+
   exists(id: string): boolean {
     return !!this._charSheets[id];
   }

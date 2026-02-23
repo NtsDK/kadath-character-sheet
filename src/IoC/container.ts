@@ -6,6 +6,7 @@ import { CharSheetActionsUiStore } from "../charSheetPage/CharSheetActionsUiStor
 import { CharSheetEditorUiStore } from "../charSheetPage/CharSheetEditorUiStore";
 import { CharSheetStore } from "../domainServices/CharSheetStore";
 import { TempStorage } from "../infrastructure/TempStorage";
+import { ExportManager } from "../infrastructure/exportImport/ExportManager";
 
 export const iocContainer = new Container();
 
@@ -15,3 +16,4 @@ iocContainer.bind(IOC_IDS.CharSheetActionsUiStore).to(CharSheetActionsUiStore).i
 iocContainer.bind(IOC_IDS.CharSheetEditorUiStore).to(CharSheetEditorUiStore).inSingletonScope();
 iocContainer.bind(IOC_IDS.CharSheetStore).to(CharSheetStore).inSingletonScope();
 iocContainer.bind(IOC_IDS.TempStorage).to(TempStorage).inSingletonScope();
+iocContainer.bind(IOC_IDS.ExportManager).to(ExportManager).inSingletonScope();

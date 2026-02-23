@@ -13,3 +13,7 @@ export interface ITempStorage {
 
   deleteAll(): Promise<void>;
 }
+
+export interface IExportManager {
+  export(charSheets: CharSheet[]): void;
+}

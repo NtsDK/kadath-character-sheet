@@ -1,6 +1,7 @@
 import { CharSheet } from "../domain/CharSheet";
 import * as R from "ramda";
 import { v4 as uuid } from "uuid";
+import { VERSION } from "../constants";
 
 export function getNewCharSheet(): CharSheet {
   return {
@@ -8,7 +9,7 @@ export function getNewCharSheet(): CharSheet {
     type: "char-sheet/beyond-the-gates",
     id: uuid(),
     updatedAt: new Date(),
-    version: "0.1.0",
+    version: VERSION,
     // characterName: "",
     // playerName: "",
     powers: [],
@@ -31,7 +32,7 @@ export function ClaudiaCharSheet(): CharSheet {
     type: "char-sheet/beyond-the-gates",
     id: uuid(),
     updatedAt: new Date(),
-    version: "0.1.0",
+    version: VERSION,
     // characterName: "Клодия",
     // playerName: "",
     powers: [
@@ -101,7 +102,7 @@ export function ClaudiaCharSheet2(): CharSheet {
     type: "char-sheet/beyond-the-gates",
     id: uuid(),
     updatedAt: new Date(),
-    version: "0.1.0",
+    version: VERSION,
     // characterName: "Клодия",
     // playerName: "",
     powers: [
@@ -217,7 +218,7 @@ export function getNewDefinedCharSheet(): CharSheet {
     type: "char-sheet/beyond-the-gates",
     id: uuid(),
     updatedAt: new Date(),
-    version: "0.1.0",
+    version: VERSION,
     // characterName: "characterName",
     // playerName: "playerName",
     powers: cloneToArr({ name: "power1", value: 1 }, 15),

@@ -17,6 +17,7 @@
     "classnames": "^2.5.1",
     "idb": "^8.0.3",
     "inversify": "^7.11.0",
+    "jszip": "^3.10.1",
     "luxon": "^3.6.1",
     "mobx": "^6.13.2",
     "mobx-react-lite": "^4.0.7",

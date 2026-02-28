@@ -17,3 +17,7 @@ export interface ITempStorage {
 export interface IExportManager {
   export(charSheets: CharSheet[]): void;
 }
+
+export interface IImportManager {
+  import(file: File): void;
+}

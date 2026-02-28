@@ -6,4 +6,5 @@ export const IOC_IDS = {
   CharSheetStore: Symbol("CharSheetStore"),
   TempStorage: Symbol("TempStorage"),
   ExportManager: Symbol("ExportManager"),
+  ImportManager: Symbol("ImportManager"),
 };

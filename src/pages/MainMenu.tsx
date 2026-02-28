@@ -1,11 +1,17 @@
 import { Button, Dropdown, MenuProps } from "antd";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import { toJS } from "mobx";
+import Dropzone from "react-dropzone";
 
 import { assert } from "../utils/assert";
-import { getCharSheetStore, getConfirmModalUiStore, getExportManager } from "../IoC";
+import {
+  getCharSheetStore,
+  getConfirmModalUiStore,
+  getExportManager,
+  getImportManager,
+} from "../IoC";
 
-const MAIN_MENU_KEYS = ["drop_base", "export_all"] as const;
+const MAIN_MENU_KEYS = ["drop_base", "export_all", "import"] as const;
 
 type MainMenuKey = (typeof MAIN_MENU_KEYS)[number];
 
@@ -15,6 +21,23 @@ const items: MenuProps["items"] = [
   {
     label: "Скачать все данные",
     key: "export_all" satisfies MainMenuKey,
+  },
+  {
+    label: (
+      <Dropzone onDrop={(acceptedFiles) => {
+        const importManager = getImportManager();
+        importManager.import(acceptedFiles[0]);
+      }}>
+        {({ getRootProps, getInputProps }) => (
+          <div {...getRootProps()}>
+            <input {...getInputProps()} accept=".zip" multiple={false} />
+            Загрузить данные
+          </div>
+        )}
+      </Dropzone>
+    ),
+
+    key: "import" satisfies MainMenuKey,
   },
   {
     type: "divider",

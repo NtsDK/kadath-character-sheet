@@ -1,12 +1,13 @@
 import { action, computed, makeObservable, observable } from "mobx";
+import { inject, injectable } from "inversify";
+
 import {
   CharSheet,
   CharSheetContent,
   Item,
   Project,
 } from "../domain/CharSheet";
-import { inject, injectable } from "inversify";
-import { IOC_IDS } from "../IoC";
+import { IOC_IDS } from "../IoC/Symbols";
 import { CharSheetStore } from "../domainServices/CharSheetStore";
 
 @injectable()

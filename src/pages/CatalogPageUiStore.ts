@@ -1,8 +1,9 @@
 import { computed, makeObservable, observable } from "mobx";
-import { CharSheet } from "../domain/CharSheet";
 import { inject, injectable } from "inversify";
+
+import { CharSheet } from "../domain/CharSheet";
 import { CharSheetStore } from "../domainServices/CharSheetStore";
-import { IOC_IDS } from "../IoC";
+import { IOC_IDS } from "../IoC/Symbols";
 
 @injectable()
 export class CatalogPageUiStore {

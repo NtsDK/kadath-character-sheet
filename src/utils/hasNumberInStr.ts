@@ -1,4 +1,4 @@
 export function hasNumberInStr(str: string): boolean {
-  const str2 = str.replace(/\D/g, "");
+  const str2 = str.replaceAll(/\D/g, "");
   return str2 !== "";
 }

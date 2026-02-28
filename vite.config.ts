@@ -7,6 +7,7 @@ import react from "@vitejs/plugin-react-swc";
 // https://stackoverflow.com/questions/77616517/make-tsyringe-decorators-works-with-vite
 // https://timtech.blog/posts/transform-typescript-legacy-decorators-vite-swc-plugin/
 // https://vitejs.dev/config/
+// eslint-disable-next-line import-plugin/no-default-export
 export default defineConfig({
   base: "./",
   plugins: [

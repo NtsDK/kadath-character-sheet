@@ -1,11 +1,14 @@
 import { Table } from "antd";
 import { observer } from "mobx-react-lite";
-import { CharSheet } from "../domain/CharSheet";
 import { ColumnsType } from "antd/es/table";
-import { CharacterMenu } from "./CharacterMenu";
 import { DateTime } from "luxon";
-import { CharacterLink } from "./CharacterLink";
+
+import { CharSheet } from "../domain/CharSheet";
 import { getCatalogPageUiStore } from "../IoC";
+
+import { CharacterMenu } from "./CharacterMenu";
+import { CharacterLink } from "./CharacterLink";
+
 
 const columns: ColumnsType<CharSheet> = [
   {

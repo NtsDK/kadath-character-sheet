@@ -1,18 +1,19 @@
 import { action, computed, makeObservable, observable, toJS } from "mobx";
+import { clone } from "ramda";
+import { v4 as uuid } from "uuid";
+import { inject, injectable } from "inversify";
+
+import { assert } from "../utils/assert";
+import { generateCopyName } from "../utils/generateCopyName";
 import {
   CharSheet,
   CharSheetContent,
   CharSheetMeta,
 } from "../domain/CharSheet";
-import { getNewCharSheet } from "./charSheet";
-import { clone } from "ramda";
-import { assert } from "../utils/assert";
-
-import { v4 as uuid } from "uuid";
-import { generateCopyName } from "../utils/generateCopyName";
-import { inject, injectable } from "inversify";
-import { IOC_IDS } from "../IoC";
+import { IOC_IDS } from "../IoC/Symbols";
 import type { ITempStorage } from "../ports";
+
+import { getNewCharSheet } from "./charSheet";
 
 @injectable()
 export class CharSheetStore {
@@ -60,9 +61,9 @@ export class CharSheetStore {
   // #region actions
 
   init(charSheets: CharSheet[]): void {
-    charSheets.forEach((charSheet) => {
+    for (const charSheet of charSheets) {
       this._charSheets[charSheet.id] = charSheet;
-    });
+    }
   }
 
   create(name: string): void {

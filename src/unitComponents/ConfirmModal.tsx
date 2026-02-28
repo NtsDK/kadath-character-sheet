@@ -1,5 +1,6 @@
 import { observer } from "mobx-react-lite";
 import { Modal } from "antd";
+
 import { getConfirmModalUiStore } from "../IoC";
 
 export const ConfirmModal = observer(() => {

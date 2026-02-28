@@ -1,8 +1,10 @@
 import { Button, Checkbox, InputNumber, Tag } from "antd";
 import { observer } from "mobx-react-lite";
+
+import { getCharSheetActionsUiStore, getCharSheetEditorUiStore } from "../IoC";
+
 import { MentalConditionSelect } from "./actionComponents/MentalConditionSelect";
 import { PostActionEffectView } from "./PostActionEffectView";
-import { getCharSheetActionsUiStore, getCharSheetEditorUiStore } from "../IoC";
 
 export const CharSheetActions = observer(() => {
   const charSheetActionsUiStore = getCharSheetActionsUiStore();
@@ -222,7 +224,7 @@ export const CharSheetActions = observer(() => {
           <Button
             type="primary"
             onClick={() => charSheetActionsUiStore.applyPostActionEffects()}
-            disabled={postActionEffects.length == 0}
+            disabled={postActionEffects.length === 0}
           >
             Применить последствия
           </Button>

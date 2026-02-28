@@ -2,8 +2,9 @@ import { observer } from "mobx-react-lite";
 import { Input, Button, InputNumber } from "antd";
 import { v4 as uuid } from "uuid";
 import { CloseOutlined, EditOutlined } from "@ant-design/icons";
-import { EditProjectModal } from "../../pages/EditProjectModal";
 import { useState } from "react";
+
+import { EditProjectModal } from "../../pages/EditProjectModal";
 import { getCharSheetEditorUiStore } from "../../IoC";
 
 type Props = {

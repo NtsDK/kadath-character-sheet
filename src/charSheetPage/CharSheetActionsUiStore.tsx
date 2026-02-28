@@ -1,12 +1,15 @@
 import { action, computed, makeObservable, observable, reaction } from "mobx";
+import { inject, injectable } from "inversify";
+
 import { strToNumber } from "../utils/strToNumber";
 import { PostActionEffect } from "../domain/PostActionEffect";
 import { assert } from "../utils/assert";
 import { MAX_LUCK, MAX_WEAKNESS } from "../domain/constants";
 import { limit } from "../utils/limit";
-import { inject, injectable } from "inversify";
+import { IOC_IDS } from "../IoC/Symbols";
+
 import { CharSheetEditorUiStore } from "./CharSheetEditorUiStore";
-import { IOC_IDS } from "../IoC";
+
 
 @injectable()
 export class CharSheetActionsUiStore {
@@ -207,7 +210,7 @@ export class CharSheetActionsUiStore {
     if (sum <= 0) {
       this._rawDiceRollResult = [];
     } else {
-      this._rawDiceRollResult = new Array(sum)
+      this._rawDiceRollResult = Array.from({length: sum})
         .fill(0)
         .map(() => Math.floor(Math.random() * 6) + 1);
       this._rawDiceRollResult.sort().reverse();
@@ -220,14 +223,14 @@ export class CharSheetActionsUiStore {
       this._postActionEffects.push("deductLuckPoints");
     }
     if (this._applyWeakness) {
-      if (!this.isFiasco) {
+      if (this.isFiasco) {
+        this._postActionEffects.push("fiascoWeaknessReset");
+      } else {
         if (this.weakness.value == MAX_WEAKNESS) {
           this._postActionEffects.push("overcomingWeakness");
         } else {
           this._postActionEffects.push("increaseWeakness");
         }
-      } else {
-        this._postActionEffects.push("fiascoWeaknessReset");
       }
     }
   }
@@ -337,19 +340,19 @@ export class CharSheetActionsUiStore {
   get checkedValues() {
     const values: number[] = [];
 
-    const powerIndexes = Array.from(this._selectedPowers);
+    const powerIndexes = [...this._selectedPowers];
     powerIndexes.sort();
-    powerIndexes.forEach((index) => {
+    for (const index of powerIndexes) {
       const power = this.powers[index];
       values.push(power.value);
-    });
+    }
 
-    const dreamlandPowerIndexes = Array.from(this._selectedDreamlandPowers);
+    const dreamlandPowerIndexes = [...this._selectedDreamlandPowers];
     dreamlandPowerIndexes.sort();
-    dreamlandPowerIndexes.forEach((index) => {
+    for (const index of dreamlandPowerIndexes) {
       const power = this.dreamlandPowers[index];
       values.push(power.value);
-    });
+    }
 
     if (this._applyWeakness) {
       values.push(-this.weakness.value);
@@ -359,34 +362,32 @@ export class CharSheetActionsUiStore {
       values.push(this.selectedMentalConditionObject.value);
     }
 
-    const bodyWoundIndexes = Array.from(this._selectedBodyWounds);
+    const bodyWoundIndexes = [...this._selectedBodyWounds];
     bodyWoundIndexes.sort();
-    bodyWoundIndexes.forEach((index) => {
+    for (const index of bodyWoundIndexes) {
       const wound = this.bodyWounds[index];
       values.push(wound.value);
-    });
+    }
 
-    const temporalConditionIndexes = Array.from(
-      this._selectedTemporalConditions,
-    );
+    const temporalConditionIndexes = [...this._selectedTemporalConditions];
     temporalConditionIndexes.sort();
-    temporalConditionIndexes.forEach((index) => {
+    for (const index of temporalConditionIndexes) {
       const condition = this.temporalConditions[index];
       values.push(condition.value);
-    });
+    }
 
     if (this._otherConditionEffect !== 0) {
       values.push(this._otherConditionEffect);
     }
 
-    const itemIndexes = Array.from(this._selectedItems);
-    itemIndexes.forEach((index) => {
+    const itemIndexes = [...this._selectedItems];
+    for (const index of itemIndexes) {
       const underscoreIndex = index.indexOf("_");
-      const number = strToNumber(index.substring(underscoreIndex + 1));
+      const number = strToNumber(index.slice(Math.max(0, underscoreIndex + 1)));
       if (number !== 0) {
         values.push(number);
       }
-    });
+    }
 
     if (this._useLuckPoints !== 0) {
       values.push(this._useLuckPoints);

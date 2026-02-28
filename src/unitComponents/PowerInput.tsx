@@ -1,6 +1,5 @@
-import { Button, Input } from "antd";
+import { Button, Input , Segmented } from "antd";
 import { observer } from "mobx-react-lite";
-import { Segmented } from "antd";
 import classnames from "classnames";
 import { CloseOutlined } from "@ant-design/icons";
 

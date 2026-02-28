@@ -1,10 +1,12 @@
+import JSZip from "jszip";
+
 import { VERSION } from "../../constants";
 import { CharSheet } from "../../domain/CharSheet";
 import { IExportManager } from "../../ports";
 import { assert } from "../../utils/assert";
+
 import { makeFileName, saveBlob } from "./fileUtils";
 import { Manifest } from "./types";
-import JSZip from "jszip";
 
 export class ExportManager implements IExportManager {
   async export(charSheets: CharSheet[]): Promise<void> {
@@ -18,12 +20,12 @@ export class ExportManager implements IExportManager {
     const filesFolder = zip.folder("files");
     assert(filesFolder);
 
-    charSheets.forEach((charSheet) => {
+    for (const charSheet of charSheets) {
       filesFolder.file(
         `${charSheet.name}_${charSheet.id}.json`,
         JSON.stringify(charSheet, null, 2),
       );
-    });
+    }
 
     const content = await zip.generateAsync({ type: "blob" });
 

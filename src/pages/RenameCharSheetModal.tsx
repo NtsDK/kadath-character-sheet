@@ -2,6 +2,7 @@ import { Input, Modal } from "antd";
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
 import classnames from "classnames";
+
 import { VALIDATE_NAME_REGEX } from "../utils/nameValidation";
 import { InputError } from "../unitComponents/InputError";
 import { getCharSheetStore } from "../IoC";

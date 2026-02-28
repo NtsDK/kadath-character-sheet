@@ -1,12 +1,14 @@
 import { observer } from "mobx-react-lite";
 import { Button, Dropdown, MenuProps } from "antd";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
-import { RenameCharSheetModal } from "./RenameCharSheetModal";
 import { useState } from "react";
 import { v4 as uuid } from "uuid";
+
 import { assert } from "../utils/assert";
 import { CharSheet } from "../domain/CharSheet";
 import { getCharSheetStore, getConfirmModalUiStore } from "../IoC";
+
+import { RenameCharSheetModal } from "./RenameCharSheetModal";
 
 const CHAR_SHEET_MENU_KEYS = ["rename", "copy", "delete"] as const;
 

@@ -1,6 +1,5 @@
 import { Button } from "antd";
 import { observer } from "mobx-react-lite";
-
 import { PlusOutlined } from "@ant-design/icons";
 
 type Props = {

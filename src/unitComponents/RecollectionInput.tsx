@@ -1,9 +1,9 @@
-import { Button, Input } from "antd";
+import { Button, Input , Segmented } from "antd";
 import { observer } from "mobx-react-lite";
-import { Segmented } from "antd";
-import { Recollection } from "../domain/CharSheet";
 import classNames from "classnames";
 import { CloseOutlined } from "@ant-design/icons";
+
+import { Recollection } from "../domain/CharSheet";
 
 type Props = {
   recollection: Recollection;

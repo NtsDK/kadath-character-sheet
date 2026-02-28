@@ -1,8 +1,9 @@
 import { Button, Dropdown, MenuProps } from "antd";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
+import { toJS } from "mobx";
+
 import { assert } from "../utils/assert";
 import { getCharSheetStore, getConfirmModalUiStore, getExportManager } from "../IoC";
-import { toJS } from "mobx";
 
 const MAIN_MENU_KEYS = ["drop_base", "export_all"] as const;
 

@@ -1,9 +1,16 @@
 import { observer } from "mobx-react-lite";
-import { Col, Form, Input, Row } from "antd";
-import { Segmented } from "antd";
+import { Col, Form, Input, Row , Segmented } from "antd";
 import { v4 as uuid } from "uuid";
+import { useParams } from "react-router";
+import { useEffect, useState } from "react";
 
 import { SectionHeader } from "../unitComponents/SectionHeader";
+import { MAX_LUCK, MAX_WEAKNESS } from "../domain/constants";
+import { range } from "../utils/range";
+import { EditProjectModal } from "../pages/EditProjectModal";
+import { EditItemModal } from "../pages/EditItemModal";
+import { getCharSheetEditorUiStore } from "../IoC";
+
 import { PowerSectionBody } from "./components/PowerSectionBody";
 import { DreamlandPowerSectionBody } from "./components/DreamlandPowerSectionBody";
 import { RecollectionSectionBody } from "./components/RecollectionSectionBody";
@@ -11,14 +18,8 @@ import { MentalConditionSectionBody } from "./components/MentalConditionSectionB
 import { BodyWoundSectionBody } from "./components/BodyWoundSectionBody";
 import { TemporalConditionSectionBody } from "./components/TemporalConditionSectionBody";
 import { ItemSectionBody } from "./components/ItemSectionBody";
-import { useParams } from "react-router";
-import { useEffect, useState } from "react";
-import { MAX_LUCK, MAX_WEAKNESS } from "../domain/constants";
-import { range } from "../utils/range";
 import { ProjectSectionBody } from "./components/ProjectSectionBody";
-import { EditProjectModal } from "../pages/EditProjectModal";
-import { EditItemModal } from "../pages/EditItemModal";
-import { getCharSheetEditorUiStore } from "../IoC";
+
 
 export const CharSheetEditor = observer(() => {
   const charSheetEditorUiStore = getCharSheetEditorUiStore();

@@ -1,5 +1,6 @@
 import { Layout } from "antd";
 import { observer } from "mobx-react-lite";
+
 import { CharSheetEditor } from "./CharSheetEditor";
 import { CharSheetActions } from "./CharSheetActions";
 const { Header, Content, Footer, Sider } = Layout;

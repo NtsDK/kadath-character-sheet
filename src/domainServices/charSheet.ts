@@ -1,6 +1,7 @@
-import { CharSheet } from "../domain/CharSheet";
 import * as R from "ramda";
 import { v4 as uuid } from "uuid";
+
+import { CharSheet } from "../domain/CharSheet";
 import { VERSION } from "../constants";
 
 export function getNewCharSheet(): CharSheet {
@@ -254,5 +255,5 @@ export function getNewDefinedCharSheet(): CharSheet {
 }
 
 function cloneToArr<T>(el: T, count: number): T[] {
-  return R.repeat<T>(el, count).map(R.clone<T>);
+  return R.repeat<T>(el, count).map(el => R.clone(el));
 }

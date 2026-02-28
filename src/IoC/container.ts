@@ -1,5 +1,5 @@
 import { Container } from "inversify";
-import { IOC_IDS } from "./Symbols";
+
 import { CatalogPageUiStore } from "../pages/CatalogPageUiStore";
 import { ConfirmModalUiStore } from "../unitComponents/ConfirmModalUiStore";
 import { CharSheetActionsUiStore } from "../charSheetPage/CharSheetActionsUiStore";
@@ -7,6 +7,8 @@ import { CharSheetEditorUiStore } from "../charSheetPage/CharSheetEditorUiStore"
 import { CharSheetStore } from "../domainServices/CharSheetStore";
 import { TempStorage } from "../infrastructure/TempStorage";
 import { ExportManager } from "../infrastructure/exportImport/ExportManager";
+
+import { IOC_IDS } from "./Symbols";
 
 export const iocContainer = new Container();
 

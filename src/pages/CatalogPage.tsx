@@ -1,11 +1,13 @@
 import { observer } from "mobx-react-lite";
 import { Button } from "antd";
 import { PlusIcon } from "@heroicons/react/24/outline";
-import { RenameCharSheetModal } from "./RenameCharSheetModal";
 import { useState } from "react";
 import { v4 as uuid } from "uuid";
-import { CatalogTable } from "./CatalogTable";
+
 import { getCharSheetStore } from "../IoC";
+
+import { CatalogTable } from "./CatalogTable";
+import { RenameCharSheetModal } from "./RenameCharSheetModal";
 import { MainMenu } from "./MainMenu";
 
 export const CatalogPage = observer(() => {

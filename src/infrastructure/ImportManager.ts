@@ -1,9 +1,9 @@
 import { injectable } from "inversify";
 import JSZip from "jszip";
 
-import { IImportManager } from "../../ports";
-import { assert } from "../../utils/assert";
-import { CharSheet } from "../../domain/CharSheet";
+import { IImportManager } from "../ports";
+import { assert } from "../utils/assert";
+import { CharSheet } from "../domain/CharSheet";
 
 import { FILES_FOLDER_NAME, MANIFEST_FILE_NAME } from "./constants";
 

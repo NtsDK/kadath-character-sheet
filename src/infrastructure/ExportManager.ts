@@ -1,10 +1,10 @@
 import JSZip from "jszip";
 import { injectable } from "inversify";
 
-import { VERSION } from "../../constants";
-import { CharSheet } from "../../domain/CharSheet";
-import { IExportManager } from "../../ports";
-import { assert } from "../../utils/assert";
+import { VERSION } from "../constants";
+import { CharSheet } from "../domain/CharSheet";
+import { IExportManager } from "../ports";
+import { assert } from "../utils/assert";
 
 import { makeFileName, saveBlob } from "./fileUtils";
 import { Manifest } from "./types";

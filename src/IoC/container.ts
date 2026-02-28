@@ -6,8 +6,8 @@ import { CharSheetActionsUiStore } from "../charSheetPage/CharSheetActionsUiStor
 import { CharSheetEditorUiStore } from "../charSheetPage/CharSheetEditorUiStore";
 import { CharSheetStore } from "../domainServices/CharSheetStore";
 import { TempStorage } from "../infrastructure/TempStorage";
-import { ExportManager } from "../infrastructure/exportImport/ExportManager";
-import { ImportManager } from "../infrastructure/exportImport/ImportManager";
+import { ExportManager } from "../infrastructure/ExportManager";
+import { ImportManager } from "../infrastructure/ImportManager";
 
 import { IOC_IDS } from "./Symbols";
 

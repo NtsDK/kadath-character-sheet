@@ -9,9 +9,15 @@ import {
   getConfirmModalUiStore,
   getExportManager,
   getImportManager,
+  getNotificationModalUiStore,
 } from "../IoC";
 
-const MAIN_MENU_KEYS = ["drop_base", "export_all", "import"] as const;
+const MAIN_MENU_KEYS = [
+  "drop_base",
+  "export_all",
+  "import",
+  "open_notification_center",
+] as const;
 
 type MainMenuKey = (typeof MAIN_MENU_KEYS)[number];
 
@@ -24,10 +30,12 @@ const items: MenuProps["items"] = [
   },
   {
     label: (
-      <Dropzone onDrop={(acceptedFiles) => {
-        const importManager = getImportManager();
-        importManager.import(acceptedFiles[0]);
-      }}>
+      <Dropzone
+        onDrop={(acceptedFiles) => {
+          const importManager = getImportManager();
+          importManager.import(acceptedFiles[0]);
+        }}
+      >
         {({ getRootProps, getInputProps }) => (
           <div {...getRootProps()}>
             <input {...getInputProps()} accept=".zip" multiple={false} />
@@ -38,6 +46,10 @@ const items: MenuProps["items"] = [
     ),
 
     key: "import" satisfies MainMenuKey,
+  },
+  {
+    label: "Центр уведомлений",
+    key: "open_notification_center" satisfies MainMenuKey,
   },
   {
     type: "divider",
@@ -68,6 +80,8 @@ export const MainMenu = () => {
             charSheetStore.deleteAll();
           },
         );
+      } else if (key === "open_notification_center") {
+        getNotificationModalUiStore().setIsModalOpen(true);
       }
     };
   return (

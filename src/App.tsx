@@ -9,6 +9,7 @@ import { AboutPage } from "./pages/AboutPage";
 import { InstructionPage } from "./pages/InstructionPage";
 import { NavMenu } from "./NavMenu";
 import { ConfirmModal } from "./unitComponents/ConfirmModal";
+import { NotificationModal } from "./pages/NotificationModal";
 
 const { Sider } = Layout;
 
@@ -33,6 +34,7 @@ export const App = observer(() => {
           <Route path="about" element={<AboutPage />} />
         </Routes>
         <ConfirmModal />
+        <NotificationModal />
       </Layout>
     </HashRouter>
   );

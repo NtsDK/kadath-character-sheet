@@ -7,4 +7,6 @@ export const IOC_IDS = {
   TempStorage: Symbol("TempStorage"),
   ExportManager: Symbol("ExportManager"),
   ImportManager: Symbol("ImportManager"),
+  NotificationModalUiStore: Symbol("NotificationModalUiStore"),
+  NotificationStore: Symbol("NotificationStore"),
 };

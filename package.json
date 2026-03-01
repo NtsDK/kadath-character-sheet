@@ -8,7 +8,8 @@
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
     "preview": "vite preview",
-    "typecheck": "tsc -p ./tsconfig.app.json --noEmit --watch"
+    "typecheck": "tsc -p ./tsconfig.app.json --noEmit --watch",
+    "prepare": "git config core.hooksPath .githooks"
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",

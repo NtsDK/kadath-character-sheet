@@ -1,0 +1,11 @@
+#!/bin/sh
+
+eval npm run lint
+LINT_RESULT=$?
+
+if [ $LINT_RESULT != 0 ]; then
+  echo "Eslint returned a non-zero exit code: $LINT_RESULT, aborting commit."
+  exit $LINT_RESULT
+else
+  echo "Eslint passed"
+fi

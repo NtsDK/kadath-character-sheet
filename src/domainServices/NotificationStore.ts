@@ -1,24 +1,17 @@
 import { action, makeObservable, observable } from "mobx";
 import { injectable } from "inversify";
+import { v4 as uuid } from "uuid";
 
-import { KNotification } from "../domain/KNotification";
+import { KNotification, NotificationCommand } from "../domain/Notification";
 
 
-const defaultNotification: Pick<KNotification, "duration"> = {
+const defaultNotification: Pick<NotificationCommand, "duration"> = {
   duration: 5000,
 };
 
 @injectable()
 export class NotificationStore {
   _notifications: KNotification[] = [
-    {
-      type: "info",
-      message: "Welcome to Kadath Character Sheet!",
-      description:
-        "This is a tool to create and manage your character sheets for the Kadath RPG.",
-      duration: 10_000,
-      showInNotificationModal: true,
-    },
   ];
 
   constructor() {
@@ -33,13 +26,15 @@ export class NotificationStore {
     return this._notifications;
   }
 
-  notify(notification: KNotification) {
+  notify(notification: NotificationCommand) {
     const defaultShowInNotificationModal =
       notification.type === "error" || notification.type === "warning";
     this._notifications.push({
       ...defaultNotification,
       showInNotificationModal: defaultShowInNotificationModal,
       ...notification,
+      id: uuid(),
+      date: new Date(),
     });
   }
 

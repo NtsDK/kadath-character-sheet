@@ -1,14 +1,13 @@
 import { Table } from "antd";
 import { observer } from "mobx-react-lite";
 import { ColumnsType } from "antd/es/table";
-import { DateTime } from "luxon";
 
 import { CharSheet } from "../domain/CharSheet";
 import { getCatalogPageUiStore } from "../IoC";
+import { simpleDateFormat } from "../utils/simpleDateFormat";
 
 import { CharacterMenu } from "./CharacterMenu";
 import { CharacterLink } from "./CharacterLink";
-
 
 const columns: ColumnsType<CharSheet> = [
   {
@@ -23,10 +22,7 @@ const columns: ColumnsType<CharSheet> = [
     dataIndex: "updatedAt",
     key: "updatedAt",
     sorter: (a, b) => a.updatedAt.getTime() - b.updatedAt.getTime(),
-    render: (value) =>
-      DateTime.fromJSDate(value).toFormat("dd LLL yyyy HH:MM:ss", {
-        locale: "ru",
-      }),
+    render: simpleDateFormat
   },
   {
     title: "",

@@ -68,4 +68,38 @@ export default tseslint.config(
       "unicorn/no-array-sort": "off",
     },
   },
+  {
+    // запрем на импорт из infrastructure, кроме IoC
+    files: [
+      "src/charSheetPage/**/*.tsx",
+      "src/charSheetPage/**/*.ts",
+      "src/domain/**/*.tsx",
+      "src/domain/**/*.ts",
+      "src/domainServices/**/*.tsx",
+      "src/domainServices/**/*.ts",
+      "src/infrastructure/**/*.tsx",
+      "src/infrastructure/**/*.ts",
+      "src/pages/**/*.tsx",
+      "src/pages/**/*.ts",
+      "src/ports/**/*.tsx",
+      "src/ports/**/*.ts",
+      "src/unitComponents/**/*.tsx",
+      "src/unitComponents/**/*.ts",
+      "src/utils/**/*.tsx",
+      "src/utils/**/*.ts",
+      "src/App.tsx",
+      "src/constants.ts",
+      "src/initApp.ts",
+      "src/main.tsx",
+      "src/NavMenu.tsx",
+    ],
+    rules: {
+      "no-restricted-imports": [
+        "error",
+        {
+          patterns: ["../infrastructure/*"],
+        },
+      ],
+    },
+  },
 );

@@ -6,7 +6,7 @@ import { KNotification, NotificationCommand } from "../domain/Notification";
 
 
 const defaultNotification: Pick<NotificationCommand, "duration"> = {
-  duration: 5000,
+  duration: 5,
 };
 
 @injectable()

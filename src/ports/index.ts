@@ -19,5 +19,5 @@ export interface IExportManager {
 }
 
 export interface IImportManager {
-  import(file: File): void;
+  import(file: File): Promise<CharSheet[]>;
 }

@@ -31,9 +31,13 @@ const items: MenuProps["items"] = [
   {
     label: (
       <Dropzone
-        onDrop={(acceptedFiles) => {
+        onDrop={async (acceptedFiles) => {
           const importManager = getImportManager();
-          importManager.import(acceptedFiles[0]);
+          try {
+            await importManager.import(acceptedFiles[0]);
+          } catch (error) {
+            console.error(error);
+          }
         }}
       >
         {({ getRootProps, getInputProps }) => (

@@ -9,6 +9,7 @@ import { assert } from "../utils/assert";
 import { makeFileName, saveBlob } from "./fileUtils";
 import { Manifest } from "./types";
 import { FILES_FOLDER_NAME, MANIFEST_FILE_NAME } from "./constants";
+import { chartSheetToDTO } from "./dtoUtils";
 
 @injectable()
 export class ExportManager implements IExportManager {
@@ -26,7 +27,7 @@ export class ExportManager implements IExportManager {
     for (const charSheet of charSheets) {
       filesFolder.file(
         `${charSheet.name}_${charSheet.id}.json`,
-        JSON.stringify(charSheet, null, 2),
+        JSON.stringify(chartSheetToDTO(charSheet), null, 2),
       );
     }
 

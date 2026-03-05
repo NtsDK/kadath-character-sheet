@@ -1,6 +1,6 @@
 import { Container } from "inversify";
 
-import { CatalogPageUiStore } from "../pages/CatalogPageUiStore";
+import { CatalogPageUiStore } from "../pageCatalog/CatalogPageUiStore";
 import { ConfirmModalUiStore } from "../unitComponents/ConfirmModalUiStore";
 import { CharSheetActionsUiStore } from "../charSheetPage/CharSheetActionsUiStore";
 import { CharSheetEditorUiStore } from "../charSheetPage/CharSheetEditorUiStore";

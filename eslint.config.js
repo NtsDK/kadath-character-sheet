@@ -69,7 +69,7 @@ export default tseslint.config(
     },
   },
   {
-    // запрем на импорт из infrastructure, кроме IoC
+    // запрет на импорт из infrastructure, кроме IoC
     files: [
       "src/charSheetPage/**/*.tsx",
       "src/charSheetPage/**/*.ts",
@@ -98,6 +98,21 @@ export default tseslint.config(
         "error",
         {
           patterns: ["../infrastructure/*"],
+        },
+      ],
+    },
+  },
+  {
+    // запрет на импорт из page.charSheet и page.catalog в обход index.ts, кроме IoC
+    files: [
+      "src/**/*.tsx",
+      "src/**/*.ts",
+    ],
+    rules: {
+      "no-restricted-imports": [
+        "error",
+        {
+          patterns: ["*/page.charSheet/*", "*/page.catalog/*"],
         },
       ],
     },

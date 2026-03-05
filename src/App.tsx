@@ -4,7 +4,7 @@ import { useState } from "react";
 import { Routes, Route, HashRouter } from "react-router";
 
 import { CharSheetPage } from "./page.charSheet";
-import { CatalogPage } from "./page.catalog/CatalogPage";
+import { CatalogPage } from "./page.catalog";
 import { AboutPage } from "./pages/AboutPage";
 import { InstructionPage } from "./pages/InstructionPage";
 import { NavMenu } from "./NavMenu";

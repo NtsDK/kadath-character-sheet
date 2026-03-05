@@ -9,6 +9,7 @@ import { getCharSheetStore } from "../IoC";
 import { CatalogTable } from "./CatalogTable";
 import { RenameCharSheetModal } from "./RenameCharSheetModal";
 import { MainMenu } from "./MainMenu";
+import { ImportModal } from "./ImportModal";
 
 export const CatalogPage = observer(() => {
   const charSheetStore = getCharSheetStore();
@@ -40,6 +41,7 @@ export const CatalogPage = observer(() => {
         }}
         handleCancel={() => setIsCreateModalOpen(false)}
       />
+      <ImportModal />
     </div>
   );
 });

@@ -3,8 +3,9 @@ import { Input, Button, InputNumber } from "antd";
 import { CloseOutlined, EditOutlined } from "@ant-design/icons";
 import { useState } from "react";
 
-import { EditItemModal } from "./EditItemModal";
 import { getCharSheetEditorUiStore } from "../../IoC";
+
+import { EditItemModal } from "./EditItemModal";
 
 type Props = {
   className?: string;

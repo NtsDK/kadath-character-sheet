@@ -1,7 +1,7 @@
 import { CharSheetActionsUiStore, CharSheetEditorUiStore } from "../page.charSheet";
 import { CharSheetStore } from "../domainServices/CharSheetStore";
 import { NotificationStore } from "../domainServices/NotificationStore";
-import { CatalogPageUiStore } from "../page.catalog";
+import { CatalogPageUiStore, ImportModalUiStore } from "../page.catalog";
 import { NotificationModalUiStore } from "../pages/NotificationModalUiStore";
 import { IExportManager, IImportManager, ITempStorage } from "../ports";
 import { ConfirmModalUiStore } from "../unitComponents/ConfirmModalUiStore";
@@ -53,4 +53,8 @@ export function getNotificationModalUiStore(): NotificationModalUiStore {
 
 export function getNotificationStore(): NotificationStore {
   return iocContainer.get<NotificationStore>(IOC_IDS.NotificationStore);
+}
+
+export function getImportModalUiStore(): ImportModalUiStore {
+  return iocContainer.get<ImportModalUiStore>(IOC_IDS.ImportModalUiStore);
 }

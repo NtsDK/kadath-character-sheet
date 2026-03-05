@@ -7,10 +7,10 @@ import { useEffect, useState } from "react";
 import { SectionHeader } from "../unitComponents/SectionHeader";
 import { MAX_LUCK, MAX_WEAKNESS } from "../domain/constants";
 import { range } from "../utils/range";
-import { EditProjectModal } from "./components/EditProjectModal";
-import { EditItemModal } from "./components/EditItemModal";
 import { getCharSheetEditorUiStore } from "../IoC";
 
+import { EditProjectModal } from "./components/EditProjectModal";
+import { EditItemModal } from "./components/EditItemModal";
 import { PowerSectionBody } from "./components/PowerSectionBody";
 import { DreamlandPowerSectionBody } from "./components/DreamlandPowerSectionBody";
 import { RecollectionSectionBody } from "./components/RecollectionSectionBody";

@@ -2,6 +2,7 @@ import { action, computed, makeObservable, observable, toJS } from "mobx";
 import { clone } from "ramda";
 import { v4 as uuid } from "uuid";
 import { inject, injectable } from "inversify";
+import * as R from "ramda";
 
 import { assert } from "../utils/assert";
 import { generateCopyName } from "../utils/generateCopyName";
@@ -27,6 +28,7 @@ export class CharSheetStore {
       _charSheets: observable,
       charSheets: computed,
       create: action,
+      insert: action,
       init: action,
       copy: action,
       delete: action,
@@ -56,6 +58,10 @@ export class CharSheetStore {
     return Object.values(this._charSheets).some((el) => el.name === name);
   }
 
+  isIdUsed(id: string): boolean {
+    return Object.values(this._charSheets).some((el) => el.id === id);
+  }
+
   // #endregion
 
   // #region actions
@@ -74,6 +80,25 @@ export class CharSheetStore {
     newCharSheet.name = name;
     this._charSheets[newCharSheet.id] = newCharSheet;
     this.tempStorage.create(newCharSheet);
+  }
+
+  /** Используется при импорте данных */
+  insert(charSheet: CharSheet, strategy: "replace" | "create"): void {
+    if (strategy === "create") {
+      if (this.isNameUsed(charSheet.name)) {
+        charSheet.name = generateCopyName(
+          charSheet.name,
+          new Set(R.pluck("name", Object.values(this._charSheets))),
+        );
+      }
+      if (this.isIdUsed(charSheet.id)) {
+        charSheet.id = uuid();
+      }
+      this._charSheets[charSheet.id] = charSheet;
+      this.tempStorage.create(toJS(charSheet));
+    } else {
+      // TODO replace strategy
+    }
   }
 
   copy(id: string): void {

@@ -8,7 +8,7 @@ import {
   getCharSheetStore,
   getConfirmModalUiStore,
   getExportManager,
-  getImportManager,
+  getImportModalUiStore,
   getNotificationModalUiStore,
 } from "../IoC";
 
@@ -32,12 +32,7 @@ const items: MenuProps["items"] = [
     label: (
       <Dropzone
         onDrop={async (acceptedFiles) => {
-          const importManager = getImportManager();
-          try {
-            await importManager.import(acceptedFiles[0]);
-          } catch (error) {
-            console.error(error);
-          }
+          getImportModalUiStore().importArchive(acceptedFiles[0]);
         }}
       >
         {({ getRootProps, getInputProps }) => (

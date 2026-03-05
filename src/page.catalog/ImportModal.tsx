@@ -4,17 +4,18 @@ import { Modal } from "antd";
 import { getImportModalUiStore } from "../IoC";
 
 export const ImportModal = observer(() => {
-
   const importModalUiStore = getImportModalUiStore();
 
-    return (
+  return (
     <Modal
       title="Загрузка листов персонажей"
       open={importModalUiStore.isModalOpen}
       onCancel={() => importModalUiStore.setIsModalOpen(false)}
     >
       <div className="tw-max-h-80 tw-overflow-auto">
-        body
+        <pre>
+          {JSON.stringify(importModalUiStore._conflictNames, null, "  ")}
+        </pre>
       </div>
     </Modal>
   );

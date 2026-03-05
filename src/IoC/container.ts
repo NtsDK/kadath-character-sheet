@@ -2,8 +2,8 @@ import { Container } from "inversify";
 
 import { CatalogPageUiStore } from "../pageCatalog/CatalogPageUiStore";
 import { ConfirmModalUiStore } from "../unitComponents/ConfirmModalUiStore";
-import { CharSheetActionsUiStore } from "../charSheetPage/CharSheetActionsUiStore";
-import { CharSheetEditorUiStore } from "../charSheetPage/CharSheetEditorUiStore";
+import { CharSheetActionsUiStore } from "../pageCharSheet/CharSheetActionsUiStore";
+import { CharSheetEditorUiStore } from "../pageCharSheet/CharSheetEditorUiStore";
 import { CharSheetStore } from "../domainServices/CharSheetStore";
 import { TempStorage } from "../infrastructure/TempStorage";
 import { ExportManager } from "../infrastructure/ExportManager";

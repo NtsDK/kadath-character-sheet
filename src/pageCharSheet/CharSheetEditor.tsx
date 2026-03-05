@@ -7,8 +7,8 @@ import { useEffect, useState } from "react";
 import { SectionHeader } from "../unitComponents/SectionHeader";
 import { MAX_LUCK, MAX_WEAKNESS } from "../domain/constants";
 import { range } from "../utils/range";
-import { EditProjectModal } from "../pages/EditProjectModal";
-import { EditItemModal } from "../pages/EditItemModal";
+import { EditProjectModal } from "./components/EditProjectModal";
+import { EditItemModal } from "./components/EditItemModal";
 import { getCharSheetEditorUiStore } from "../IoC";
 
 import { PowerSectionBody } from "./components/PowerSectionBody";

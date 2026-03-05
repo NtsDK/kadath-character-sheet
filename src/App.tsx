@@ -3,7 +3,7 @@ import { Layout } from "antd";
 import { useState } from "react";
 import { Routes, Route, HashRouter } from "react-router";
 
-import { CharSheetPage } from "./charSheetPage";
+import { CharSheetPage } from "./pageCharSheet";
 import { CatalogPage } from "./pageCatalog/CatalogPage";
 import { AboutPage } from "./pages/AboutPage";
 import { InstructionPage } from "./pages/InstructionPage";

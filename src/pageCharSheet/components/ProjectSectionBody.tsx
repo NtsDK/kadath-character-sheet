@@ -4,8 +4,9 @@ import { v4 as uuid } from "uuid";
 import { CloseOutlined, EditOutlined } from "@ant-design/icons";
 import { useState } from "react";
 
-import { EditProjectModal } from "../../pages/EditProjectModal";
 import { getCharSheetEditorUiStore } from "../../IoC";
+
+import { EditProjectModal } from "./EditProjectModal";
 
 type Props = {
   className?: string;

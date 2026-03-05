@@ -1,5 +1,5 @@
-import { CharSheetActionsUiStore } from "../charSheetPage/CharSheetActionsUiStore";
-import { CharSheetEditorUiStore } from "../charSheetPage/CharSheetEditorUiStore";
+import { CharSheetActionsUiStore } from "../pageCharSheet/CharSheetActionsUiStore";
+import { CharSheetEditorUiStore } from "../pageCharSheet/CharSheetEditorUiStore";
 import { CharSheetStore } from "../domainServices/CharSheetStore";
 import { NotificationStore } from "../domainServices/NotificationStore";
 import { CatalogPageUiStore } from "../pageCatalog/CatalogPageUiStore";

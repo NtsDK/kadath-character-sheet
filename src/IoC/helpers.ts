@@ -1,8 +1,8 @@
-import { CharSheetActionsUiStore } from "../pageCharSheet/CharSheetActionsUiStore";
-import { CharSheetEditorUiStore } from "../pageCharSheet/CharSheetEditorUiStore";
+import { CharSheetActionsUiStore } from "../page.charSheet/CharSheetActionsUiStore";
+import { CharSheetEditorUiStore } from "../page.charSheet/CharSheetEditorUiStore";
 import { CharSheetStore } from "../domainServices/CharSheetStore";
 import { NotificationStore } from "../domainServices/NotificationStore";
-import { CatalogPageUiStore } from "../pageCatalog/CatalogPageUiStore";
+import { CatalogPageUiStore } from "../page.catalog/CatalogPageUiStore";
 import { NotificationModalUiStore } from "../pages/NotificationModalUiStore";
 import { IExportManager, IImportManager, ITempStorage } from "../ports";
 import { ConfirmModalUiStore } from "../unitComponents/ConfirmModalUiStore";

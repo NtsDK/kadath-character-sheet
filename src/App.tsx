@@ -3,8 +3,8 @@ import { Layout } from "antd";
 import { useState } from "react";
 import { Routes, Route, HashRouter } from "react-router";
 
-import { CharSheetPage } from "./pageCharSheet";
-import { CatalogPage } from "./pageCatalog/CatalogPage";
+import { CharSheetPage } from "./page.charSheet";
+import { CatalogPage } from "./page.catalog/CatalogPage";
 import { AboutPage } from "./pages/AboutPage";
 import { InstructionPage } from "./pages/InstructionPage";
 import { NavMenu } from "./NavMenu";

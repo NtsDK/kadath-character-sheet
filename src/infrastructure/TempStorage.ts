@@ -54,28 +54,33 @@ export class TempStorage implements ITempStorage {
   }
 
   async getAllCharSheets(): Promise<CharSheet[]> {
-    return openDB<KadathDBSchema>(DB_NAME, DB_VERSION).then(async (db) => {
-      const dtos = await db.getAll(FILES_STORE);
-      const charSheets: CharSheet[] = [];
-      for (const dto of dtos) {
-        if (validateCharSheetDTO(dto)) {
-          charSheets.push(dtoToCharSheet(dto));
-        } else {
-          // @ts-expect-error - ожидаем, что в dto есть имя
-          const name = dto?.name;
-          console.error(
-            `Ошибка загрузки листа персонажа ${name}`,
-            JSON.stringify(validateCharSheetDTO.errors, null, "  "),
-          );
-          this.notificationStore.notify({
-            type: "error",
-            message: "Ошибка загрузки из браузера",
-            description: `Ошибка загрузки листа персонажа ${name}`,
-            duration: 0,
-          });
-        }
+    const dtos = await this.getAllDtos();
+    const charSheets: CharSheet[] = [];
+    for (const dto of dtos) {
+      if (validateCharSheetDTO(dto)) {
+        charSheets.push(dtoToCharSheet(dto));
+      } else {
+        // @ts-expect-error - ожидаем, что в dto есть имя
+        const name = dto?.name;
+        console.error(
+          `Ошибка загрузки листа персонажа ${name}`,
+          JSON.stringify(validateCharSheetDTO.errors, null, "  "),
+        );
+        this.notificationStore.notify({
+          type: "error",
+          message: "Ошибка загрузки из браузера",
+          description: `Ошибка загрузки листа персонажа ${name}`,
+          duration: 0,
+        });
       }
-      return charSheets;
+    }
+    return charSheets;
+  }
+
+  /** внутренний метод инфраструктуры, не должен быть в интерфейсе ITempStorage */
+  async getAllDtos(): Promise<CharSheetDTO[]> {
+    return openDB<KadathDBSchema>(DB_NAME, DB_VERSION).then(async (db) => {
+      return await db.getAll(FILES_STORE);
     });
   }
 

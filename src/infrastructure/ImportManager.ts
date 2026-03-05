@@ -75,7 +75,7 @@ export class ImportManager implements IImportManager {
 
   private async getCharSheetDTOs(
     zip: JSZip,
-    version: string,
+    _version: string,
   ): Promise<CharSheetDTO[]> {
     const filesFolder = zip.folder(FILES_FOLDER_NAME);
     if (!filesFolder) {

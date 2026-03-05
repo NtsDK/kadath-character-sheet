@@ -1,19 +1,38 @@
 import JSZip from "jszip";
-import { injectable } from "inversify";
+import { inject, injectable } from "inversify";
 
 import { VERSION } from "../constants";
 import { CharSheet } from "../domain/CharSheet";
-import { IExportManager } from "../ports";
+import type { IExportManager, ITempStorage } from "../ports";
 import { assert } from "../utils/assert";
+import { IOC_IDS } from "../IoC/Symbols";
 
 import { makeFileName, saveBlob } from "./fileUtils";
-import { Manifest } from "./types";
+import { CharSheetDTO, Manifest } from "./types";
 import { FILES_FOLDER_NAME, MANIFEST_FILE_NAME } from "./constants";
 import { chartSheetToDTO } from "./dtoUtils";
+import { TempStorage } from "./TempStorage";
 
 @injectable()
 export class ExportManager implements IExportManager {
+  constructor(
+    @inject(IOC_IDS.TempStorage)
+    public readonly tempStorage: TempStorage,
+  ) {}
+
+  async exportTempStorage(): Promise<void> {
+    const dtos = await this.tempStorage.getAllDtos();
+    return this.innerExport(dtos, "_tempStorage");
+  }
+
   async export(charSheets: CharSheet[]): Promise<void> {
+    return this.innerExport(charSheets.map((el) => chartSheetToDTO(el)));
+  }
+
+  async innerExport(
+    charSheetDtos: CharSheetDTO[],
+    archiveSuffix = "",
+  ): Promise<void> {
     const manifest: Manifest = {
       version: VERSION,
     };
@@ -24,16 +43,19 @@ export class ExportManager implements IExportManager {
     const filesFolder = zip.folder(FILES_FOLDER_NAME);
     assert(filesFolder);
 
-    for (const charSheet of charSheets) {
+    for (const charSheetDto of charSheetDtos) {
       filesFolder.file(
-        `${charSheet.name}_${charSheet.id}.json`,
-        JSON.stringify(chartSheetToDTO(charSheet), null, 2),
+        `${charSheetDto.name}_${charSheetDto.id}.json`,
+        JSON.stringify(charSheetDto, null, 2),
       );
     }
 
     const content = await zip.generateAsync({ type: "blob" });
 
-    const exportFileName = makeFileName("kadath_character_sheets", "zip");
+    const exportFileName = makeFileName(
+      "kadath_character_sheets" + archiveSuffix,
+      "zip",
+    );
     saveBlob(content, exportFileName);
   }
 }

@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite";
 import classNames from "classnames";
 import { CloseOutlined } from "@ant-design/icons";
 
-import { Recollection } from "../domain/CharSheet";
+import type { Recollection } from "../domain/CharSheet";
 
 type Props = {
   recollection: Recollection;

@@ -1,4 +1,5 @@
-import { Button, Dropdown, MenuProps } from "antd";
+import type { MenuProps } from "antd";
+import { Button, Dropdown } from "antd";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import { toJS } from "mobx";
 import Dropzone from "react-dropzone";

@@ -1,10 +1,10 @@
-import { CharSheetActionsUiStore, CharSheetEditorUiStore } from "../page.charSheet";
-import { CharSheetStore } from "../domainServices/CharSheetStore";
-import { NotificationStore } from "../domainServices/NotificationStore";
-import { CatalogPageUiStore, ImportModalUiStore } from "../page.catalog";
-import { NotificationModalUiStore } from "../pages/NotificationModalUiStore";
-import { IExportManager, IImportManager, ITempStorage } from "../ports";
-import { ConfirmModalUiStore } from "../unitComponents/ConfirmModalUiStore";
+import type { CharSheetActionsUiStore, CharSheetEditorUiStore } from "../page.charSheet";
+import type { CharSheetStore } from "../domainServices/CharSheetStore";
+import type { NotificationStore } from "../domainServices/NotificationStore";
+import type { CatalogPageUiStore, ImportModalUiStore } from "../page.catalog";
+import type { NotificationModalUiStore } from "../pages/NotificationModalUiStore";
+import type { IExportManager, IImportManager, ITempStorage } from "../ports";
+import type { ConfirmModalUiStore } from "../unitComponents/ConfirmModalUiStore";
 
 import { iocContainer } from "./container";
 import { IOC_IDS } from "./Symbols";

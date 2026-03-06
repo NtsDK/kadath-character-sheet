@@ -1,6 +1,6 @@
 import { observer } from "mobx-react-lite";
 
-import { PostActionEffect } from "../domain/PostActionEffect";
+import type { PostActionEffect } from "../domain/PostActionEffect";
 import { assert } from "../utils/assert";
 import { MAX_LUCK } from "../domain/constants";
 import { getCharSheetActionsUiStore } from "../IoC";

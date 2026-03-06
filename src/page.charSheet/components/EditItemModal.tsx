@@ -2,7 +2,7 @@ import { Form, Input, InputNumber, Modal } from "antd";
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
 
-import { Item } from "../../domain/CharSheet";
+import type { Item } from "../../domain/CharSheet";
 import { hasNumberInStr } from "../../utils/hasNumberInStr";
 import { InputError } from "../../unitComponents/InputError";
 

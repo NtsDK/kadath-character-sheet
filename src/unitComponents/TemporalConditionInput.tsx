@@ -2,7 +2,7 @@ import { Button, Input, InputNumber, Radio } from "antd";
 import { observer } from "mobx-react-lite";
 import { CloseOutlined } from "@ant-design/icons";
 
-import { TemporalCondition } from "../domain/CharSheet";
+import type { TemporalCondition } from "../domain/CharSheet";
 
 type Props = {
   temporalCondition: TemporalCondition;

@@ -2,7 +2,7 @@ import { Form, Input, InputNumber, Modal } from "antd";
 import { observer } from "mobx-react-lite";
 import { useState } from "react";
 
-import { Project } from "../../domain/CharSheet";
+import type { Project } from "../../domain/CharSheet";
 
 type Props = {
   title?: string;

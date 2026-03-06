@@ -1,8 +1,8 @@
 import { Table } from "antd";
 import { observer } from "mobx-react-lite";
-import { ColumnsType } from "antd/es/table";
+import type { ColumnsType } from "antd/es/table";
 
-import { CharSheet } from "../domain/CharSheet";
+import type { CharSheet } from "../domain/CharSheet";
 import { getCatalogPageUiStore } from "../IoC";
 import { simpleDateFormat } from "../utils/simpleDateFormat";
 

@@ -1,7 +1,7 @@
 import * as R from "ramda";
 import { v4 as uuid } from "uuid";
 
-import { CharSheet } from "../domain/CharSheet";
+import type { CharSheet } from "../domain/CharSheet";
 import { VERSION } from "../constants";
 
 export function getNewCharSheet(): CharSheet {

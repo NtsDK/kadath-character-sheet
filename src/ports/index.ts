@@ -1,4 +1,4 @@
-import { CharSheet } from "../domain/CharSheet";
+import type { CharSheet } from "../domain/CharSheet";
 
 export interface ITempStorage {
   init(): Promise<void>;

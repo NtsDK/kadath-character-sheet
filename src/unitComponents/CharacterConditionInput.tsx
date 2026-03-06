@@ -4,7 +4,7 @@ import { HandThumbDownIcon } from "@heroicons/react/24/outline";
 import classNames from "classnames";
 import { CloseOutlined } from "@ant-design/icons";
 
-import { CharacterCondition } from "../domain/CharSheet";
+import type { CharacterCondition } from "../domain/CharSheet";
 
 type Props = {
   characterCondition: CharacterCondition;

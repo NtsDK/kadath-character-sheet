@@ -1,6 +1,6 @@
-import { CharSheet } from "../domain/CharSheet";
+import type { CharSheet } from "../domain/CharSheet";
 
-import { CharSheetDTO } from "./types";
+import type { CharSheetDTO } from "./types";
 
 export const chartSheetToDTO = (charSheet: CharSheet): CharSheetDTO => {
   return {

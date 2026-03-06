@@ -1,7 +1,7 @@
 import { observer } from "mobx-react-lite";
 import { useNavigate } from "react-router";
 
-import { CharSheet } from "../domain/CharSheet";
+import type { CharSheet } from "../domain/CharSheet";
 
 type Props = {
   charSheet: CharSheet;

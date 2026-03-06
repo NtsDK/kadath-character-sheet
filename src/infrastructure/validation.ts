@@ -1,9 +1,10 @@
-import Ajv, { JSONSchemaType } from "ajv";
+import type { JSONSchemaType } from "ajv";
+import Ajv from "ajv";
 import * as R from "ramda";
 
-import { Item, MentalCondition, Power, Project } from "../domain/CharSheet";
+import type { Item, MentalCondition, Power, Project } from "../domain/CharSheet";
 
-import { CharSheetDTO, Manifest } from "./types";
+import type { CharSheetDTO, Manifest } from "./types";
 
 // import { Manifest } from "./types";
 

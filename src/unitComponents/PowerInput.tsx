@@ -3,7 +3,7 @@ import { observer } from "mobx-react-lite";
 import classnames from "classnames";
 import { CloseOutlined } from "@ant-design/icons";
 
-import { Power } from "../domain/CharSheet";
+import type { Power } from "../domain/CharSheet";
 
 type Props = {
   power: Power;

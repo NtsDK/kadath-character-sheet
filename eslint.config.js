@@ -32,6 +32,19 @@ export default defineConfig(
       "import-plugin": importPlugin,
       unicorn: eslintPluginUnicorn,
     },
+    // settings: {
+    //   "import/parsers": {
+    //     "@typescript-eslint/parser": [".ts", ".tsx"],
+    //   },
+    //   "import/resolver": {
+    //     // You will also need to install and configure the TypeScript resolver
+    //     // See also https://github.com/import-js/eslint-import-resolver-typescript#configuration
+    //     // typescript: true,
+    //     typescript: {
+    //       "alwaysTryTypes": true,
+    //     },
+    //   },
+    // },
     rules: {
       ...reactHooks.configs.recommended.rules,
       ...importPlugin.flatConfigs.recommended.rules,

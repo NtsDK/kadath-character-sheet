@@ -1,6 +1,7 @@
 import { defineConfig } from "vite";
 // import react from "@vitejs/plugin-react";
 import react from "@vitejs/plugin-react-swc";
+// import { resolve } from 'path';
 // import checker from "vite-plugin-checker";
 
 
@@ -25,4 +26,9 @@ export default defineConfig({
     //   },
     // }),
   ],
+  // "resolve": {
+  //   alias: {
+  //     '@': resolve(__dirname, 'src'),
+  //   }
+  // }
 });

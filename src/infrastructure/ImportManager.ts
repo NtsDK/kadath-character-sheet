@@ -91,7 +91,7 @@ export class ImportManager implements IImportManager {
     const files: { relativePath: string; file: JSZip.JSZipObject }[] = [];
 
     // eslint-disable-next-line unicorn/no-array-for-each
-    filesFolder.forEach(async (relativePath, file) => {
+    filesFolder.forEach((relativePath, file) => {
       files.push({ relativePath, file });
     });
 

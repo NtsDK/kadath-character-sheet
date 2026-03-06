@@ -34,7 +34,7 @@ export const CharSheetEditor = observer(() => {
     if (params.charSheetId) {
       charSheetEditorUiStore.setId(params.charSheetId);
     }
-  }, [params.charSheetId]);
+  }, [params.charSheetId, charSheetEditorUiStore]);
 
   if (!charSheetEditorUiStore.charSheetExists) {
     return null;

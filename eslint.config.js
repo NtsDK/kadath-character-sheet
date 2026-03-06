@@ -6,20 +6,25 @@ import tseslint from "typescript-eslint";
 import importPlugin from "eslint-plugin-import";
 import eslintPluginUnicorn from "eslint-plugin-unicorn";
 
-export default tseslint.config(
+import { defineConfig } from "eslint/config";
+
+export default defineConfig(
   { ignores: ["dist"] },
   {
     extends: [
       js.configs.recommended,
-      ...tseslint.configs.recommended,
+      ...tseslint.configs.recommendedTypeChecked,
       importPlugin.flatConfigs.recommended,
       importPlugin.flatConfigs.typescript,
       eslintPluginUnicorn.configs.recommended,
     ],
-    files: ["**/*.{ts,tsx}"],
+    files: ["src/**/*.{ts,tsx}"],
     languageOptions: {
       ecmaVersion: 2020,
       globals: globals.browser,
+      parserOptions: {
+        projectService: true,
+      },
     },
     plugins: {
       "react-hooks": reactHooks,
@@ -53,12 +58,31 @@ export default tseslint.config(
         "warn",
         { allowConstantExport: true },
       ],
-      // ts
+      "no-restricted-imports": [
+        "error",
+        {
+          paths: [".", ".."],
+          patterns: [
+            // запрет на импорт из page.charSheet и page.catalog в обход index.ts
+            "*/page.charSheet/*",
+            "*/page.catalog/*",
+            // запрет на импорт из infrastructure изнутри, только через index.ts
+            "*/infrastructure/*",
+          ],
+        },
+      ],
+      // typescript
       "@typescript-eslint/no-explicit-any": "warn",
       "@typescript-eslint/no-unused-vars": "warn",
-      // "@typescript-eslint/await-thenable": "error",
-      // "@typescript-eslint/promise-function-async": "error",
-      // "@typescript-eslint/no-unsafe-return": "error",
+      "@typescript-eslint/await-thenable": "error",
+      "@typescript-eslint/promise-function-async": "error",
+      "@typescript-eslint/no-unsafe-return": "error",
+      "@typescript-eslint/consistent-type-imports": "error",
+      "@typescript-eslint/no-unused-vars": "off",
+      "@typescript-eslint/no-floating-promises": "warn",
+      "@typescript-eslint/no-explicit-any": "off",
+      "@typescript-eslint/no-misused-promises": "off",
+      "@typescript-eslint/no-unsafe-assignment": "off",
       // unicorn
       "unicorn/filename-case": "off",
       "unicorn/prevent-abbreviations": "off",
@@ -70,66 +94,14 @@ export default tseslint.config(
   },
   {
     // запрет на импорт из infrastructure, кроме IoC
-    files: [
-      "src/charSheetPage/**/*.tsx",
-      "src/charSheetPage/**/*.ts",
-      "src/domain/**/*.tsx",
-      "src/domain/**/*.ts",
-      // "src/IoC/**/*.tsx",
-      // "src/IoC/**/*.ts",
-      "src/domainServices/**/*.tsx",
-      "src/domainServices/**/*.ts",
-      "src/infrastructure/**/*.tsx",
-      "src/infrastructure/**/*.ts",
-      "src/pages/**/*.tsx",
-      "src/pages/**/*.ts",
-      "src/ports/**/*.tsx",
-      "src/ports/**/*.ts",
-      "src/unitComponents/**/*.tsx",
-      "src/unitComponents/**/*.ts",
-      "src/utils/**/*.tsx",
-      "src/utils/**/*.ts",
-      "src/App.tsx",
-      "src/constants.ts",
-      "src/initApp.ts",
-      "src/main.tsx",
-      "src/NavMenu.tsx",
-    ],
+    files: ["src/**/*.{ts,tsx}"],
+    ignores: ["src/IoC/**/*.{ts,tsx}"],
     rules: {
       "no-restricted-imports": [
         "error",
         {
+          paths: ["../infrastructure"],
           patterns: ["../infrastructure/*"],
-        },
-      ],
-    },
-  },
-  // {
-  //   // запрет на импорт из infrastructure изнутри, только через index.ts, кроме IoC
-  //   files: [
-  //     "src/IoC/**/*.tsx",
-  //     "src/IoC/**/*.ts",
-  //   ],
-  //   rules: {
-  //     "no-restricted-imports": [
-  //       "error",
-  //       {
-  //         patterns: ["../infrastructure/*"],
-  //       },
-  //     ],
-  //   },
-  // },
-  {
-    // запрет на импорт из page.charSheet и page.catalog в обход index.ts, кроме IoC
-    files: [
-      "src/**/*.tsx",
-      "src/**/*.ts",
-    ],
-    rules: {
-      "no-restricted-imports": [
-        "error",
-        {
-          patterns: ["*/page.charSheet/*", "*/page.catalog/*"],
         },
       ],
     },

@@ -32,7 +32,7 @@ const items: MenuProps["items"] = [
   {
     label: (
       <Dropzone
-        onDrop={async (acceptedFiles) => {
+        onDrop={(acceptedFiles) => {
           getImportModalUiStore().importArchive(acceptedFiles[0]);
         }}
       >

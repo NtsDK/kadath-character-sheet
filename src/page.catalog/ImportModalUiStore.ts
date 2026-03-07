@@ -7,11 +7,13 @@ import type { IImportManager } from "../ports";
 import { CharSheet } from "../domain/CharSheet";
 import { CharSheetStore } from "../domainServices";
 
+import { ConflictInfo, ImportStrategy } from "./types";
+
 @injectable()
 export class ImportModalUiStore {
   _isModalOpen = false;
   _uploadedCharSheets: CharSheet[] = [];
-  _conflictNames: string[] = [];
+  _conflictInfos: ConflictInfo[] = [];
 
   constructor(
     @inject(IOC_IDS.ImportManager)
@@ -22,26 +24,59 @@ export class ImportModalUiStore {
     makeObservable(this, {
       _isModalOpen: observable,
       _uploadedCharSheets: observable,
-      _conflictNames: observable,
+      _conflictInfos: observable,
       setIsModalOpen: action,
       importArchive: action,
+      setImportStrategy: action,
+      setImportStrategyToAll: action,
+      importCharSheets: action,
     });
   }
+
   get isModalOpen() {
     return this._isModalOpen;
+  }
+
+  get conflictInfos() {
+    return this._conflictInfos;
+  }
+
+  importCharSheets() {
+    const conflictsByName = R.indexBy(R.prop("name"), this._conflictInfos);
+    for (const charSheet of this._uploadedCharSheets) {
+      const conflictInfo = conflictsByName[charSheet.name];
+      if (conflictInfo) {
+        const { importStrategy, importingCharSheet } = conflictInfo;
+        if (importStrategy === "skip") {
+          continue;
+        }
+        this.charSheetStore.insert(importingCharSheet, importStrategy);
+      } else {
+        this.charSheetStore.insert(charSheet, "create");
+      }
+    }
+    this.setIsModalOpen(false);
   }
 
   setIsModalOpen(isOpen: boolean) {
     this._isModalOpen = isOpen;
   }
 
+  setImportStrategy(index: number, importStrategy: ImportStrategy) {
+    this._conflictInfos[index].importStrategy = importStrategy;
+  }
+
+  setImportStrategyToAll(importStrategy: ImportStrategy) {
+    for (const conflictInfo of this._conflictInfos) {
+      conflictInfo.importStrategy = importStrategy;
+    }
+  }
+
   async importArchive(file: File) {
     this._uploadedCharSheets = [];
-    this._conflictNames = [];
+    this._conflictInfos = [];
     try {
       this._uploadedCharSheets = await this.importManager.import(file);
-
-      // const uploadedCharSheetNames = R.pluck("name", this._uploadedCharSheets);
 
       const uploadedCharSheetsByNames = R.indexBy(
         R.prop("name"),
@@ -49,7 +84,6 @@ export class ImportModalUiStore {
       );
 
       const currentCharSheets = this.charSheetStore.getAll();
-      // const currentCharSheetNames = R.pluck("name", currentCharSheets);
       const currentCharSheetsByNames = R.indexBy(
         R.prop("name"),
         currentCharSheets,
@@ -62,7 +96,12 @@ export class ImportModalUiStore {
 
       if (conflictNames.length > 0) {
         conflictNames.sort((a, b) => a.localeCompare(b));
-        this._conflictNames = conflictNames;
+        this._conflictInfos = conflictNames.map((name) => ({
+          name,
+          existingCharSheet: currentCharSheetsByNames[name],
+          importingCharSheet: uploadedCharSheetsByNames[name],
+          importStrategy: "skip",
+        }));
         this._isModalOpen = true;
       } else {
         for (const charSheet of this._uploadedCharSheets) {

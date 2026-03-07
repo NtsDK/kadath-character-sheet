@@ -97,7 +97,13 @@ export class CharSheetStore {
       this._charSheets[charSheet.id] = charSheet;
       this.tempStorage.create(toJS(charSheet));
     } else {
-      // TODO replace strategy
+      const currentCharSheet = Object.values(this._charSheets).find(
+        (el) => el.name === charSheet.name,
+      );
+      assert(currentCharSheet);
+      charSheet.id = currentCharSheet.id;
+      this._charSheets[charSheet.id] = charSheet;
+      this.tempStorage.update(toJS(charSheet));
     }
   }
 

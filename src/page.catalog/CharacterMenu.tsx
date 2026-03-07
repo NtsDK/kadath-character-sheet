@@ -4,14 +4,19 @@ import { Button, Dropdown } from "antd";
 import { EllipsisVerticalIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { v4 as uuid } from "uuid";
+import { toJS } from "mobx";
 
 import { assert } from "../utils/assert";
 import type { CharSheet } from "../domain/CharSheet";
-import { getCharSheetStore, getConfirmModalUiStore } from "../IoC";
+import {
+  getCharSheetStore,
+  getConfirmModalUiStore,
+  getExportManager,
+} from "../IoC";
 
 import { RenameCharSheetModal } from "./RenameCharSheetModal";
 
-const CHAR_SHEET_MENU_KEYS = ["rename", "copy", "delete"] as const;
+const CHAR_SHEET_MENU_KEYS = ["rename", "copy", "delete", "export"] as const;
 
 type CharSheetMenuKey = (typeof CHAR_SHEET_MENU_KEYS)[number];
 
@@ -23,6 +28,10 @@ const items: MenuProps["items"] = [
   {
     label: "Скопировать",
     key: "copy" satisfies CharSheetMenuKey,
+  },
+  {
+    label: "Скачать",
+    key: "export" satisfies CharSheetMenuKey,
   },
   {
     type: "divider",
@@ -39,6 +48,7 @@ type Props = {
 
 export const CharacterMenu = observer(({ charSheet }: Props) => {
   const charSheetStore = getCharSheetStore();
+  const exportManager = getExportManager();
   const [isRenameModalOpen, setIsRenameModalOpen] = useState(false);
   const [renameCharId, setRenameCharId] = useState(uuid());
 
@@ -61,6 +71,10 @@ export const CharacterMenu = observer(({ charSheet }: Props) => {
             charSheetStore.delete(id);
           },
         );
+      } else if (key === "export") {
+        const charSheet = charSheetStore.get(id);
+        assert(charSheet);
+        exportManager.export(toJS([charSheet]));
       }
     };
 

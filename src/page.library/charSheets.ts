@@ -550,7 +550,7 @@ export function ClaudiaCharSheet2(): CharSheet {
         name: "Сумка с разными лакомствами в дорогу 2",
         currentStrength: 4,
         maxStrength: 4,
-        powers: [],
+        powers: ["Глинтвейн с силой домашнего очага 1"],
       },
       {
         name: "Тёплая и практичная одежда 2",

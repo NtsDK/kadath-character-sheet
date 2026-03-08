@@ -14,7 +14,7 @@ type Props = {
 
 export const ProjectSectionBody = observer(({ className }: Props) => {
   const charSheetEditorUiStore = getCharSheetEditorUiStore();
-  const { projects } = charSheetEditorUiStore.charSheet;
+  const { projects, id } = charSheetEditorUiStore.charSheet;
   const [isEditProjectModalOpen, setIsEditProjectModalOpen] = useState(false);
   const [editProjectIndex, setEditProjectIndex] = useState(0);
 
@@ -52,7 +52,7 @@ export const ProjectSectionBody = observer(({ className }: Props) => {
         </div>
       ))}
       <EditProjectModal
-        key={editProjectIndex}
+        key={id + "_" + editProjectIndex}
         title="Изменить замысел"
         isModalOpen={isEditProjectModalOpen}
         handleOk={(project) => {

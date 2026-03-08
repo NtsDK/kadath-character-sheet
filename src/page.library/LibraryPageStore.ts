@@ -44,7 +44,7 @@ export class LibraryPageStore {
     if (showNotification) {
       this.notificationStore.notify({
         type: "success",
-        message: `Созданы персонаж ${char.name}`,
+        message: `Создан персонаж ${char.name}`,
         duration: 5,
       });
     }

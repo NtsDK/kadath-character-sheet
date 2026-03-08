@@ -76,9 +76,10 @@ export default defineConfig(
         {
           paths: [".", ".."],
           patterns: [
-            // запрет на импорт из page.charSheet и page.catalog в обход index.ts
+            // запрет на импорт из page.charSheet, page.catalog и page.library в обход index.ts
             "*/page.charSheet/*",
             "*/page.catalog/*",
+            "*/page.library/*",
             // запрет на импорт из infrastructure изнутри, только через index.ts
             "*/infrastructure/*",
           ],

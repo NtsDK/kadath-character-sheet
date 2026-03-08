@@ -2,6 +2,7 @@ import type { CharSheetActionsUiStore, CharSheetEditorUiStore } from "../page.ch
 import type { CharSheetStore } from "../domainServices/CharSheetStore";
 import type { NotificationStore } from "../domainServices/NotificationStore";
 import type { CatalogPageUiStore, ImportModalUiStore } from "../page.catalog";
+import type { LibraryPageStore } from "../page.library";
 import type { NotificationModalUiStore } from "../pages/NotificationModalUiStore";
 import type { IExportManager, IImportManager, ITempStorage } from "../ports";
 import type { ConfirmModalUiStore } from "../unitComponents/ConfirmModalUiStore";
@@ -11,6 +12,10 @@ import { IOC_IDS } from "./Symbols";
 
 export function getCatalogPageUiStore(): CatalogPageUiStore {
   return iocContainer.get<CatalogPageUiStore>(IOC_IDS.CatalogPageUiStore);
+}
+
+export function getLibraryPageStore(): LibraryPageStore {
+  return iocContainer.get<LibraryPageStore>(IOC_IDS.LibraryPageStore);
 }
 
 export function getConfirmModalUiStore(): ConfirmModalUiStore {

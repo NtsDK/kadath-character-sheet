@@ -5,6 +5,7 @@ import {
   QuestionCircleOutlined,
   TeamOutlined,
   UserOutlined,
+  BookOutlined,
 } from "@ant-design/icons";
 import { Link, useLocation } from "react-router";
 
@@ -32,10 +33,15 @@ export const NavMenu = observer(() => {
         <span>Лист персонажа</span>
         <Link to={"/charSheet/" + charId} />
       </Menu.Item>
-      <Menu.Item key="/instruction">
+      {/* <Menu.Item key="/instruction">
         <QuestionCircleOutlined />
         <span>Инструкция</span>
         <Link to="/instruction" />
+      </Menu.Item> */}
+      <Menu.Item key="/library">
+        <BookOutlined />
+        <span>Библиотека</span>
+        <Link to="/library" />
       </Menu.Item>
       <Menu.Item key="/about">
         <InfoCircleOutlined />

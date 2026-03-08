@@ -2,9 +2,10 @@ import { Container } from "inversify";
 
 import { CatalogPageUiStore, ImportModalUiStore } from "../page.catalog";
 import { ConfirmModalUiStore } from "../unitComponents/ConfirmModalUiStore";
-import { CharSheetActionsUiStore , CharSheetEditorUiStore } from "../page.charSheet";
-import { CharSheetStore , NotificationStore } from "../domainServices";
-import { TempStorage , ExportManager , ImportManager } from "../infrastructure";
+import { CharSheetActionsUiStore, CharSheetEditorUiStore } from "../page.charSheet";
+import { LibraryPageStore } from "../page.library";
+import { CharSheetStore, NotificationStore } from "../domainServices";
+import { TempStorage, ExportManager, ImportManager } from "../infrastructure";
 import { NotificationModalUiStore } from "../pages/NotificationModalUiStore";
 
 import { IOC_IDS } from "./Symbols";
@@ -21,6 +22,8 @@ export function initIoCContainer() {
   // CharSheet editor page
   iocContainer.bind(IOC_IDS.CharSheetActionsUiStore).to(CharSheetActionsUiStore).inSingletonScope();
   iocContainer.bind(IOC_IDS.CharSheetEditorUiStore).to(CharSheetEditorUiStore).inSingletonScope();
+  // Library page
+  iocContainer.bind(IOC_IDS.LibraryPageStore).to(LibraryPageStore).inSingletonScope();
   // infrastructure
   iocContainer.bind(IOC_IDS.TempStorage).to(TempStorage).inSingletonScope();
   iocContainer.bind(IOC_IDS.ExportManager).to(ExportManager).inSingletonScope();

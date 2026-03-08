@@ -5,8 +5,8 @@ import { Routes, Route, HashRouter } from "react-router";
 
 import { CharSheetPage } from "./page.charSheet";
 import { CatalogPage } from "./page.catalog";
+import { LibraryPage } from "./page.library";
 import { AboutPage } from "./pages/AboutPage";
-import { InstructionPage } from "./pages/InstructionPage";
 import { NavMenu } from "./NavMenu";
 import { ConfirmModal } from "./unitComponents/ConfirmModal";
 import { NotificationModal } from "./pages/NotificationModal";
@@ -30,7 +30,8 @@ export const App = observer(() => {
         <Routes>
           <Route path="/" element={<CatalogPage />} />
           <Route path="charSheet/:charSheetId" element={<CharSheetPage />} />
-          <Route path="instruction" element={<InstructionPage />} />
+          {/* <Route path="instruction" element={<InstructionPage />} /> */}
+          <Route path="library" element={<LibraryPage />} />
           <Route path="about" element={<AboutPage />} />
         </Routes>
         <ConfirmModal />

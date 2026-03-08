@@ -33,7 +33,7 @@ export const RenameCharSheetModal = observer(
         return;
       }
       if (!VALIDATE_NAME_REGEX.test(trimmedName)) {
-        setError("Имя может содержать только буквы, цифры, пробелы, символ подчеркивания и круглые скобки");
+        setError("Имя может содержать только буквы, цифры, пробелы, символ подчеркивания, апостроф и круглые скобки");
         return;
       }
       if (getCharSheetStore().isNameUsed(trimmedName)) {

@@ -2,11 +2,6 @@ import { inject, injectable } from "inversify";
 import { openDB, deleteDB, IDBPDatabase } from "idb";
 
 import { CharSheet } from "../domain/CharSheet";
-import {
-  ClaudiaCharSheet,
-  ClaudiaCharSheet2,
-  getNewDefinedCharSheet,
-} from "../domainServices/charSheet";
 import { ITempStorage } from "../ports";
 import { IOC_IDS } from "../IoC/Symbols";
 import { NotificationStore } from "../domainServices/NotificationStore";
@@ -36,21 +31,13 @@ export class TempStorage implements ITempStorage {
   ) {}
 
   async init(): Promise<void> {
-    let initializeFilesStore = false;
     this.db = await openDB(DB_NAME, DB_VERSION, {
       upgrade(db) {
         if (!db.objectStoreNames.contains(FILES_STORE)) {
           db.createObjectStore(FILES_STORE, { keyPath: "id" });
-          initializeFilesStore = true;
         }
       },
     });
-
-    if (initializeFilesStore) {
-      this.create(ClaudiaCharSheet());
-      this.create(ClaudiaCharSheet2());
-      this.create(getNewDefinedCharSheet());
-    }
   }
 
   async getAllCharSheets(): Promise<CharSheet[]> {

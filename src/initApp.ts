@@ -11,12 +11,12 @@ export async function initApp() {
 
   const charSheetStore = getCharSheetStore();
   charSheetStore.init(charSheets);
-  if (charSheets.length === 0) {
-    const libraryPageStore = getLibraryPageStore();
-    libraryPageStore.createCharacter("beyond-the-gates/Claudia", false);
-    libraryPageStore.createCharacter("beyond-the-gates/test_char_sheet", false);
-    libraryPageStore.createCharacter("beyond-the-gates/Claudia_test", false);
-  }
+  // if (charSheets.length === 0) {
+  //   const libraryPageStore = getLibraryPageStore();
+  //   libraryPageStore.createCharacter("beyond-the-gates/Claudia", false);
+  //   libraryPageStore.createCharacter("beyond-the-gates/test_char_sheet", false);
+  //   libraryPageStore.createCharacter("beyond-the-gates/Claudia_test", false);
+  // }
 
   const list = Object.values(charSheetStore.charSheets);
   const charSheetEditorUiStore = getCharSheetEditorUiStore();

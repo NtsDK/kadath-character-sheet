@@ -55,6 +55,17 @@ export const CatalogTable = observer(() => {
     }),
   };
 
+  if (charSheets.length === 0) {
+    return (
+      <div>
+        <div className="tw-text-xl tw-m-10">
+          В базе нет персонажей. Создайте персонажа с помощью кнопки наверху
+          страницы или загрузите персонажа на вкладке Библиотека.
+        </div>
+      </div>
+    );
+  }
+
   return (
     <>
       <Table<CharSheet>

@@ -1,6 +1,6 @@
-import type { DataModel } from "./dataModelTypes";
+import type { ConfigurationDataModel } from "../domain/ConfigurationDataModel";
 
-const dataModel: DataModel = [
+export const dataModel: ConfigurationDataModel = [
   {
     name: "powers",
     title: "Силы",

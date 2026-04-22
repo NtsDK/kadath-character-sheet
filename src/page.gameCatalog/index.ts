@@ -1,0 +1,1 @@
+export { GameCatalogPage } from "./GameCatalogPage";

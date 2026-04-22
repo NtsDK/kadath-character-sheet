@@ -10,6 +10,8 @@ import { AboutPage } from "./pages/AboutPage";
 import { NavMenu } from "./NavMenu";
 import { ConfirmModal } from "./unitComponents/ConfirmModal";
 import { NotificationModal } from "./pages/NotificationModal";
+import { GameCatalogPage } from "./page.gameCatalog";
+import { GamePage } from "./page.game";
 
 const { Sider } = Layout;
 
@@ -30,6 +32,8 @@ export const App = observer(() => {
         <Routes>
           <Route path="/" element={<CatalogPage />} />
           <Route path="charSheet/:charSheetId" element={<CharSheetPage />} />
+          <Route path="gameCatalog" element={<GameCatalogPage />} />
+          <Route path="game/:gameId" element={<GamePage />} />
           {/* <Route path="instruction" element={<InstructionPage />} /> */}
           <Route path="library" element={<LibraryPage />} />
           <Route path="about" element={<AboutPage />} />

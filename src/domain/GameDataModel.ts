@@ -65,4 +65,4 @@ interface ListItem {
 // Collected types
 type DataModelItem = PrimitiveItem | ListItem;
 
-export type ConfigurationDataModel = (DataModelItem & TopNameableItem)[];
+export type GameDataModel = (DataModelItem & TopNameableItem)[];

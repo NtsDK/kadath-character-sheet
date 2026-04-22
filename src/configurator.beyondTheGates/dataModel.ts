@@ -1,6 +1,6 @@
-import type { ConfigurationDataModel } from "../domain/ConfigurationDataModel";
+import type { GameDataModel } from "../domain/GameDataModel";
 
-export const dataModel: ConfigurationDataModel = [
+export const dataModel: GameDataModel = [
   {
     name: "powers",
     title: "Силы",

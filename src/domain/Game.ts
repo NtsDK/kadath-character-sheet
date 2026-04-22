@@ -1,16 +1,16 @@
-import type { ConfigurationDataModel, GearItem } from "./ConfigurationDataModel";
+import type { GameDataModel, GearItem } from "./GameDataModel";
 
-export interface CharSheetConfiguration {
+export interface Game {
   // мета информация о конфигурации листа персонажа
   /** Уникальное название конфигурации - игровой линейки */
   name: string;
   /** Внутренний идентификатор конфигурации */
   id: string;
-  /** Версия файла, хэш модели данных */
-  version: string;
+  /** Версия */
+  version: number;
 
   /** Схема данных конфигурации */
-  dataModel: ConfigurationDataModel;
+  dataModel: GameDataModel;
 
   /** Макет листа персонажа  */
   layout: Layout;

@@ -10,6 +10,7 @@ import type { NotificationModalUiStore } from "../pages/NotificationModalUiStore
 import type { IExportManager, IImportManager, ITempStorage } from "../ports";
 import type { ConfirmModalUiStore } from "../unitComponents/ConfirmModalUiStore";
 import type { GameStore } from "../domainServices";
+import type { GameCatalogPageUiStore } from "../page.gameCatalog";
 
 import { iocContainer } from "./container";
 import { IOC_IDS } from "./Symbols";
@@ -70,4 +71,10 @@ export function getNotificationStore(): NotificationStore {
 
 export function getImportModalUiStore(): ImportModalUiStore {
   return iocContainer.get<ImportModalUiStore>(IOC_IDS.ImportModalUiStore);
+}
+
+export function getGameCatalogPageUiStore(): GameCatalogPageUiStore {
+  return iocContainer.get<GameCatalogPageUiStore>(
+    IOC_IDS.GameCatalogPageUiStore,
+  );
 }

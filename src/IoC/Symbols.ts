@@ -6,6 +6,8 @@ export const IOC_IDS = {
   // Catalog page
   CatalogPageUiStore: Symbol("CatalogPageUiStore"),
   ImportModalUiStore: Symbol("ImportModalUiStore"),
+  // Game catalog page
+  GameCatalogPageUiStore: Symbol("GameCatalogPageUiStore"),
   // Library page
   LibraryPageStore: Symbol("LibraryPageStore"),
   // CharSheet editor page

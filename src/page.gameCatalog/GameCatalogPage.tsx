@@ -6,6 +6,8 @@ import { v4 as uuid } from "uuid";
 
 import { getGameStore, getLibraryPageStore } from "../IoC";
 
+import { CatalogTable } from "./CatalogTable";
+
 export const GameCatalogPage = observer(() => {
     const gameStore = getGameStore();
     const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
@@ -25,7 +27,7 @@ export const GameCatalogPage = observer(() => {
           </Button>
           {/* <MainMenu /> */}
         </div>
-        {/* <CatalogTable /> */}
+        <CatalogTable />
         {/* <RenameCharSheetModal
           key={createKey}
           title="Создать персонажа"

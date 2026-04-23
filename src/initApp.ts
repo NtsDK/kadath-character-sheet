@@ -1,8 +1,14 @@
-import { getCharSheetEditorUiStore, getCharSheetStore, getLibraryPageStore, getTempStorage } from "./IoC";
+import { beyondTheGatesGame } from "./configurator.beyondTheGates/configuration";
+import {
+  getCharSheetEditorUiStore,
+  getCharSheetStore,
+  getGameStore,
+  getLibraryPageStore,
+  getTempStorage,
+} from "./IoC";
 import { initIoCContainer } from "./IoC/container";
 
 export async function initApp() {
-
   initIoCContainer();
 
   const tempStorage = getTempStorage();
@@ -11,6 +17,8 @@ export async function initApp() {
 
   const charSheetStore = getCharSheetStore();
   charSheetStore.init(charSheets);
+  const gameStore = getGameStore();
+  gameStore.init([beyondTheGatesGame]);
   // if (charSheets.length === 0) {
   //   const libraryPageStore = getLibraryPageStore();
   //   libraryPageStore.createCharacter("beyond-the-gates/Claudia", false);

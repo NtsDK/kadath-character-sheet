@@ -7,7 +7,7 @@ export interface Game {
   /** Внутренний идентификатор конфигурации */
   id: string;
   /** Версия */
-  version: number;
+  // version: number;
 
   /** Схема данных конфигурации */
   dataModel: GameDataModel;
@@ -16,11 +16,17 @@ export interface Game {
   layout: Layout;
 
   /** Предметы для игры */
-  // gearItemCollections: GearItemCollection[];
+  gearItemCollections: GearItemCollection[];
 
-  // /** Набор прегенерированных персонажей */
-  // characterCollections: object[];
+  /** Набор прегенерированных персонажей */
+  characterCollections: object[];
 }
+
+export type GameMetaProps = "name" | "id";
+export type GameContentProps = "dataModel" | "layout";
+export type GameMeta = Pick<Game, GameMetaProps>;
+export type GameContent = Omit<Game, GameContentProps>;
+export type GameSupplemental = Omit<Game, GameMetaProps | GameContentProps>;
 
 interface GearItemCollection {
   name: string;

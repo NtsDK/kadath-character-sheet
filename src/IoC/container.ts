@@ -4,7 +4,7 @@ import { CatalogPageUiStore, ImportModalUiStore } from "../page.catalog";
 import { ConfirmModalUiStore } from "../unitComponents/ConfirmModalUiStore";
 import { CharSheetActionsUiStore, CharSheetEditorUiStore } from "../page.charSheet";
 import { LibraryPageStore } from "../page.library";
-import { CharSheetStore, NotificationStore } from "../domainServices";
+import { CharSheetStore, GameStore, NotificationStore } from "../domainServices";
 import { TempStorage, ExportManager, ImportManager } from "../infrastructure";
 import { NotificationModalUiStore } from "../pages/NotificationModalUiStore";
 
@@ -15,6 +15,7 @@ export const iocContainer = new Container();
 export function initIoCContainer() {
   // domain services
   iocContainer.bind(IOC_IDS.CharSheetStore).to(CharSheetStore).inSingletonScope();
+  iocContainer.bind(IOC_IDS.GameStore).to(GameStore).inSingletonScope();
   iocContainer.bind(IOC_IDS.NotificationStore).to(NotificationStore).inSingletonScope();
   // Catalog page
   iocContainer.bind(IOC_IDS.CatalogPageUiStore).to(CatalogPageUiStore).inSingletonScope();

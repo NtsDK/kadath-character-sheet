@@ -32,6 +32,7 @@ export class CharSheetStore {
       init: action,
       copy: action,
       delete: action,
+      deleteAll: action,
       updateMeta: action,
       updateContent: action,
     });

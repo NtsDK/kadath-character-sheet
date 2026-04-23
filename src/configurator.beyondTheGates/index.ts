@@ -1,1 +1,1 @@
-export { configuration } from "./configuration";
+export { beyondTheGatesGame as configuration } from "./configuration";

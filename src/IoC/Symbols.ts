@@ -1,6 +1,7 @@
 export const IOC_IDS = {
   // domain services
   CharSheetStore: Symbol("CharSheetStore"),
+  GameStore: Symbol("GameStore"),
   NotificationStore: Symbol("NotificationStore"),
   // Catalog page
   CatalogPageUiStore: Symbol("CatalogPageUiStore"),

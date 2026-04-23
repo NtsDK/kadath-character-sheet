@@ -1,4 +1,7 @@
-import type { CharSheetActionsUiStore, CharSheetEditorUiStore } from "../page.charSheet";
+import type {
+  CharSheetActionsUiStore,
+  CharSheetEditorUiStore,
+} from "../page.charSheet";
 import type { CharSheetStore } from "../domainServices/CharSheetStore";
 import type { NotificationStore } from "../domainServices/NotificationStore";
 import type { CatalogPageUiStore, ImportModalUiStore } from "../page.catalog";
@@ -6,6 +9,7 @@ import type { LibraryPageStore } from "../page.library";
 import type { NotificationModalUiStore } from "../pages/NotificationModalUiStore";
 import type { IExportManager, IImportManager, ITempStorage } from "../ports";
 import type { ConfirmModalUiStore } from "../unitComponents/ConfirmModalUiStore";
+import type { GameStore } from "../domainServices";
 
 import { iocContainer } from "./container";
 import { IOC_IDS } from "./Symbols";
@@ -36,6 +40,10 @@ export function getCharSheetEditorUiStore(): CharSheetEditorUiStore {
 
 export function getCharSheetStore(): CharSheetStore {
   return iocContainer.get<CharSheetStore>(IOC_IDS.CharSheetStore);
+}
+
+export function getGameStore(): GameStore {
+  return iocContainer.get<GameStore>(IOC_IDS.GameStore);
 }
 
 export function getTempStorage(): ITempStorage {

@@ -15,7 +15,8 @@ import {
 import { simpleDateFormat } from "../utils/simpleDateFormat";
 import type { Game, GameContent } from "../domain/Game";
 
-// import { CharacterMenu } from "./CharacterMenu";
+import { GameMenu } from "./GameMenu";
+
 // import { CharacterLink } from "./CharacterLink";
 
 const columns: ColumnsType<Game> = [
@@ -34,12 +35,12 @@ const columns: ColumnsType<Game> = [
   //   sorter: (a, b) => a.updatedAt.getTime() - b.updatedAt.getTime(),
   //   render: simpleDateFormat,
   // },
-  // {
-  //   title: "",
-  //   dataIndex: "menu",
-  //   key: "menu",
-  //   render: (_, record) => <CharacterMenu charSheet={record} />,
-  // },
+  {
+    title: "",
+    dataIndex: "menu",
+    key: "menu",
+    render: (_, record) => <GameMenu game={record} />,
+  },
 ];
 
 export const CatalogTable = observer(() => {

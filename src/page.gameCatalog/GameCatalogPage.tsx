@@ -7,6 +7,7 @@ import { v4 as uuid } from "uuid";
 import { getGameStore, getLibraryPageStore } from "../IoC";
 
 import { CatalogTable } from "./CatalogTable";
+import { RenameGameModal } from "./RenameGameModal";
 
 export const GameCatalogPage = observer(() => {
     const gameStore = getGameStore();
@@ -28,16 +29,16 @@ export const GameCatalogPage = observer(() => {
           {/* <MainMenu /> */}
         </div>
         <CatalogTable />
-        {/* <RenameCharSheetModal
+        <RenameGameModal
           key={createKey}
-          title="Создать персонажа"
+          title="Создать игру"
           isModalOpen={isCreateModalOpen}
-          handleOk={(name) => {
-            charSheetStore.create(name);
+          handleOk={(name, id) => {
+            gameStore.create(name, id);
             setIsCreateModalOpen(false);
           }}
           handleCancel={() => setIsCreateModalOpen(false)}
-        /> */}
+        />
         {/* <ImportModal /> */}
       </div>
     );

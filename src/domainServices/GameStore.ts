@@ -5,7 +5,7 @@ import { inject, injectable } from "inversify";
 import * as R from "ramda";
 
 import { assert } from "../utils/assert";
-import { generateCopyName } from "../utils/generateCopyName";
+import { generateCopyId, generateCopyName } from "../utils/generateCopyName";
 import {
   CharSheet,
   CharSheetContent,
@@ -96,7 +96,7 @@ export class GameStore {
         );
       }
       if (this.isIdUsed(game.id)) {
-        game.id = generateCopyName(
+        game.id = generateCopyId(
           game.id,
           new Set(R.pluck("id", Object.values(this._games))),
         );
@@ -118,7 +118,7 @@ export class GameStore {
     const original = this.get(id);
     assert(!!original);
     const copy = clone(toJS(original));
-    copy.id = generateCopyName(
+    copy.id = generateCopyId(
       copy.id,
       new Set(R.pluck("id", Object.values(this._games))),
     );

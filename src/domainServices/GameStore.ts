@@ -6,16 +6,10 @@ import * as R from "ramda";
 
 import { assert } from "../utils/assert";
 import { generateCopyId, generateCopyName } from "../utils/generateCopyName";
-import {
-  CharSheet,
-  CharSheetContent,
-  CharSheetMeta,
-} from "../domain/CharSheet";
 import { IOC_IDS } from "../IoC/Symbols";
 import type { ITempStorage } from "../ports";
 import { Game, GameContent, GameMeta, GameSupplemental } from "../domain/Game";
 
-import { getNewCharSheet } from "./charSheet";
 import { getNewGame } from "./game";
 
 @injectable()

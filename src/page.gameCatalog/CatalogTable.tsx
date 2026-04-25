@@ -5,8 +5,6 @@ import { useState } from "react";
 
 import type { CharSheet } from "../domain/CharSheet";
 import {
-  getCatalogPageUiStore,
-  getCharSheetStore,
   getConfirmModalUiStore,
   getExportManager,
   getGameCatalogPageUiStore,
@@ -16,8 +14,7 @@ import { simpleDateFormat } from "../utils/simpleDateFormat";
 import type { Game, GameContent } from "../domain/Game";
 
 import { GameMenu } from "./GameMenu";
-
-// import { CharacterLink } from "./CharacterLink";
+import { GameLink } from "./GameLink";
 
 const columns: ColumnsType<Game> = [
   {
@@ -25,8 +22,7 @@ const columns: ColumnsType<Game> = [
     dataIndex: "name",
     key: "name",
     sorter: (a, b) => a.name.localeCompare(b.name),
-    // render: (_, record) => <CharacterLink charSheet={record} />,
-    render: (_, record) => record.name,
+    render: (_, record) => <GameLink game={record} />,
   },
   // {
   //   title: "Обновлено",

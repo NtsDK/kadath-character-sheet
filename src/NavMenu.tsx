@@ -11,7 +11,12 @@ import {
 } from "@ant-design/icons";
 import { Link, useLocation } from "react-router";
 
-import { getCharSheetEditorUiStore, getCharSheetStore } from "./IoC";
+import {
+  getCharSheetEditorUiStore,
+  getCharSheetStore,
+  getGameEditorUiStore,
+  getGameStore,
+} from "./IoC";
 
 export const NavMenu = observer(() => {
   const location = useLocation();
@@ -19,6 +24,8 @@ export const NavMenu = observer(() => {
   const key = location.pathname;
   const charId = getCharSheetEditorUiStore().id;
   const charSheetStore = getCharSheetStore();
+  const gameId = getGameEditorUiStore().id;
+  const gameStore = getGameStore();
 
   return (
     <Menu theme="dark" defaultSelectedKeys={[key]} mode="inline" key={key}>
@@ -45,10 +52,10 @@ export const NavMenu = observer(() => {
         <span>Каталог игр</span>
         <Link to="/gameCatalog" />
       </Menu.Item>
-      <Menu.Item key="/game">
+      <Menu.Item key={"/game/" + gameId} disabled={!gameStore.exists(gameId)}>
         <ProductOutlined />
         <span>Игра</span>
-        <Link to="/game" />
+        <Link to={"/game/" + gameId} />
       </Menu.Item>
       <Menu.Item key="/library">
         <BookOutlined />

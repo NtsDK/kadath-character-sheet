@@ -11,6 +11,7 @@ import type { IExportManager, IImportManager, ITempStorage } from "../ports";
 import type { ConfirmModalUiStore } from "../unitComponents/ConfirmModalUiStore";
 import type { GameStore } from "../domainServices";
 import type { GameCatalogPageUiStore } from "../page.gameCatalog";
+import type { GameEditorUiStore } from "../page.game";
 
 import { iocContainer } from "./container";
 import { IOC_IDS } from "./Symbols";
@@ -76,5 +77,11 @@ export function getImportModalUiStore(): ImportModalUiStore {
 export function getGameCatalogPageUiStore(): GameCatalogPageUiStore {
   return iocContainer.get<GameCatalogPageUiStore>(
     IOC_IDS.GameCatalogPageUiStore,
+  );
+}
+
+export function getGameEditorUiStore(): GameEditorUiStore {
+  return iocContainer.get<GameEditorUiStore>(
+    IOC_IDS.GameEditorUiStore,
   );
 }

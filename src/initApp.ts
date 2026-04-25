@@ -2,6 +2,7 @@ import { beyondTheGatesGame } from "./configurator.beyondTheGates/configuration"
 import {
   getCharSheetEditorUiStore,
   getCharSheetStore,
+  getGameEditorUiStore,
   getGameStore,
   getLibraryPageStore,
   getTempStorage,
@@ -29,4 +30,8 @@ export async function initApp() {
   const list = Object.values(charSheetStore.charSheets);
   const charSheetEditorUiStore = getCharSheetEditorUiStore();
   charSheetEditorUiStore.setId(list[0]?.id);
+
+  const gameList = Object.values(gameStore.games);
+  const gameEditorUiStore = getGameEditorUiStore();
+  gameEditorUiStore.setId(gameList[0]?.id);
 }

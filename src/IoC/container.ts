@@ -8,6 +8,7 @@ import { CharSheetStore, GameStore, NotificationStore } from "../domainServices"
 import { TempStorage, ExportManager, ImportManager } from "../infrastructure";
 import { NotificationModalUiStore } from "../pages/NotificationModalUiStore";
 import { GameCatalogPageUiStore } from "../page.gameCatalog";
+import { GameEditorUiStore } from "../page.game";
 
 import { IOC_IDS } from "./Symbols";
 
@@ -23,6 +24,8 @@ export function initIoCContainer() {
   iocContainer.bind(IOC_IDS.ImportModalUiStore).to(ImportModalUiStore).inSingletonScope();
   // Game catalog page
   iocContainer.bind(IOC_IDS.GameCatalogPageUiStore).to(GameCatalogPageUiStore).inSingletonScope();
+  // Game editor page
+  iocContainer.bind(IOC_IDS.GameEditorUiStore).to(GameEditorUiStore).inSingletonScope();
   // CharSheet editor page
   iocContainer.bind(IOC_IDS.CharSheetActionsUiStore).to(CharSheetActionsUiStore).inSingletonScope();
   iocContainer.bind(IOC_IDS.CharSheetEditorUiStore).to(CharSheetEditorUiStore).inSingletonScope();

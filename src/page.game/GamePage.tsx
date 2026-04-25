@@ -5,14 +5,15 @@ const { Header, Content, Footer, Sider } = Layout;
 
 import { getLibraryPageStore } from "../IoC";
 
+import { GameEditor } from "./GameEditor";
+
 export const GamePage = observer(() => {
   return (
     <Content>
       <Layout>
-        <Content>GamePage</Content>
-        {/* <Sider theme="light" width="250">
-          <CharSheetActions />
-        </Sider> */}
+        <Content>
+          <GameEditor />
+        </Content>
       </Layout>
     </Content>
   );

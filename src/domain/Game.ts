@@ -9,7 +9,7 @@ export interface Game {
   /** Версия */
   // version: number;
 
-  /** Схема данных конфигурации */
+  /** Модель данных */
   dataModel: GameDataModel;
 
   /** Макет листа персонажа  */

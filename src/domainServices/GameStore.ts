@@ -15,6 +15,7 @@ import { getNewGame } from "./game";
 @injectable()
 export class GameStore {
   _games: Record<string, Game> = {};
+  _gameDrafts: Record<string, Game> = {};
 
   constructor(
     @inject(IOC_IDS.TempStorage)
@@ -22,6 +23,7 @@ export class GameStore {
   ) {
     makeObservable(this, {
       _games: observable,
+      _gameDrafts: observable,
       games: computed,
       create: action,
       insert: action,
@@ -50,6 +52,10 @@ export class GameStore {
 
   exists(id: string): boolean {
     return !!this._games[id];
+  }
+
+  hasDraft(id: string) {
+    return !!this._gameDrafts[id];
   }
 
   isNameUsed(name: string): boolean {

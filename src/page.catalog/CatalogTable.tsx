@@ -74,6 +74,7 @@ export const CatalogTable = observer(() => {
         dataSource={charSheets}
         size="small"
         rowKey={(el) => el.id}
+        pagination={false}
       />
       {selectedRowKeys.length > 0 && (
         <div className="tw-fixed tw-bg-blue-900 tw-left-0 tw-top-0 tw-w-full tw-p-2 tw-text-right">

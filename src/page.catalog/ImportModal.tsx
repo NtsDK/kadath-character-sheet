@@ -88,6 +88,7 @@ export const ImportModal = observer(() => {
           columns={columns}
           dataSource={importModalUiStore.conflictInfos}
           size="small"
+          pagination={false}
         />
       </div>
     </Modal>

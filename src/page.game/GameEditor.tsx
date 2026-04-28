@@ -11,7 +11,7 @@ import {
 
 import { getGameEditorUiStore } from "../IoC";
 
-import { DataModelEditor } from "./DataModelEditor";
+import { DataModelEditor } from "./DataModelEditor/DataModelEditor";
 import { LayoutEditor } from "./LayoutEditor";
 
 export const GameEditor = observer(() => {

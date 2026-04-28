@@ -1,0 +1,59 @@
+import { Button, Table } from "antd";
+import { observer } from "mobx-react-lite";
+import type { ColumnsType, TableProps } from "antd/es/table";
+import { useState } from "react";
+
+import type { TopDataModelItem } from "../../domain/GameDataModel";
+import { getGameEditorUiStore } from "../../IoC";
+
+// import type { CharSheet } from "../domain/CharSheet";
+// import {
+//   getCatalogPageUiStore,
+//   getCharSheetStore,
+//   getConfirmModalUiStore,
+//   getExportManager,
+// } from "../IoC";
+// import { simpleDateFormat } from "../utils/simpleDateFormat";
+
+// import { CharacterMenu } from "./CharacterMenu";
+// import { CharacterLink } from "./CharacterLink";
+
+const columns: ColumnsType<TopDataModelItem> = [
+  {
+    title: "",
+    dataIndex: "body",
+    key: "body",
+    render: (_, record) => {
+      return <div>{record.name} {record.title} {record.type}</div>
+    },
+  },
+  // {
+  //   title: "Обновлено",
+  //   dataIndex: "updatedAt",
+  //   key: "updatedAt",
+  //   sorter: (a, b) => a.updatedAt.getTime() - b.updatedAt.getTime(),
+  //   render: simpleDateFormat,
+  // },
+  // {
+  //   title: "",
+  //   dataIndex: "menu",
+  //   key: "menu",
+  //   render: (_, record) => <CharacterMenu charSheet={record} />,
+  // },
+];
+
+export const CatalogTable = observer(() => {
+  const { game } = getGameEditorUiStore();
+
+  return (
+    <>
+      <Table<TopDataModelItem>
+        columns={columns}
+        dataSource={game.dataModel}
+        size="small"
+        rowKey={(el) => el.name}
+        pagination={false}
+      />
+    </>
+  );
+});

@@ -1,4 +1,4 @@
-import { Button, Table } from "antd";
+import { Button, Table, Tag } from "antd";
 import { observer } from "mobx-react-lite";
 import type { ColumnsType, TableProps } from "antd/es/table";
 import { useState } from "react";
@@ -23,6 +23,18 @@ const columns: ColumnsType<Game> = [
     key: "name",
     sorter: (a, b) => a.name.localeCompare(b.name),
     render: (_, record) => <GameLink game={record} />,
+  },
+  {
+    title: "Статус",
+    dataIndex: "status",
+    key: "status",
+    render: (_, record) => {
+      const gameStore = getGameStore();
+      if (gameStore.hasDraft(record.id)) {
+        return <Tag color="yellow">Есть черновик</Tag>;
+      }
+      return <Tag color="green">Опубликована</Tag>;
+    },
   },
   // {
   //   title: "Обновлено",
@@ -73,6 +85,7 @@ export const CatalogTable = observer(() => {
         dataSource={games}
         size="small"
         rowKey={(el) => el.id}
+        pagination={false}
       />
       {/* {selectedRowKeys.length > 0 && (
         <div className="tw-fixed tw-bg-blue-900 tw-left-0 tw-top-0 tw-w-full tw-p-2 tw-text-right">

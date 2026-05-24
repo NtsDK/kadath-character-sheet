@@ -46,7 +46,7 @@ interface ProjectItem {
   description: string;
 }
 
-type PrimitiveItem =
+export type PrimitiveItem =
   | StringItem
   | NumberItem
   | LabeledNumberItem
@@ -55,7 +55,7 @@ type PrimitiveItem =
   | ProjectItem;
 
 // Composite items
-interface ListItem {
+export interface ListItem {
   type: "list";
   initialLength?: number;
   maxLength?: number;

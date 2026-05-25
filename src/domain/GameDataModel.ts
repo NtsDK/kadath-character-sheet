@@ -63,8 +63,17 @@ export interface ListItem {
 }
 
 // Collected types
-type DataModelItem = PrimitiveItem | ListItem;
+export type DataModelItem = PrimitiveItem | ListItem;
 
-export type TopDataModelItem = DataModelItem & TopNameableItem
+export type TopDataModelItem = DataModelItem & TopNameableItem;
 
 export type GameDataModel = TopDataModelItem[];
+
+export type TypeMeta =
+  | {
+      type: PrimitiveItem["type"];
+    }
+  | {
+      type: ListItem["type"];
+      proto: PrimitiveItem["type"];
+    };

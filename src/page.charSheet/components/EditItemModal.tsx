@@ -10,7 +10,6 @@ type Props = {
   title?: string;
   isModalOpen: boolean;
   handleOk: (item: Item) => void;
-  validateName?: (name: string) => string | null;
   handleCancel: () => void;
   defaultItem?: Item;
 };

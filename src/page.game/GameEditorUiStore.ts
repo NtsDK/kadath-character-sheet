@@ -4,6 +4,7 @@ import { inject, injectable } from "inversify";
 import { IOC_IDS } from "../IoC/Symbols";
 import { GameStore } from "../domainServices";
 import { Game } from "../domain/Game";
+import { TypeMeta } from "../domain/GameDataModel";
 
 @injectable()
 export class GameEditorUiStore {
@@ -90,8 +91,18 @@ export class GameEditorUiStore {
     this._id = id;
   }
 
+  isItemNameUsed(name: string) {
+    return this.game.dataModel.some(el => el.name === name);
+  }
+
   get id(): string {
     return this._id;
+  }
+
+  createModelItem(name: string, title: string, typeMeta: TypeMeta) {
+    const dataModel = [...this.game.dataModel];
+    // TODO add creation
+    this.gameStore.updateContent(this._id, { dataModel });
   }
 
   // get canCreatePower() {

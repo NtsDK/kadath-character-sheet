@@ -8,7 +8,6 @@ type Props = {
   title?: string;
   isModalOpen: boolean;
   handleOk: (project: Project) => void;
-  validateName?: (name: string) => string | null;
   handleCancel: () => void;
   defaultProject?: Project;
 };

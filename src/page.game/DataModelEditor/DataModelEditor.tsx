@@ -39,8 +39,8 @@ export const DataModelEditor = observer(() => {
         key={createKey}
         title="Создать элемент модели"
         isModalOpen={isCreateModalOpen}
-        handleOk={(name) => {
-          // charSheetStore.create(name);
+        handleOk={(name, title, typeMeta) => {
+          gameEditorUiStore.createModelItem(name, title, typeMeta);
           setIsCreateModalOpen(false);
         }}
         handleCancel={() => setIsCreateModalOpen(false)}

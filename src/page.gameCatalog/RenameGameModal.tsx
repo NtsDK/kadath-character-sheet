@@ -11,7 +11,6 @@ type Props = {
   title?: string;
   isModalOpen: boolean;
   handleOk: (name: string, id: string) => void;
-  validateName?: (name: string) => string | null;
   handleCancel: () => void;
   defaultNameValue?: string;
   defaultIdValue?: string;

@@ -25,7 +25,7 @@ export interface Game {
 export type GameMetaProps = "name" | "id";
 export type GameContentProps = "dataModel" | "layout";
 export type GameMeta = Pick<Game, GameMetaProps>;
-export type GameContent = Omit<Game, GameContentProps>;
+export type GameContent = Pick<Game, GameContentProps>;
 export type GameSupplemental = Omit<Game, GameMetaProps | GameContentProps>;
 
 interface GearItemCollection {

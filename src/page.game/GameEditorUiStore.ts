@@ -5,6 +5,7 @@ import { IOC_IDS } from "../IoC/Symbols";
 import { GameStore } from "../domainServices";
 import { Game } from "../domain/Game";
 import { TypeMeta } from "../domain/GameDataModel";
+import { getTopDataModelItem } from "../domainServices/getTopDataModelItem";
 
 @injectable()
 export class GameEditorUiStore {
@@ -101,8 +102,11 @@ export class GameEditorUiStore {
 
   createModelItem(name: string, title: string, typeMeta: TypeMeta) {
     const dataModel = [...this.game.dataModel];
-    // TODO add creation
-    this.gameStore.updateContent(this._id, { dataModel });
+    const layout = [...this.game.layout];
+    const modelItem = getTopDataModelItem(name, title, typeMeta);
+    dataModel.push(modelItem);
+    layout.push(name);
+    this.gameStore.updateContent(this._id, { dataModel, layout });
   }
 
   // get canCreatePower() {

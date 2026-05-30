@@ -105,7 +105,6 @@ export const EditModelItemModal = observer(
           onChange={onNameChange}
           status={nameError ? "error" : undefined}
           onPressEnter={() => onOk()}
-          className="tw-mb-2"
         />
         <InputError error={nameError} className="tw-mb-2" />
         <Input

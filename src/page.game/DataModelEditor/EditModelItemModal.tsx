@@ -1,5 +1,5 @@
 import { observer } from "mobx-react-lite";
-import { Input, Modal, Select } from "antd";
+import { Form, Input, Modal, Select } from "antd";
 import { useState } from "react";
 
 import { InputError } from "../../unitComponents/InputError";
@@ -12,12 +12,10 @@ import type {
 import { VALIDATE_ID_REGEX } from "../../utils/nameValidation";
 import { getGameEditorUiStore } from "../../IoC";
 
-
 type Props = {
   title?: string;
   isModalOpen: boolean;
   handleOk: (name: string, title: string, typeMeta: TypeMeta) => void;
-  validateName?: (name: string) => string | null;
   handleCancel: () => void;
 
   defaultName?: string;
@@ -99,35 +97,57 @@ export const EditModelItemModal = observer(
         cancelText="Отмена"
         okText="ОК"
       >
-        <Input
-          placeholder="Введите внутреннее название элемента модели"
-          value={name}
-          onChange={onNameChange}
-          status={nameError ? "error" : undefined}
-          onPressEnter={() => onOk()}
-        />
-        <InputError error={nameError} className="tw-mb-2" />
-        <Input
-          placeholder="Введите отображаемое название элемента модели"
-          value={itemTitle}
-          onChange={onItemTitleChange}
-          onPressEnter={() => onOk()}
+        <Form.Item
+          label="Внутреннее название элемента модели"
+          layout="vertical"
           className="tw-mb-2"
-        />
-        <Select<DataModelItem["type"]>
-          value={typeMeta.type}
-          style={{ width: 300 }}
-          onChange={onTypeChange}
-          options={typeOptions}
-          className="tw-mb-2"
-        />
-        {typeMeta.type === "list" && (
-          <Select<PrimitiveItem["type"]>
-            value={typeMeta.proto}
-            style={{ width: 300 }}
-            onChange={onProtoTypeChange}
-            options={protoTypeOptions}
+        >
+          <Input
+            placeholder="Введите внутреннее название элемента модели"
+            value={name}
+            onChange={onNameChange}
+            status={nameError ? "error" : undefined}
+            onPressEnter={() => onOk()}
           />
+          <InputError error={nameError} />
+        </Form.Item>
+        <Form.Item
+          label="Представление элемента модели"
+          layout="vertical"
+          className="tw-mb-2"
+        >
+          <Input
+            placeholder="Введите отображаемое название элемента модели"
+            value={itemTitle}
+            onChange={onItemTitleChange}
+            onPressEnter={() => onOk()}
+          />
+        </Form.Item>
+        <Form.Item
+          label="Тип элемента модели"
+          layout="vertical"
+          className="tw-mb-2"
+        >
+          <Select<DataModelItem["type"]>
+            value={typeMeta.type}
+            style={{ width: 300 }}
+            onChange={onTypeChange}
+            options={typeOptions}
+          />
+        </Form.Item>
+        {typeMeta.type === "list" && (
+          <Form.Item
+            label="Тип элемента списка"
+            layout="vertical"
+            className="tw-mb-2"
+          >
+            <Select<PrimitiveItem["type"]>
+              value={typeMeta.proto}
+              style={{ width: 300 }}
+              onChange={onProtoTypeChange}
+              options={protoTypeOptions}
+            />
+          </Form.Item>
         )}
       </Modal>
     );

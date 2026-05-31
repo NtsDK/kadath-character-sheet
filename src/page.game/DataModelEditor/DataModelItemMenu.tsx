@@ -16,6 +16,8 @@ import {
 import type { TopDataModelItem } from "../../domain/GameDataModel";
 import { includes } from "../../utils/includes";
 
+import { EditModelItemModal } from "./EditModelItemModal";
+
 const MODEL_ITEM_MENU_KEYS = ["edit", "copy", "delete"] as const;
 
 type ModelItemMenuKey = (typeof MODEL_ITEM_MENU_KEYS)[number];
@@ -43,13 +45,11 @@ type Props = {
 };
 
 export const DataModelItemMenu = observer(({ modelItem }: Props) => {
-  // const charSheetStore = getCharSheetStore();
-  // const exportManager = getExportManager();
   const gameEditorUiStore = getGameEditorUiStore();
-  const [isRenameModalOpen, setIsRenameModalOpen] = useState(false);
-  const [renameCharId, setRenameCharId] = useState(uuid());
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editItemModelName, setEditItemModelName] = useState(uuid());
 
-  const { title, name } = modelItem;
+  const { title, name, type } = modelItem;
 
   const makeOnClick =
     (): MenuProps["onClick"] =>
@@ -57,8 +57,9 @@ export const DataModelItemMenu = observer(({ modelItem }: Props) => {
       assert(includes(key, ...MODEL_ITEM_MENU_KEYS));
       // console.log(`Click on item ${key} for char sheet ${id}`);
       if (key === "edit") {
-        // setRenameCharId(id);
-        // setIsRenameModalOpen(true);
+        setEditItemModelName(name);
+        // setEditItemModelName(uuid());
+        setIsEditModalOpen(true);
       } else if (key === "copy") {
         gameEditorUiStore.copyModelItem(name);
       } else if (key === "delete") {
@@ -80,17 +81,28 @@ export const DataModelItemMenu = observer(({ modelItem }: Props) => {
           icon={<EllipsisVerticalIcon className="tw-h-4" />}
         ></Button>
       </Dropdown>
-      {/* <RenameCharSheetModal
-        key={renameCharId}
-        title="Переименовать персонажа"
-        isModalOpen={isRenameModalOpen}
-        handleOk={(name) => {
-          charSheetStore.updateMeta(renameCharId, { name });
-          setIsRenameModalOpen(false);
+
+      <EditModelItemModal
+        key={editItemModelName}
+        title="Изменить элемент модели"
+        isModalOpen={isEditModalOpen}
+        handleOk={(name, title, typeMeta) => {
+          console.log(name, title, typeMeta)
+          // gameEditorUiStore.editModelItem(modelItem, name, title, typeMeta);
+          setIsEditModalOpen(false);
         }}
-        defaultValue={charSheetStore.get(renameCharId)?.name}
-        handleCancel={() => setIsRenameModalOpen(false)}
-      /> */}
+        defaultItemTitle={title}
+        defaultName={name}
+        defaultTypeMeta={
+          type === "list"
+            ? {
+                type: "list",
+                proto: modelItem.proto.type,
+              }
+            : { type }
+        }
+        handleCancel={() => setIsEditModalOpen(false)}
+      />
     </>
   );
 });

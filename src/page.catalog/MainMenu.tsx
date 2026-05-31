@@ -12,6 +12,7 @@ import {
   getImportModalUiStore,
   getNotificationModalUiStore,
 } from "../IoC";
+import { includes } from "../utils/includes";
 
 const MAIN_MENU_KEYS = [
   "drop_base",
@@ -68,7 +69,7 @@ export const MainMenu = () => {
   const makeOnClick =
     (): MenuProps["onClick"] =>
     ({ key }) => {
-      assert(MAIN_MENU_KEYS.includes(key as MainMenuKey));
+      assert(includes(key, ...MAIN_MENU_KEYS));
       // // console.log(`Click on item ${key} for char sheet ${id}`);
       if (key === "export_all") {
         const charSheets = charSheetStore.getAll();

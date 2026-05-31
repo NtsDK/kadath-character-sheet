@@ -6,76 +6,68 @@ import { useState } from "react";
 import { v4 as uuid } from "uuid";
 import { toJS } from "mobx";
 
-import { assert } from "../utils/assert";
-import type { CharSheet } from "../domain/CharSheet";
+import { assert } from "../../utils/assert";
 import {
   getCharSheetStore,
   getConfirmModalUiStore,
   getExportManager,
-} from "../IoC";
-import { includes } from "../utils/includes";
+  getGameEditorUiStore,
+} from "../../IoC";
+import type { TopDataModelItem } from "../../domain/GameDataModel";
+import { includes } from "../../utils/includes";
 
-import { RenameCharSheetModal } from "./RenameCharSheetModal";
+const MODEL_ITEM_MENU_KEYS = ["edit", "copy", "delete"] as const;
 
-const CHAR_SHEET_MENU_KEYS = ["rename", "copy", "delete", "export"] as const;
-
-type CharSheetMenuKey = (typeof CHAR_SHEET_MENU_KEYS)[number];
+type ModelItemMenuKey = (typeof MODEL_ITEM_MENU_KEYS)[number];
 
 const items: MenuProps["items"] = [
   {
-    label: "Переименовать",
-    key: "rename" satisfies CharSheetMenuKey,
+    label: "Изменить",
+    key: "edit" satisfies ModelItemMenuKey,
   },
   {
     label: "Скопировать",
-    key: "copy" satisfies CharSheetMenuKey,
-  },
-  {
-    label: "Скачать",
-    key: "export" satisfies CharSheetMenuKey,
+    key: "copy" satisfies ModelItemMenuKey,
   },
   {
     type: "divider",
   },
   {
     label: "Удалить",
-    key: "delete" satisfies CharSheetMenuKey,
+    key: "delete" satisfies ModelItemMenuKey,
   },
 ];
 
 type Props = {
-  charSheet: CharSheet;
+  modelItem: TopDataModelItem;
 };
 
-export const CharacterMenu = observer(({ charSheet }: Props) => {
-  const charSheetStore = getCharSheetStore();
-  const exportManager = getExportManager();
+export const DataModelItemMenu = observer(({ modelItem }: Props) => {
+  // const charSheetStore = getCharSheetStore();
+  // const exportManager = getExportManager();
+  const gameEditorUiStore = getGameEditorUiStore();
   const [isRenameModalOpen, setIsRenameModalOpen] = useState(false);
   const [renameCharId, setRenameCharId] = useState(uuid());
 
-  const { id, name } = charSheet;
+  const { title, name } = modelItem;
 
   const makeOnClick =
     (): MenuProps["onClick"] =>
     ({ key }) => {
-      assert(includes(key, ...CHAR_SHEET_MENU_KEYS));
+      assert(includes(key, ...MODEL_ITEM_MENU_KEYS));
       // console.log(`Click on item ${key} for char sheet ${id}`);
-      if (key === "rename") {
-        setRenameCharId(id);
-        setIsRenameModalOpen(true);
+      if (key === "edit") {
+        // setRenameCharId(id);
+        // setIsRenameModalOpen(true);
       } else if (key === "copy") {
-        charSheetStore.copy(id);
+        gameEditorUiStore.copyModelItem(name);
       } else if (key === "delete") {
         getConfirmModalUiStore().confirm(
-          `Вы уверены, что хотите удалить персонажа ${name}?`,
+          `Вы уверены, что хотите удалить элемент модели ${title}?`,
           () => {
-            charSheetStore.delete(id);
+            gameEditorUiStore.deleteModelItem(name);
           },
         );
-      } else if (key === "export") {
-        const charSheet = charSheetStore.get(id);
-        assert(charSheet);
-        exportManager.export(toJS([charSheet]));
       }
     };
 
@@ -88,7 +80,7 @@ export const CharacterMenu = observer(({ charSheet }: Props) => {
           icon={<EllipsisVerticalIcon className="tw-h-4" />}
         ></Button>
       </Dropdown>
-      <RenameCharSheetModal
+      {/* <RenameCharSheetModal
         key={renameCharId}
         title="Переименовать персонажа"
         isModalOpen={isRenameModalOpen}
@@ -98,7 +90,7 @@ export const CharacterMenu = observer(({ charSheet }: Props) => {
         }}
         defaultValue={charSheetStore.get(renameCharId)?.name}
         handleCancel={() => setIsRenameModalOpen(false)}
-      />
+      /> */}
     </>
   );
 });

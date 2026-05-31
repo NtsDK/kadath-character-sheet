@@ -1,11 +1,14 @@
-import { action, computed, makeObservable, observable } from "mobx";
+import { action, computed, makeObservable, observable, toJS } from "mobx";
 import { inject, injectable } from "inversify";
+import { clone, pluck } from "ramda";
 
 import { IOC_IDS } from "../IoC/Symbols";
 import { GameStore } from "../domainServices";
 import { Game } from "../domain/Game";
 import { TypeMeta } from "../domain/GameDataModel";
 import { getTopDataModelItem } from "../domainServices/getTopDataModelItem";
+import { assert } from "../utils/assert";
+import { generateCopyId, generateCopyName } from "../utils/generateCopyName";
 
 @injectable()
 export class GameEditorUiStore {
@@ -93,7 +96,7 @@ export class GameEditorUiStore {
   }
 
   isItemNameUsed(name: string) {
-    return this.game.dataModel.some(el => el.name === name);
+    return this.game.dataModel.some((el) => el.name === name);
   }
 
   get id(): string {
@@ -106,6 +109,31 @@ export class GameEditorUiStore {
     const modelItem = getTopDataModelItem(name, title, typeMeta);
     dataModel.push(modelItem);
     layout.push(name);
+    this.gameStore.updateContent(this._id, { dataModel, layout });
+  }
+
+  copyModelItem(name: string) {
+    const dataModel = [...this.game.dataModel];
+    const layout = [...this.game.layout];
+    const modelItem = dataModel.find((el) => el.name === name);
+    assert(!!modelItem);
+    const copy = clone(toJS(modelItem));
+    copy.name = generateCopyId(
+      modelItem.name,
+      new Set(pluck("name", dataModel)),
+    );
+    copy.title = generateCopyName(
+      modelItem.title,
+      new Set(pluck("title", dataModel)),
+    );
+    dataModel.push(copy);
+    layout.push(copy.name);
+    this.gameStore.updateContent(this._id, { dataModel, layout });
+  }
+
+  deleteModelItem(name: string) {
+    const dataModel = [...this.game.dataModel].filter((el) => el.name !== name);
+    const layout = [...this.game.layout].filter((el) => el !== name);
     this.gameStore.updateContent(this._id, { dataModel, layout });
   }
 
@@ -417,4 +445,3 @@ export class GameEditorUiStore {
   // }
   // // #endregion
 }
-

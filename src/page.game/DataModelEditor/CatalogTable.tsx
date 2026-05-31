@@ -6,6 +6,8 @@ import { useState } from "react";
 import type { TopDataModelItem } from "../../domain/GameDataModel";
 import { getGameEditorUiStore } from "../../IoC";
 
+import { DataModelItemMenu } from "./DataModelItemMenu";
+
 // import type { CharSheet } from "../domain/CharSheet";
 // import {
 //   getCatalogPageUiStore,
@@ -34,12 +36,12 @@ const columns: ColumnsType<TopDataModelItem> = [
   //   sorter: (a, b) => a.updatedAt.getTime() - b.updatedAt.getTime(),
   //   render: simpleDateFormat,
   // },
-  // {
-  //   title: "",
-  //   dataIndex: "menu",
-  //   key: "menu",
-  //   render: (_, record) => <CharacterMenu charSheet={record} />,
-  // },
+  {
+    title: "",
+    dataIndex: "menu",
+    key: "menu",
+    render: (_, record) => <DataModelItemMenu modelItem={record} />,
+  },
 ];
 
 export const CatalogTable = observer(() => {

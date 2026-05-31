@@ -7,12 +7,9 @@ import { v4 as uuid } from "uuid";
 import { toJS } from "mobx";
 
 import { assert } from "../utils/assert";
-import {
-  getConfirmModalUiStore,
-  getExportManager,
-  getGameStore,
-} from "../IoC";
+import { getConfirmModalUiStore, getExportManager, getGameStore } from "../IoC";
 import type { Game } from "../domain/Game";
+import { includes } from "../utils/includes";
 
 import { RenameGameModal } from "./RenameGameModal";
 
@@ -57,7 +54,7 @@ export const GameMenu = observer(({ game }: Props) => {
   const makeOnClick =
     (): MenuProps["onClick"] =>
     ({ key }) => {
-      assert(GAME_MENU_KEYS.includes(key as GameMenuKey));
+      assert(includes(key, ...GAME_MENU_KEYS));
       // console.log(`Click on item ${key} for char sheet ${id}`);
       if (key === "rename") {
         setRenameCharId(id);
@@ -71,10 +68,10 @@ export const GameMenu = observer(({ game }: Props) => {
             gameStore.delete(id);
           },
         );
-      // } else if (key === "export") {
-      //   const charSheet = charSheetStore.get(id);
-      //   assert(charSheet);
-      //   exportManager.export(toJS([charSheet]));
+        // } else if (key === "export") {
+        //   const charSheet = charSheetStore.get(id);
+        //   assert(charSheet);
+        //   exportManager.export(toJS([charSheet]));
       }
     };
 

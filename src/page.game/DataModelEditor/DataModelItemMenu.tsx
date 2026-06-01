@@ -87,8 +87,7 @@ export const DataModelItemMenu = observer(({ modelItem }: Props) => {
         title="Изменить элемент модели"
         isModalOpen={isEditModalOpen}
         handleOk={(name, title, typeMeta) => {
-          console.log(name, title, typeMeta)
-          // gameEditorUiStore.editModelItem(modelItem, name, title, typeMeta);
+          gameEditorUiStore.editModelItem(modelItem.name, name, title, typeMeta);
           setIsEditModalOpen(false);
         }}
         defaultItemTitle={title}

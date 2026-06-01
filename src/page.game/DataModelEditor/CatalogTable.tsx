@@ -8,25 +8,19 @@ import { getGameEditorUiStore } from "../../IoC";
 
 import { DataModelItemMenu } from "./DataModelItemMenu";
 
-// import type { CharSheet } from "../domain/CharSheet";
-// import {
-//   getCatalogPageUiStore,
-//   getCharSheetStore,
-//   getConfirmModalUiStore,
-//   getExportManager,
-// } from "../IoC";
-// import { simpleDateFormat } from "../utils/simpleDateFormat";
-
-// import { CharacterMenu } from "./CharacterMenu";
-// import { CharacterLink } from "./CharacterLink";
-
 const columns: ColumnsType<TopDataModelItem> = [
   {
     title: "",
     dataIndex: "body",
     key: "body",
     render: (_, record) => {
-      return <div>{record.name} {record.title} {record.type}</div>
+      return (
+        <div>
+          {record.name} {record.title}
+          <br/>
+          {record.type} {record.type == "list" && record.proto.type}
+        </div>
+      );
     },
   },
   // {

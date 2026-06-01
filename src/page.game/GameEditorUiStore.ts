@@ -1,14 +1,15 @@
 import { action, computed, makeObservable, observable, toJS } from "mobx";
 import { inject, injectable } from "inversify";
-import { clone, pluck } from "ramda";
+import { clone, pluck, equals } from "ramda";
 
 import { IOC_IDS } from "../IoC/Symbols";
 import { GameStore } from "../domainServices";
 import { Game } from "../domain/Game";
-import { TypeMeta } from "../domain/GameDataModel";
+import { TopDataModelItem, TypeMeta } from "../domain/GameDataModel";
 import { getTopDataModelItem } from "../domainServices/getTopDataModelItem";
 import { assert } from "../utils/assert";
 import { generateCopyId, generateCopyName } from "../utils/generateCopyName";
+import { dataModelItemToTypeMeta } from "../domainServices/dataModelItemToTypeMeta";
 
 @injectable()
 export class GameEditorUiStore {
@@ -109,6 +110,33 @@ export class GameEditorUiStore {
     const modelItem = getTopDataModelItem(name, title, typeMeta);
     dataModel.push(modelItem);
     layout.push(name);
+    this.gameStore.updateContent(this._id, { dataModel, layout });
+  }
+
+  editModelItem(
+    oldName: string,
+    name: string,
+    title: string,
+    typeMeta: TypeMeta,
+  ) {
+    const index = this.game.dataModel.findIndex((el) => el.name === oldName);
+    assert(index != -1);
+    const curModelItem = this.game.dataModel[index];
+    const curTypeMeta = dataModelItemToTypeMeta(curModelItem);
+    const dataModel = [...this.game.dataModel];
+    let layout = [...this.game.layout]
+    if (equals(typeMeta, curTypeMeta)) {
+      const copy = clone(toJS(this.game.dataModel[index]));
+      copy.name = name;
+      copy.title = title;
+      dataModel[index] = copy;
+    } else {
+      const modelItem = getTopDataModelItem(name, title, typeMeta);
+      dataModel[index] = modelItem;
+    }
+    layout = layout.map((el) =>
+      el === oldName ? name : el,
+    );
     this.gameStore.updateContent(this._id, { dataModel, layout });
   }
 

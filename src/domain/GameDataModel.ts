@@ -13,16 +13,22 @@ interface StringItem {
 interface NumberItem {
   type: "number";
   value: number;
-  min?: number;
-  max?: number;
+  min: number;
+  max: number;
 }
 
 interface LabeledNumberItem {
   type: "labeledNumber";
   value: number;
   label: string;
-  min?: number;
-  max?: number;
+}
+
+interface LabeledNumberInRangeItem {
+  type: "labeledNumberInRange";
+  value: number;
+  label: string;
+  min: number;
+  max: number;
 }
 
 interface CharacterCondition {
@@ -50,6 +56,7 @@ export type PrimitiveItem =
   | StringItem
   | NumberItem
   | LabeledNumberItem
+  | LabeledNumberInRangeItem
   | CharacterCondition
   | GearItem
   | ProjectItem;
@@ -57,7 +64,7 @@ export type PrimitiveItem =
 // Composite items
 export interface ListItem {
   type: "list";
-  initialLength?: number;
+  initialLength: number;
   maxLength?: number;
   proto: PrimitiveItem;
 }

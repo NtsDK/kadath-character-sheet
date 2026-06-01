@@ -8,7 +8,7 @@ export const dataModel: GameDataModel = [
     initialLength: 10,
     maxLength: 15,
     proto: {
-      type: "labeledNumber",
+      type: "labeledNumberInRange",
       label: "",
       value: 1,
       min: 1,
@@ -22,7 +22,7 @@ export const dataModel: GameDataModel = [
     initialLength: 3,
     maxLength: 3,
     proto: {
-      type: "labeledNumber",
+      type: "labeledNumberInRange",
       label: "",
       value: 1,
       min: 1,
@@ -32,7 +32,7 @@ export const dataModel: GameDataModel = [
   {
     name: "weakness",
     title: "Слабость",
-    type: "labeledNumber",
+    type: "labeledNumberInRange",
     label: "",
     value: 1,
     min: 1,
@@ -45,7 +45,7 @@ export const dataModel: GameDataModel = [
     initialLength: 2,
     maxLength: 3,
     proto: {
-      type: "labeledNumber",
+      type: "labeledNumberInRange",
       label: "",
       value: 1,
       min: 1,

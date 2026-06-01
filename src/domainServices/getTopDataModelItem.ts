@@ -15,7 +15,8 @@ export function getTopDataModelItem(
       type: "list",
       name,
       title,
-      proto: protoItem
+      initialLength: 3,
+      proto: protoItem,
     };
   } else {
     const item = getPrimitiveModelItem(typeMeta.type);
@@ -49,6 +50,8 @@ function getPrimitiveModelItem(type: PrimitiveItem["type"]): PrimitiveItem {
     return {
       type: "number",
       value: 0,
+      min: 0,
+      max: 5,
     };
   }
   if (type === "labeledNumber") {
@@ -56,6 +59,15 @@ function getPrimitiveModelItem(type: PrimitiveItem["type"]): PrimitiveItem {
       type: "labeledNumber",
       label: "",
       value: 1,
+    };
+  }
+  if (type === "labeledNumberInRange") {
+    return {
+      type: "labeledNumberInRange",
+      label: "",
+      value: 1,
+      min: 1,
+      max: 3,
     };
   }
   if (type === "gearItem") {

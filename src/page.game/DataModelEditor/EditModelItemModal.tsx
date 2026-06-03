@@ -15,11 +15,11 @@ import { getGameEditorUiStore } from "../../IoC";
 type Props = {
   title?: string;
   isModalOpen: boolean;
-  handleOk: (name: string, title: string, typeMeta: TypeMeta) => void;
+  handleOk: (id: string, name: string, typeMeta: TypeMeta) => void;
   handleCancel: () => void;
 
-  defaultName?: string;
-  defaultItemTitle?: string;
+  defaultId?: string;
+  defaultItemName?: string;
   defaultTypeMeta?: TypeMeta;
 };
 
@@ -42,20 +42,20 @@ export const EditModelItemModal = observer(
     isModalOpen,
     handleOk,
     handleCancel,
-    defaultName,
-    defaultItemTitle,
+    defaultId: defaultId,
+    defaultItemName: defaultItemName,
     defaultTypeMeta,
   }: Props) => {
-    const [name, setName] = useState(defaultName || "");
-    const [itemTitle, setItemTitle] = useState(defaultItemTitle || "");
+    const [id, setId] = useState(defaultId || "");
+    const [itemName, setItemName] = useState(defaultItemName || "");
     const [typeMeta, setTypeMeta] = useState<TypeMeta>(
       defaultTypeMeta || { type: "string" },
     );
-    const [nameError, setNameError] = useState<undefined | string>();
+    const [idError, setIdError] = useState<undefined | string>();
 
-    function onNameChange(event: React.ChangeEvent<HTMLInputElement>) {
-      setNameError(undefined);
-      setName(event.target.value);
+    function onIdChange(event: React.ChangeEvent<HTMLInputElement>) {
+      setIdError(undefined);
+      setId(event.target.value);
     }
     function onTypeChange(value: DataModelItem["type"]) {
       if (value === "list") {
@@ -75,17 +75,17 @@ export const EditModelItemModal = observer(
         proto: value,
       });
     }
-    function onItemTitleChange(event: React.ChangeEvent<HTMLInputElement>) {
-      setItemTitle(event.target.value);
+    function onItemNameChange(event: React.ChangeEvent<HTMLInputElement>) {
+      setItemName(event.target.value);
     }
     function onOk() {
-      const trimmedName = name.trim();
-      const nameErrorCheck = validateName(trimmedName, defaultName);
-      if (nameErrorCheck) {
-        setNameError(nameErrorCheck);
+      const trimmedId = id.trim();
+      const idErrorCheck = validateId(trimmedId, defaultId);
+      if (idErrorCheck) {
+        setIdError(idErrorCheck);
       }
-      if (!nameErrorCheck) {
-        handleOk(name, itemTitle, typeMeta);
+      if (!idErrorCheck) {
+        handleOk(id, itemName, typeMeta);
       }
     }
     return (
@@ -104,12 +104,12 @@ export const EditModelItemModal = observer(
         >
           <Input
             placeholder="Введите внутреннее название элемента модели"
-            value={name}
-            onChange={onNameChange}
-            status={nameError ? "error" : undefined}
+            value={id}
+            onChange={onIdChange}
+            status={idError ? "error" : undefined}
             onPressEnter={() => onOk()}
           />
-          <InputError error={nameError} />
+          <InputError error={idError} />
         </Form.Item>
         <Form.Item
           label="Представление элемента модели"
@@ -118,8 +118,8 @@ export const EditModelItemModal = observer(
         >
           <Input
             placeholder="Введите отображаемое название элемента модели"
-            value={itemTitle}
-            onChange={onItemTitleChange}
+            value={itemName}
+            onChange={onItemNameChange}
             onPressEnter={() => onOk()}
           />
         </Form.Item>
@@ -154,17 +154,17 @@ export const EditModelItemModal = observer(
   },
 );
 
-function validateName(
-  name: string,
-  prevName: string | undefined,
+function validateId(
+  id: string,
+  prevId: string | undefined,
 ): string | null {
-  if (name === "") {
+  if (id === "") {
     return "Внутреннее название не может быть пустым";
   }
-  if (!VALIDATE_ID_REGEX.test(name)) {
+  if (!VALIDATE_ID_REGEX.test(id)) {
     return "Внутреннее название может содержать только латинские буквы, цифры, черточку и символ подчеркивания";
   }
-  if (name !== prevName && getGameEditorUiStore().isItemNameUsed(name)) {
+  if (id !== prevId && getGameEditorUiStore().isItemIdUsed(id)) {
     return "Внутреннее название уже используется";
   }
   return null;

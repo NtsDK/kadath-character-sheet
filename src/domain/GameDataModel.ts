@@ -1,11 +1,11 @@
 interface TopNameableItem {
+  id: string;
   name: string;
-  title: string;
 }
 
 // Primitive items
 
-interface StringItem {
+export interface StringItem {
   type: "string";
   value: string;
 }

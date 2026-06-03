@@ -5,24 +5,24 @@ import type {
 } from "../domain/GameDataModel";
 
 export function getTopDataModelItem(
+  id: string,
   name: string,
-  title: string,
   typeMeta: TypeMeta,
 ): TopDataModelItem {
   if (typeMeta.type === "list") {
     const protoItem = getPrimitiveModelItem(typeMeta.proto);
     return {
       type: "list",
-      name,
-      title,
+      id: id,
+      name: name,
       initialLength: 3,
       proto: protoItem,
     };
   } else {
     const item = getPrimitiveModelItem(typeMeta.type);
     return {
-      name,
-      title,
+      id: id,
+      name: name,
       ...item,
     };
   }

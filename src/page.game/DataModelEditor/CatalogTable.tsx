@@ -16,9 +16,10 @@ const columns: ColumnsType<TopDataModelItem> = [
     render: (_, record) => {
       return (
         <div>
-          {record.name} {record.title}
+          {record.id} {record.name}
           <br/>
           {record.type} {record.type == "list" && record.proto.type}
+          <br/>
         </div>
       );
     },
@@ -47,7 +48,7 @@ export const CatalogTable = observer(() => {
         columns={columns}
         dataSource={game.dataModel}
         size="small"
-        rowKey={(el) => el.name}
+        rowKey={(el) => el.id}
         pagination={false}
       />
     </>

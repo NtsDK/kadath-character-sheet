@@ -2,8 +2,8 @@ import type { GameDataModel } from "../domain/GameDataModel";
 
 export const dataModel: GameDataModel = [
   {
-    name: "powers",
-    title: "Силы",
+    id: "powers",
+    name: "Силы",
     type: "list",
     initialLength: 10,
     maxLength: 15,
@@ -16,8 +16,8 @@ export const dataModel: GameDataModel = [
     },
   },
   {
-    name: "dreamlandPowers",
-    title: "Силы Мира Грёз",
+    id: "dreamlandPowers",
+    name: "Силы Мира Грёз",
     type: "list",
     initialLength: 3,
     maxLength: 3,
@@ -30,8 +30,8 @@ export const dataModel: GameDataModel = [
     },
   },
   {
-    name: "weakness",
-    title: "Слабость",
+    id: "weakness",
+    name: "Слабость",
     type: "labeledNumberInRange",
     label: "",
     value: 1,
@@ -39,8 +39,8 @@ export const dataModel: GameDataModel = [
     max: 5,
   },
   {
-    name: "recollections",
-    title: "Воспоминания",
+    id: "recollections",
+    name: "Воспоминания",
     type: "list",
     initialLength: 2,
     maxLength: 3,
@@ -53,8 +53,8 @@ export const dataModel: GameDataModel = [
     },
   },
   {
-    name: "mentalConditions",
-    title: "Душевные состояния",
+    id: "mentalConditions",
+    name: "Душевные состояния",
     type: "list",
     initialLength: 3,
     maxLength: 3,
@@ -66,8 +66,8 @@ export const dataModel: GameDataModel = [
     },
   },
   {
-    name: "bodyWounds",
-    title: "Телесные раны",
+    id: "bodyWounds",
+    name: "Телесные раны",
     type: "list",
     initialLength: 3,
     maxLength: 6,
@@ -79,8 +79,8 @@ export const dataModel: GameDataModel = [
     },
   },
   {
-    name: "temporalConditions",
-    title: "Трудности и преимущества",
+    id: "temporalConditions",
+    name: "Трудности и преимущества",
     type: "list",
     initialLength: 3,
     proto: {
@@ -90,16 +90,16 @@ export const dataModel: GameDataModel = [
     },
   },
   {
-    name: "luck",
-    title: "Удача",
+    id: "luck",
+    name: "Удача",
     type: "number",
     value: 0,
     min: 0,
     max: 12,
   },
   {
-    name: "items",
-    title: "Снаряжение",
+    id: "items",
+    name: "Снаряжение",
     type: "list",
     initialLength: 3,
     proto: {
@@ -111,8 +111,8 @@ export const dataModel: GameDataModel = [
     },
   },
   {
-    name: "projects",
-    title: "Замыслы",
+    id: "projects",
+    name: "Замыслы",
     type: "list",
     initialLength: 2,
     proto: {
@@ -124,8 +124,8 @@ export const dataModel: GameDataModel = [
     },
   },
   {
-    name: "notes",
-    title: "Заметки",
+    id: "notes",
+    name: "Заметки",
     type: "string",
     value: "",
   },

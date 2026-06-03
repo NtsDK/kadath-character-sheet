@@ -96,30 +96,30 @@ export class GameEditorUiStore {
     this._id = id;
   }
 
-  isItemNameUsed(name: string) {
-    return this.game.dataModel.some((el) => el.name === name);
+  isItemIdUsed(id: string) {
+    return this.game.dataModel.some((el) => el.id === id);
   }
 
   get id(): string {
     return this._id;
   }
 
-  createModelItem(name: string, title: string, typeMeta: TypeMeta) {
+createModelItem(id: string, name: string, typeMeta: TypeMeta) {
     const dataModel = [...this.game.dataModel];
     const layout = [...this.game.layout];
-    const modelItem = getTopDataModelItem(name, title, typeMeta);
+    const modelItem = getTopDataModelItem(id, name, typeMeta);
     dataModel.push(modelItem);
-    layout.push(name);
+    layout.push(id);
     this.gameStore.updateContent(this._id, { dataModel, layout });
   }
 
   editModelItem(
-    oldName: string,
+    oldId: string,
+    id: string,
     name: string,
-    title: string,
     typeMeta: TypeMeta,
   ) {
-    const index = this.game.dataModel.findIndex((el) => el.name === oldName);
+    const index = this.game.dataModel.findIndex((el) => el.id === oldId);
     assert(index != -1);
     const curModelItem = this.game.dataModel[index];
     const curTypeMeta = dataModelItemToTypeMeta(curModelItem);
@@ -127,41 +127,41 @@ export class GameEditorUiStore {
     let layout = [...this.game.layout]
     if (equals(typeMeta, curTypeMeta)) {
       const copy = clone(toJS(this.game.dataModel[index]));
+      copy.id = id;
       copy.name = name;
-      copy.title = title;
       dataModel[index] = copy;
     } else {
-      const modelItem = getTopDataModelItem(name, title, typeMeta);
+      const modelItem = getTopDataModelItem(id, name, typeMeta);
       dataModel[index] = modelItem;
     }
     layout = layout.map((el) =>
-      el === oldName ? name : el,
+      el === oldId ? id : el,
     );
     this.gameStore.updateContent(this._id, { dataModel, layout });
   }
 
-  copyModelItem(name: string) {
+  copyModelItem(id: string) {
     const dataModel = [...this.game.dataModel];
     const layout = [...this.game.layout];
-    const modelItem = dataModel.find((el) => el.name === name);
+    const modelItem = dataModel.find((el) => el.id === id);
     assert(!!modelItem);
     const copy = clone(toJS(modelItem));
-    copy.name = generateCopyId(
+    copy.id = generateCopyId(
+      modelItem.id,
+      new Set(pluck("id", dataModel)),
+    );
+    copy.name = generateCopyName(
       modelItem.name,
       new Set(pluck("name", dataModel)),
     );
-    copy.title = generateCopyName(
-      modelItem.title,
-      new Set(pluck("title", dataModel)),
-    );
     dataModel.push(copy);
-    layout.push(copy.name);
+    layout.push(copy.id);
     this.gameStore.updateContent(this._id, { dataModel, layout });
   }
 
-  deleteModelItem(name: string) {
-    const dataModel = [...this.game.dataModel].filter((el) => el.name !== name);
-    const layout = [...this.game.layout].filter((el) => el !== name);
+  deleteModelItem(id: string) {
+    const dataModel = [...this.game.dataModel].filter((el) => el.id !== id);
+    const layout = [...this.game.layout].filter((el) => el !== id);
     this.gameStore.updateContent(this._id, { dataModel, layout });
   }
 

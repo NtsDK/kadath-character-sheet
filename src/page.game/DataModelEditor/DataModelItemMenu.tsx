@@ -47,9 +47,9 @@ type Props = {
 export const DataModelItemMenu = observer(({ modelItem }: Props) => {
   const gameEditorUiStore = getGameEditorUiStore();
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const [editItemModelName, setEditItemModelName] = useState(uuid());
+  const [editItemModelId, setEditItemModelId] = useState(uuid());
 
-  const { title, name, type } = modelItem;
+  const { name: name, id: id, type } = modelItem;
 
   const makeOnClick =
     (): MenuProps["onClick"] =>
@@ -57,16 +57,16 @@ export const DataModelItemMenu = observer(({ modelItem }: Props) => {
       assert(includes(key, ...MODEL_ITEM_MENU_KEYS));
       // console.log(`Click on item ${key} for char sheet ${id}`);
       if (key === "edit") {
-        setEditItemModelName(name);
+        setEditItemModelId(id);
         // setEditItemModelName(uuid());
         setIsEditModalOpen(true);
       } else if (key === "copy") {
-        gameEditorUiStore.copyModelItem(name);
+        gameEditorUiStore.copyModelItem(id);
       } else if (key === "delete") {
         getConfirmModalUiStore().confirm(
-          `Вы уверены, что хотите удалить элемент модели ${title}?`,
+          `Вы уверены, что хотите удалить элемент модели ${name}?`,
           () => {
-            gameEditorUiStore.deleteModelItem(name);
+            gameEditorUiStore.deleteModelItem(id);
           },
         );
       }
@@ -83,15 +83,15 @@ export const DataModelItemMenu = observer(({ modelItem }: Props) => {
       </Dropdown>
 
       <EditModelItemModal
-        key={editItemModelName}
+        key={editItemModelId}
         title="Изменить элемент модели"
         isModalOpen={isEditModalOpen}
-        handleOk={(name, title, typeMeta) => {
-          gameEditorUiStore.editModelItem(modelItem.name, name, title, typeMeta);
+        handleOk={(id, name, typeMeta) => {
+          gameEditorUiStore.editModelItem(modelItem.id, id, name, typeMeta);
           setIsEditModalOpen(false);
         }}
-        defaultItemTitle={title}
-        defaultName={name}
+        defaultItemName={name}
+        defaultId={id}
         defaultTypeMeta={
           type === "list"
             ? {

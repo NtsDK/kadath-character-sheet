@@ -5,7 +5,11 @@ import { clone, pluck, equals } from "ramda";
 import { IOC_IDS } from "../IoC/Symbols";
 import { GameStore } from "../domainServices";
 import { Game } from "../domain/Game";
-import { TopDataModelItem, TypeMeta } from "../domain/GameDataModel";
+import {
+  DataModelItem,
+  TopDataModelItem,
+  TypeMeta,
+} from "../domain/GameDataModel";
 import { getTopDataModelItem } from "../domainServices/getTopDataModelItem";
 import { assert } from "../utils/assert";
 import { generateCopyId, generateCopyName } from "../utils/generateCopyName";
@@ -104,7 +108,7 @@ export class GameEditorUiStore {
     return this._id;
   }
 
-createModelItem(id: string, name: string, typeMeta: TypeMeta) {
+  createModelItem(id: string, name: string, typeMeta: TypeMeta) {
     const dataModel = [...this.game.dataModel];
     const layout = [...this.game.layout];
     const modelItem = getTopDataModelItem(id, name, typeMeta);
@@ -113,18 +117,13 @@ createModelItem(id: string, name: string, typeMeta: TypeMeta) {
     this.gameStore.updateContent(this._id, { dataModel, layout });
   }
 
-  editModelItem(
-    oldId: string,
-    id: string,
-    name: string,
-    typeMeta: TypeMeta,
-  ) {
+  editModelItem(oldId: string, id: string, name: string, typeMeta: TypeMeta) {
     const index = this.game.dataModel.findIndex((el) => el.id === oldId);
     assert(index != -1);
     const curModelItem = this.game.dataModel[index];
     const curTypeMeta = dataModelItemToTypeMeta(curModelItem);
     const dataModel = [...this.game.dataModel];
-    let layout = [...this.game.layout]
+    let layout = [...this.game.layout];
     if (equals(typeMeta, curTypeMeta)) {
       const copy = clone(toJS(this.game.dataModel[index]));
       copy.id = id;
@@ -134,10 +133,18 @@ createModelItem(id: string, name: string, typeMeta: TypeMeta) {
       const modelItem = getTopDataModelItem(id, name, typeMeta);
       dataModel[index] = modelItem;
     }
-    layout = layout.map((el) =>
-      el === oldId ? id : el,
-    );
+    layout = layout.map((el) => (el === oldId ? id : el));
     this.gameStore.updateContent(this._id, { dataModel, layout });
+  }
+
+  editModelItemProps<T extends DataModelItem>(id: string, modelItem: Partial<T>) {
+    const dataModel = this.game.dataModel.map((el) => {
+      if (el.id === id) {
+        return { ...el, ...modelItem } as TopDataModelItem;
+      }
+      return el;
+    });
+    this.gameStore.updateContent(this._id, { dataModel });
   }
 
   copyModelItem(id: string) {
@@ -146,10 +153,7 @@ createModelItem(id: string, name: string, typeMeta: TypeMeta) {
     const modelItem = dataModel.find((el) => el.id === id);
     assert(!!modelItem);
     const copy = clone(toJS(modelItem));
-    copy.id = generateCopyId(
-      modelItem.id,
-      new Set(pluck("id", dataModel)),
-    );
+    copy.id = generateCopyId(modelItem.id, new Set(pluck("id", dataModel)));
     copy.name = generateCopyName(
       modelItem.name,
       new Set(pluck("name", dataModel)),

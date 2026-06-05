@@ -7,19 +7,27 @@ import type { TopDataModelItem } from "../../domain/GameDataModel";
 import { getGameEditorUiStore } from "../../IoC";
 
 import { DataModelItemMenu } from "./DataModelItemMenu";
+import { StringPrimitiveEditor } from "./StringPrimitiveEditor";
+import { NumberPrimitiveEditor } from "./NumberPrimitiveEditor";
 
 const columns: ColumnsType<TopDataModelItem> = [
   {
     title: "",
     dataIndex: "body",
     key: "body",
+    sorter: (a, b) => a.name.localeCompare(b.name),
+    sortOrder: "ascend",
     render: (_, record) => {
       return (
         <div>
-          {record.id} {record.name}
+          {record.name}
+          <br/>
+          {record.id}
           <br/>
           {record.type} {record.type == "list" && record.proto.type}
           <br/>
+          {record.type === "string" && <StringPrimitiveEditor id={record.id} item={record} />}
+          {record.type === "number" && <NumberPrimitiveEditor id={record.id} item={record} />}
         </div>
       );
     },

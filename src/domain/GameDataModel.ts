@@ -10,20 +10,20 @@ export interface StringItem {
   value: string;
 }
 
-interface NumberItem {
+export interface NumberItem {
   type: "number";
   value: number;
   min: number;
   max: number;
 }
 
-interface LabeledNumberItem {
+export interface LabeledNumberItem {
   type: "labeledNumber";
   value: number;
   label: string;
 }
 
-interface LabeledNumberInRangeItem {
+export interface LabeledNumberInRangeItem {
   type: "labeledNumberInRange";
   value: number;
   label: string;
@@ -31,7 +31,7 @@ interface LabeledNumberInRangeItem {
   max: number;
 }
 
-interface CharacterCondition {
+export interface CharacterCondition {
   type: "characterCondition";
   label: string;
   value: number;
@@ -44,7 +44,7 @@ export interface GearItem {
   maxStrength: number;
   powers: string[];
 }
-interface ProjectItem {
+export interface ProjectItem {
   type: "project";
   label: string;
   progress: number;

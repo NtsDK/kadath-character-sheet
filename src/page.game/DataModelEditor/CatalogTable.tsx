@@ -9,6 +9,7 @@ import { getGameEditorUiStore } from "../../IoC";
 import { DataModelItemMenu } from "./DataModelItemMenu";
 import { StringPrimitiveEditor } from "./StringPrimitiveEditor";
 import { NumberPrimitiveEditor } from "./NumberPrimitiveEditor";
+import { LabeledNumberInRangePrimitiveEditor } from "./LabeledNumberInRangePrimitiveEditor";
 
 const columns: ColumnsType<TopDataModelItem> = [
   {
@@ -21,13 +22,20 @@ const columns: ColumnsType<TopDataModelItem> = [
       return (
         <div>
           {record.name}
-          <br/>
+          <br />
           {record.id}
-          <br/>
+          <br />
           {record.type} {record.type == "list" && record.proto.type}
-          <br/>
-          {record.type === "string" && <StringPrimitiveEditor id={record.id} item={record} />}
-          {record.type === "number" && <NumberPrimitiveEditor id={record.id} item={record} />}
+          <br />
+          {record.type === "string" && (
+            <StringPrimitiveEditor id={record.id} item={record} />
+          )}
+          {record.type === "number" && (
+            <NumberPrimitiveEditor id={record.id} item={record} />
+          )}
+          {record.type === "labeledNumberInRange" && (
+            <LabeledNumberInRangePrimitiveEditor id={record.id} item={record} />
+          )}
         </div>
       );
     },

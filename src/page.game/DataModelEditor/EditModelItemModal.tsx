@@ -1,14 +1,10 @@
 import { observer } from "mobx-react-lite";
 import { Form, Input, Modal, Select } from "antd";
 import { useState } from "react";
+import * as R from "ramda";
 
 import { InputError } from "../../unitComponents/InputError";
-import type {
-  DataModelItem,
-  ListItem,
-  PrimitiveItem,
-  TypeMeta,
-} from "../../domain/GameDataModel";
+import type { TypeMeta } from "../../domain/GameDataModel";
 import { VALIDATE_ID_REGEX } from "../../utils/nameValidation";
 import { getGameEditorUiStore } from "../../IoC";
 
@@ -23,18 +19,87 @@ type Props = {
   defaultTypeMeta?: TypeMeta;
 };
 
-const protoTypeOptions: { value: PrimitiveItem["type"]; label: string }[] = [
-  { value: "project", label: "Замысел" },
-  { value: "gearItem", label: "Предмет" },
-  { value: "characterCondition", label: "Состояние персонажа" },
-  { value: "string", label: "Текст" },
-  { value: "number", label: "Число" },
-  { value: "labeledNumber", label: "Число с подписью" },
+type TypeCodes =
+  | "projectList"
+  | "gearItemList"
+  | "characterConditionList"
+  | "string"
+  | "number"
+  | "labeledNumberList"
+  | "labeledNumberInRangeList"
+  | "labeledNumberInRange";
+
+type DisplayItemType = {
+  typeMeta: TypeMeta;
+  label: string;
+  value: TypeCodes;
+};
+
+const typeOptions: DisplayItemType[] = [
+  {
+    typeMeta: {
+      type: "list",
+      proto: "project",
+    },
+    label: "Список замыслов",
+    value: "projectList",
+  },
+  {
+    typeMeta: {
+      type: "list",
+      proto: "gearItem",
+    },
+    label: "Список предметов",
+    value: "gearItemList",
+  },
+  {
+    typeMeta: {
+      type: "list",
+      proto: "characterCondition",
+    },
+    label: "Список состояний (раны и душевные состояния)",
+    value: "characterConditionList",
+  },
+  {
+    typeMeta: {
+      type: "string",
+    },
+    label: "Текст (заметки)",
+    value: "string",
+  },
+  {
+    typeMeta: {
+      type: "number",
+    },
+    label: "Число (удача)",
+    value: "number",
+  },
+  {
+    typeMeta: {
+      type: "list",
+      proto: "labeledNumber",
+    },
+    label: "Список чисел с подписью (трудности и преимущества)",
+    value: "labeledNumberList",
+  },
+  {
+    typeMeta: {
+      type: "list",
+      proto: "labeledNumberInRange",
+    },
+    label: "Список чисел в диапазоне с подписью (силы, воспоминания)",
+    value: "labeledNumberInRangeList",
+  },
+  {
+    typeMeta: {
+      type: "labeledNumberInRange",
+    },
+    label: "Число в диапазоне с подписью (слабость)",
+    value: "labeledNumberInRange",
+  },
 ];
-const typeOptions: { value: DataModelItem["type"]; label: string }[] = [
-  ...protoTypeOptions,
-  { value: "list", label: "Список" },
-];
+
+typeOptions.sort((a, b) => a.label.localeCompare(b.label));
 
 export const EditModelItemModal = observer(
   ({
@@ -48,8 +113,9 @@ export const EditModelItemModal = observer(
   }: Props) => {
     const [id, setId] = useState(defaultId || "");
     const [itemName, setItemName] = useState(defaultItemName || "");
-    const [typeMeta, setTypeMeta] = useState<TypeMeta>(
-      defaultTypeMeta || { type: "string" },
+    const [typeCode, setTypeCode] = useState<TypeCodes>(
+      typeOptions.find((el) => R.equals(el.typeMeta, defaultTypeMeta))?.value ||
+        "string",
     );
     const [idError, setIdError] = useState<undefined | string>();
 
@@ -57,24 +123,10 @@ export const EditModelItemModal = observer(
       setIdError(undefined);
       setId(event.target.value);
     }
-    function onTypeChange(value: DataModelItem["type"]) {
-      if (value === "list") {
-        setTypeMeta({
-          type: "list",
-          proto: "labeledNumber",
-        });
-      } else {
-        setTypeMeta({
-          type: value,
-        });
-      }
+    function onTypeChange(value: TypeCodes) {
+      setTypeCode(value);
     }
-    function onProtoTypeChange(value: PrimitiveItem["type"]) {
-      setTypeMeta({
-        type: "list",
-        proto: value,
-      });
-    }
+
     function onItemNameChange(event: React.ChangeEvent<HTMLInputElement>) {
       setItemName(event.target.value);
     }
@@ -85,7 +137,13 @@ export const EditModelItemModal = observer(
         setIdError(idErrorCheck);
       }
       if (!idErrorCheck) {
-        handleOk(id, itemName, typeMeta);
+        handleOk(
+          id,
+          itemName,
+          typeOptions.find((el) => el.value === typeCode)?.typeMeta || {
+            type: "string",
+          },
+        );
       }
     }
     return (
@@ -128,36 +186,19 @@ export const EditModelItemModal = observer(
           layout="vertical"
           className="tw-mb-2"
         >
-          <Select<DataModelItem["type"]>
-            value={typeMeta.type}
-            style={{ width: 300 }}
+          <Select<TypeCodes>
+            value={typeCode}
+            style={{ width: 450 }}
             onChange={onTypeChange}
             options={typeOptions}
           />
         </Form.Item>
-        {typeMeta.type === "list" && (
-          <Form.Item
-            label="Тип элемента списка"
-            layout="vertical"
-            className="tw-mb-2"
-          >
-            <Select<PrimitiveItem["type"]>
-              value={typeMeta.proto}
-              style={{ width: 300 }}
-              onChange={onProtoTypeChange}
-              options={protoTypeOptions}
-            />
-          </Form.Item>
-        )}
       </Modal>
     );
   },
 );
 
-function validateId(
-  id: string,
-  prevId: string | undefined,
-): string | null {
+function validateId(id: string, prevId: string | undefined): string | null {
   if (id === "") {
     return "Внутреннее название не может быть пустым";
   }

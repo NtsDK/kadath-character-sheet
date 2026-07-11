@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import {
   LayoutOutlined,
   ProfileOutlined,
-  TeamOutlined
+  TeamOutlined,
 } from "@ant-design/icons";
 
 import { getGameEditorUiStore } from "../IoC";
@@ -29,7 +29,8 @@ export const GameEditor = observer(() => {
   }
 
   return (
-    <div style={{ width: "40rem" }} className="tw-px-8 tw-py-4">
+    // <div style={{ width: "40rem" }} className="tw-px-8 tw-py-4">
+    <div className="tw-px-8 tw-py-4">
       <h1 className="tw-text-2xl tw-mb-4">{gameEditorUiStore.game.name}</h1>
       <Tabs
         defaultActiveKey="dataModel"
@@ -39,13 +40,13 @@ export const GameEditor = observer(() => {
             label: "Модель данных",
             key: "dataModel",
             children: <DataModelEditor />,
-            icon: <ProfileOutlined />
+            icon: <ProfileOutlined />,
           },
           {
             label: "Макет",
             key: "layout",
             children: <LayoutEditor />,
-            icon: <LayoutOutlined />
+            icon: <LayoutOutlined />,
           },
           // {
           //   label: "Прегены",

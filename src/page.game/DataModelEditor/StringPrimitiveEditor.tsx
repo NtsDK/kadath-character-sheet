@@ -2,26 +2,25 @@ import { observer } from "mobx-react-lite";
 import { Form, Input } from "antd";
 
 import type { StringItem } from "../../domain/GameDataModel";
-import { getGameEditorUiStore } from "../../IoC";
 
 type Props = {
-  id: string;
   item: StringItem;
+  onChange: (modelItem: Partial<StringItem>) => void;
 };
 
-export const StringPrimitiveEditor = observer(({ id, item }: Props) => {
-  const uiStore = getGameEditorUiStore();
+export const StringPrimitiveEditor = observer(({ item, onChange }: Props) => {
   return (
     <div>
       <Form.Item
         label="Значение по умолчанию"
-        layout="vertical"
+        // layout="vertical"
         className="tw-mb-0"
+        labelCol={{ span: 9 }}
       >
         <Input
           value={item.value}
           onChange={(e) =>
-            uiStore.editModelItemProps<StringItem>(id, {
+            onChange({
               value: e.target.value,
             })
           }

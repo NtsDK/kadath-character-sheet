@@ -1,55 +1,64 @@
 import { observer } from "mobx-react-lite";
 import { Form, Input } from "antd";
 
-import { getGameEditorUiStore } from "../../IoC";
 import type { NumberItem } from "../../domain/GameDataModel";
 
 type Props = {
-  id: string;
   item: NumberItem;
+  onChange: (modelItem: Partial<NumberItem>) => void;
 };
 
-export const NumberPrimitiveEditor = observer(({ id, item }: Props) => {
-  const uiStore = getGameEditorUiStore();
+export const NumberPrimitiveEditor = observer(({ item, onChange }: Props) => {
   return (
     <div>
-      <Form.Item label="Минимум" layout="vertical" className="tw-mb-0">
+      <Form.Item
+        label="Минимум"
+        // layout="vertical"
+        className="tw-mb-0"
+        labelCol={{ span: 9 }}
+      >
         <Input
           type="number"
           value={item.min}
-          onChange={(e) => {
-            uiStore.editModelItemProps<NumberItem>(id, {
+          onChange={(e) =>
+            onChange({
               min: Number(e.target.value),
-            });
-          }}
+            })
+          }
         />
       </Form.Item>
-      <Form.Item label="Максимум" layout="vertical" className="tw-mb-0">
+      <Form.Item
+        label="Максимум"
+        // layout="vertical"
+        className="tw-mb-0"
+        labelCol={{ span: 9 }}
+      >
         <Input
           type="number"
           value={item.max}
-          onChange={(e) => {
-            uiStore.editModelItemProps<NumberItem>(id, {
+          onChange={(e) =>
+            onChange({
               max: Number(e.target.value),
-            });
-          }}
+            })
+          }
         />
       </Form.Item>
       <Form.Item
         label="Значение по умолчанию"
-        layout="vertical"
+        // layout="vertical"
         className="tw-mb-0"
+        labelCol={{ span: 9 }}
       >
         <Input
           type="number"
           value={item.value}
           min={item.min}
           max={item.max}
-          onChange={(e) => {
-            uiStore.editModelItemProps<NumberItem>(id, {
+          onChange={(e) =>
+            onChange({
               value: Number(e.target.value),
-            });
-          }}
+            })
+          }
         />
       </Form.Item>
     </div>

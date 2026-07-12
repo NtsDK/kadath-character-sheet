@@ -12,6 +12,8 @@ import type {
 import { StringPrimitiveEditor } from "./StringPrimitiveEditor";
 import { NumberPrimitiveEditor } from "./NumberPrimitiveEditor";
 import { LabeledNumberInRangePrimitiveEditor } from "./LabeledNumberInRangePrimitiveEditor";
+import { LabeledNumberPrimitiveEditor } from "./LabeledNumberPrimitiveEditor";
+import { CharacterConditionPrimitiveEditor } from "./CharacterConditionPrimitiveEditor";
 
 type Props<T extends PrimitiveItem> = {
   item: T;
@@ -37,10 +39,16 @@ export const PrimitiveEditor = observer(
             onChange={onChange}
           />
         )}
-        {item.type === "labeledNumber" && "labeledNumber"}
-        {item.type === "characterCondition" && "characterCondition"}
-        {item.type === "gearItem" && "gearItem"}
-        {item.type === "project" && "project"}
+        {item.type === "labeledNumber" && (
+          // @ts-expect-error - TypeScript cannot infer the type of T here, but we know it's a LabeledNumberItem
+          <LabeledNumberPrimitiveEditor item={item} onChange={onChange} />
+        )}
+        {item.type === "characterCondition" && (
+          // @ts-expect-error - TypeScript cannot infer the type of T here, but we know it's a CharacterCondition
+          <CharacterConditionPrimitiveEditor item={item} onChange={onChange} />
+        )}
+        {/* {item.type === "gearItem" && "gearItem"}
+        {item.type === "project" && "project"} */}
       </>
     );
   },
